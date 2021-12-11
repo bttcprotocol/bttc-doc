@@ -60,10 +60,10 @@ contract HelloWorld {
 按照圖中的信息填寫：
 
 * 網絡名稱（Network Name）：BitTorrent Chain Donau
-* RPC URL（RPC URL）：https://pre-rpc.bittorrentchain.io/ 
+* RPC URL（RPC URL）：https://pre-rpc.bt.io/ 
 * 智能鏈ID（ChainID）：1029
 * 符號（Symbol）：BTT
-* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bittorrentchain.io/
+* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bt.io/
 
 ![image](../pics/wallet-rpc.png)
 
@@ -287,10 +287,10 @@ mapping(uint256 => Tracking) public trackings;
 按照圖中的信息填寫：
 
 * 網絡名稱（Network Name）：BitTorrent Chain Donau
-* RPC URL（RPC URL）：https://pre-rpc.bittorrentchain.io/ 
+* RPC URL（RPC URL）：https://pre-rpc.bt.io/ 
 * 智能鏈ID（ChainID）：1029
 * 符號（Symbol）：BTT
-* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bittorrentchain.io/
+* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bt.io/
 
 ![image](../pics/wallet-rpc.png)
 

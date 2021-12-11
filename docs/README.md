@@ -53,7 +53,7 @@ The BitTorrent Mainnet is launched on December 12, 2021. There is also a running
 ### BTTC Test Network (Donau)
 
 * Network Name: BitTorrent Chain Donau
-* RPC URL (RPC URL): https://pre-rpc.bittorrentchain.io/
+* RPC URL (RPC URL): https://pre-rpc.bt.io/
 * Smart chain ID (ChainID): 1029
 * Symbol: BTT
-* Block Explorer URL: https://testscan.bittorrentchain.io/
+* Block Explorer URL: https://testscan.bt.io/

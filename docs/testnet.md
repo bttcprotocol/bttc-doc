@@ -57,9 +57,9 @@ For details, please refer to:：[Conncting Metamask to Binance Smart Chain](http
 Accessing to the BTTC test network requires Metamask. Please use Metamask to add the network configuration of the BTTC test network, and switch to the BTTC test network.
 
 * Network Name: BitTorrent Chain Donau
-* RPC URL: https://pre-rpc.bittorrentchain.io/ 
+* RPC URL: https://pre-rpc.bt.io/ 
 * ChainID: 1029
 * Symbol: BTT
-* Block Explorer URL: https://testscan.bittorrentchain.io/
+* Block Explorer URL: https://testscan.bt.io/
 
 ![image](./pics/wallet-rpc.png)

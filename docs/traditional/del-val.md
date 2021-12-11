@@ -43,7 +43,7 @@ BitTorrent-Chain的代碼庫，用於了解BitTorrent-Chain 核心組件如何�
 
 ## 設置節點
 
-請參考節點設置[文檔](http://doc.bittorrentchain.io/v1/doc/traditional/validator/node.html "文檔")
+請參考節點設置[文檔](http://doc.bt.io/v1/doc/traditional/validator/node.html "文檔")
 
 ## 委託人
 

@@ -53,7 +53,7 @@ BTTC的正式網從2021年12月12日起正式開始運行。同時有一個正�
 ### BTTC測試網（Donau）
 
 * 網絡名稱（Network Name）：BitTorrent Chain Donau
-* RPC URL（RPC URL）：https://pre-rpc.bittorrentchain.io/ 
+* RPC URL（RPC URL）：https://pre-rpc.bt.io/ 
 * 智能鏈ID（ChainID）：1029
 * 符號（Symbol）：BTT
-* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bittorrentchain.io/
+* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bt.io/

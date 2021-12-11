@@ -43,7 +43,7 @@ Once you are familiar with the architecture and code base, you can set up your n
 
 ## Setting up your node
 
-Please refer to the node setup [documentation](http://doc.bittorrentchain.io/v1/doc/validator/node.html "documentation")
+Please refer to the node setup [documentation](http://doc.bt.io/v1/doc/validator/node.html "documentation")
 
 ## Delegator
 

@@ -2,7 +2,7 @@
 
 ## 区块链浏览器
 
-* 测试网：[https://scan.bittorrentchain.io/](https://scan.bittorrentchain.io/)
+* 测试网：[https://scan.bt.io/](https://scan.bt.io/)
 
 ## 合约开发
 

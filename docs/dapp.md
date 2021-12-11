@@ -64,10 +64,10 @@ Open the MetaMask wallet and select Custom RPC in the drop-down menu as shown in
 Fill in according to the information in the picture:
 
 * Network Name: BitTorrent Chain Donau
-* RPC URL: https://pre-rpc.bittorrentchain.io/ 
+* RPC URL: https://pre-rpc.bt.io/ 
 * ChainID: 1029
 * Symbol: BTT
-* Block Explorer URL: https://testscan.bittorrentchain.io/
+* Block Explorer URL: https://testscan.bt.io/
 
 ![image](./pics/wallet-rpc.png)
 
@@ -291,10 +291,10 @@ Open Metamask and select Custom RPC from the networks dropdown
 Fill in the information as per the chart：
 
 * Network Name: BitTorrent Chain Donau
-* RPC URL: https://pre-rpc.bittorrentchain.io/ 
+* RPC URL: https://pre-rpc.bt.io/ 
 * ChainID: 1029
 * Symbol: BTT
-* Block Explorer URL: https://testscan.bittorrentchain.io/
+* Block Explorer URL: https://testscan.bt.io/
 
 ![image](./pics/wallet-rpc.png)
 

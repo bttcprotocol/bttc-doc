@@ -10,7 +10,7 @@ https://rpc.bt.io
 
 ### Endpoint
 
-https://pre-rpc.bittorrentchain.io/
+https://pre-rpc.bt.io/
 
 ## JSON-RPC 方法
 

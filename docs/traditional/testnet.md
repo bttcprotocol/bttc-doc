@@ -55,9 +55,9 @@ BSC測試網的接入需要使用Metamask，並切換至Goerli測試網，通過
 BTTC測試網的接入需要使用Metamask，並使用Metamask添加BTTC測試網的網絡配置，並切換至BTTC測試網。
 
 * 網絡名稱（Network Name）：BitTorrent Chain Donau
-* RPC URL（RPC URL）：https://pre-rpc.bittorrentchain.io/ 
+* RPC URL（RPC URL）：https://pre-rpc.bt.io/ 
 * 智能鏈ID（ChainID）：1029
 * 符號（Symbol）：BTT
-* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bittorrentchain.io/
+* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bt.io/
 
 ![image](../pics/wallet-rpc.png)
