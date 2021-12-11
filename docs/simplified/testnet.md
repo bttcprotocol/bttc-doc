@@ -7,7 +7,7 @@ BitTorrent Chain（BTTC）测试网现已正式开启，目前已支持TRON测�
 | TRON  | Nile  |  [Nile Faucet](https://nileex.io/join/getJoinPage) |
 |  ETH |  Goerli | [Goerli Faucet](https://faucet.goerli.mudit.blog/)  |
 |  BSC |  BSC测试网 | [BSC Faucet](https://testnet.binance.org/faucet-smart)  |
-|  BTTC | BitTorrent Chain Donau  | [Donau Faucet](https://testfaucet.bittorrentchain.io/#)  |
+|  BTTC | BitTorrent Chain Donau  | [Donau Faucet](https://testfaucet.bt.io/#)  |
 
 ## TRON Nile 测试网
 

@@ -45,10 +45,10 @@ BTTC的正式網從2021年12月12日起正式開始運行。同時有一個正�
 ### BTTC主網
 
 * 網絡名稱（Network Name）：BitTorrent Chain Mainnet
-* RPC URL（RPC URL）：https://rpc.bittorrentchain.io/
+* RPC URL（RPC URL）：https://rpc.bt.io
 * 智能鏈ID（ChainID）：199
 * 符號（Symbol）：BTT
-* 區塊瀏覽器URL（Block Explorer URL）：https://scan.bittorrentchain.io/
+* 區塊瀏覽器URL（Block Explorer URL）：https://scan.bt.io
 
 ### BTTC測試網（Donau）
 

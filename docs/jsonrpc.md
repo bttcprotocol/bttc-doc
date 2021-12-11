@@ -4,7 +4,7 @@
 
 ### Endpoint
 
-https://rpc.bittorrentchain.io/
+https://rpc.bt.io
 
 ## Donau(ChainID 0x405, Decimal 1029)
 
