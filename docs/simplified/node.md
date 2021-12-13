@@ -138,7 +138,7 @@ Event Monitor的搭建步骤如下：
 
 - 编译bttc-event-monitor
 
-    **代码地址**：http://39.106.174.213/tron/bttc-event-monitor
+    **代码地址**：
 
     **编译命令**：`./gradlew build -x test`
 

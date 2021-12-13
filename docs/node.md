@@ -137,7 +137,7 @@ The steps to build Event Monitor are as follows:
 
 - Compile bttc-event-monitor
 
-    **Code** : http://39.106.174.213/tron/bttc-event-monitor
+    **Code** : 
 
     **Compile command** : `./gradlew build -x test`
 
