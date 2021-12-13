@@ -63,6 +63,86 @@ npm install -g @bttcnetwork/bttc-cli
 bttc-cli -V
 ```
 
+## Event Monitor server setup
+
+Event Monitor is used to query contract events on the TRON. Only validators are required to build this. When using bttc-cli, it corresponds to the TRON grid url column.
+
+The steps to build Event Monitor are as follows:
+
+- Install MongoDB, require collection to be empty
+
+- Compile event plugin
+
+    **Code**: https://github.com/tronprotocol/event-plugin
+
+    **Compile command**: `./gradlew build -x test`
+
+    **Compilation result**: eventplugin/build/plugins/plugin-mongodb-1.0.0.zip, put it in the specified location of the TRON fullnode configuration file (event.subscribe.path)
+
+- Compile TRON fullnode
+
+    **Code**: https://github.com/tronprotocol/java-tron
+
+    **Compile command**: `./gradlew build -x test`
+
+    **Modify the configuration file**:
+
+    ```conf
+    event.subscribe = {
+  native = {
+    useNativeQueue = false // if true, use native message queue, else use event plugin.
+  }
+    path = "/data/bttc-jsonrpc/servers/fullnode/plugin-mongodb-1.0.0.zip" // absolute path of plugin
+    server = "127.0.0.1:27017" // target server address to receive event triggers
+    dbconfig = "eventlog|tron|123456|2" // dbname|username|password
+    topics = [
+        {
+          triggerName = "block" // block trigger, the value can't be modified
+          enable = true
+          topic = "block" // plugin topic, the value could be modified
+          solidified = true
+        },
+        {
+          triggerName = "transaction"
+          enable = true
+          topic = "transaction"
+          ethCompatible = true
+          solidified = true
+        },
+        {
+          triggerName = "solidity" // solidity block event trigger, the value can't be modified
+          enable = true // the default value is true
+          topic = "solidity"
+        },
+        {
+          triggerName = "soliditylog"
+          enable = true
+          redundancy = true
+          topic = "soliditylog"
+        }
+    ]
+ 
+    filter = {
+       fromblock = "" // the value could be "", "earliest" or a specified block number as the beginning of the queried range
+       toblock = "" // the value could be "", "latest" or a specified block number as end of the queried range
+       contractAddress = [
+           // contract address you want to subscribe, if it's set to "", you will receive contract logs/events with any contract address.
+       ]
+ 
+       contractTopic = [
+           "" // contract topic you want to subscribe, if it's set to "", you will receive contract logs/events with any contract topic.
+       ]
+    }
+    ```
+
+- Compile bttc-event-monitor
+
+    **Code** : http://39.106.174.213/tron/bttc-event-monitor
+
+    **Compile command** : `./gradlew build -x test`
+
+    **Reference start command**: `nohup java -Xmx1g -XX:+UseConcMarkSweepGC -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails -Xloggc:./gc.log -XX:+PrintGCDateStamps -XX:+CMSParallelRemarkEnabled -XX:ReservedCodeCacheSize=256m -XX :+CMSScavengeBeforeRemark -jar -Dspring.config.location=application.yml bttc-event-monitor-0.0.1-SNAPSHOT.jar >> bttc-event-monitor.log 2>&1 &`
+
 ## Deploy Node
 
 Use the following command to initialize the node directory:
@@ -86,10 +166,16 @@ Then fill in the following questions one by one, please pay attention to the dif
 ? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://bsc-dataseed.binance.org/
 ? Please enter TRON rpc url grpc.trongrid.io:50051
-? Please enter TRON grid url http://172.18.1.86:8547
+? Please enter TRON grid url  # Please build your own event service
 ? Please select devnet type remote
 ? Please enter comma separated hosts/IPs
 ```
+
+::: tip NOTE
+Only the Validator needs to build a event monitoring service (the url corresponding to the TRON grid url). For ordinary users, please enter any content starting with "http://" to occupy the place.
+
+The mainnet does not provide public event monitoring services, please follow the above tutorial to build your own.
+:::
 
 ### BTTC Test Net (Donau, 1029)
 
@@ -104,7 +190,7 @@ Then fill in the following questions one by one, please pay attention to the dif
 ? Please enter ETH url https://goerli.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://data-seed-prebsc-1-s1.binance.org:8545/
 ? Please enter TRON rpc url 47.252.19.181:50051
-? Please enter TRON grid url http://172.18.1.136:8547
+? Please enter TRON grid url test-tronevent.bittorrentchain.io
 ? Please select devnet type remote
 ? Please enter comma separated hosts/IPs
 ```
@@ -146,7 +232,7 @@ vim /data/bttc/node0/deliveryd/config/delivery-config.toml
 eth_rpc_url = "https://goerli.infura.io/v3/<YOUR_INFURA_KEY>"
 bsc_rpc_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 tron_rpc_url = "47.252.19.181:50051"
-tron_grid_url = "http://172.18.1.136:8547"
+tron_grid_url = "test-tronevent.bittorrentchain.io"
 ```
 
 #### Replace Genesis file Configuration
