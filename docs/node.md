@@ -189,7 +189,7 @@ The mainnet does not provide public event monitoring services, please follow the
 ? Please enter ETH url https://goerli.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://data-seed-prebsc-1-s1.binance.org:8545/
 ? Please enter TRON rpc url 47.252.19.181:50051
-? Please enter TRON grid url http://test-tronevent.bt.io
+? Please enter TRON grid url https://test-tronevent.bt.io
 ? Please select devnet type remote
 ? Please enter comma separated hosts/IPs
 ```
@@ -231,7 +231,7 @@ vim /data/bttc/node0/deliveryd/config/delivery-config.toml
 eth_rpc_url = "https://goerli.infura.io/v3/<YOUR_INFURA_KEY>"
 bsc_rpc_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 tron_rpc_url = "47.252.19.181:50051"
-tron_grid_url = "http://test-tronevent.bt.io"
+tron_grid_url = "https://test-tronevent.bt.io"
 ```
 
 #### Replace Genesis file Configuration
