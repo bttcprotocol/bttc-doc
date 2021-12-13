@@ -73,6 +73,24 @@ bttc-cli setup devnet
 
 然後依次填寫以下問題，請注意主網和測試網的區別
 
+### BTTC主網 (199)
+
+```sh
+? Please enter Bttc chain id 199
+? Please enter Delivery chain id delivery-199
+? Please enter Bttc branch or tag master
+? Please enter Delivery branch or tag release_1.0.0
+? Please enter Contracts branch or tag stake
+? Please enter number of validator nodes 0 # number of block procducing nodes
+? Please enter number of non-validator nodes 1 # number of full nodes
+? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
+? Please enter BSC url https://bsc-dataseed.binance.org/
+? Please enter TRON rpc url grpc.trongrid.io:50051
+? Please enter TRON grid url http://172.18.1.86:8547
+? Please select devnet type remote
+? Please enter comma separated hosts/IPs
+```
+
 ### BTTC測試網（Donau, 1029）
 
 ```sh
