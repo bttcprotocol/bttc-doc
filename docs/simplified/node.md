@@ -173,7 +173,7 @@ bttc-cli setup devnet
 ```
 
 ::: tip NOTE
-仅Validator需要搭建时间监控服务（即TRON grid url对应的url）。普通用户请输入以"http://"开头的任意内容占位即可。
+仅Validator需要搭建事件监控服务（即TRON grid url对应的url）。普通用户请输入以"http://"开头的任意内容占位即可。
 
 主网不提供公共的事件监控服务，请按照上面的教程自行搭建。
 :::
