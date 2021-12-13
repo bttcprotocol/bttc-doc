@@ -163,7 +163,7 @@ Then fill in the following questions one by one, please pay attention to the dif
 ? Please enter number of validator nodes 0 # number of block procducing nodes
 ? Please enter number of non-validator nodes 1 # number of full nodes
 ? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
-? Please enter BSC url https://bsc-dataseed.binance.org/
+? Please enter BSC url https://bsc-dataseed.binance.org/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
 ? Please enter TRON rpc url grpc.trongrid.io:50051
 ? Please enter TRON grid url  # Please build your own event service
 ? Please select devnet type remote
@@ -215,11 +215,11 @@ Directory: `/data/bttc/node0/deliveryd/config/delivery-config.toml`
 
 **Configuration instructions:**
 
-- eth_rpc_url: For the API_KEY address you applied for, you need to generate INFURA_KEY yourself in order to communicate with Ethereum. [API_KEY Application Tutorial](https://ethereumico.io/knowledge-base/infura-api-key-guide)
+- eth_rpc_url: Ethereum network rpc address. You need to generate INFURA_KEY yourself in order to communicate with Ethereum. [API_KEY Application Tutorial](https://ethereumico.io/knowledge-base/infura-api-key-guide)
 
 - tron_rpc_url: RPC address of TRON network node.
 
-- tron_grid_url: TRON network query node.
+- tron_grid_url: TRON Network event service query url.
 
 - bsc_rpc_url: RPC address of BSC network node.
 

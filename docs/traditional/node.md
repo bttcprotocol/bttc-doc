@@ -164,7 +164,7 @@ bttc-cli setup devnet
 ? Please enter number of validator nodes 0 # number of block procducing nodes
 ? Please enter number of non-validator nodes 1 # number of full nodes
 ? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
-? Please enter BSC url https://bsc-dataseed.binance.org/
+? Please enter BSC url https://bsc-dataseed.binance.org/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
 ? Please enter TRON rpc url grpc.trongrid.io:50051
 ? Please enter TRON grid url  # Please build your own event service
 ? Please select devnet type remote
@@ -216,11 +216,11 @@ bttc-cli setup devnet
 
 **配置說明：**
 
-- eth_rpc_url: 為自己申請的API_KEY地址，需要自己生成 INFURA_KEY 以便跟以太坊通信。 [API_KEY申請教程](https://ethereumico.io/knowledge-base/infura-api-key-guide)
+- eth_rpc_url: 以太坊網絡rpc地址。需要自己生成 INFURA_KEY 以便跟以太坊通信。 [API_KEY申請教程](https://ethereumico.io/knowledge-base/infura-api-key-guide)
 
 - tron_rpc_url: TRON網絡節點的RPC地址。
 
-- tron_grid_url: TRON網絡查詢節點。
+- tron_grid_url: TRON網絡事件服務查詢url。
 
 - bsc_rpc_url：BSC網絡節點的RPC地址。
 
