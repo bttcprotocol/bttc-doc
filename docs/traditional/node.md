@@ -238,11 +238,11 @@ tron_grid_url = "test-tronevent.bt.io"
 
 #### 替換創世文件配置
 
-將[genesis.json](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json)替換至路徑：`/data/bttc/node0/deliveryd/config/genesis.json`。
+將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/delivery/config/genesis.json)替換至路徑：`/data/bttc/node0/deliveryd/config/genesis.json`。
 
 #### 添加delivery層的node-id
 
-修改配置文件`/data/bttc/node0/deliveryd/config/config.toml`的seeds字段。在[這裡](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/without-sentry/delivery)查看seed信息。
+修改配置文件`/data/bttc/node0/deliveryd/config/config.toml`的seeds字段。在[這裡](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/without-sentry/delivery)查看測試網seed信息，或在[這裡](https://github.com/bttcprotocol/launch/tree/master/mainnet-v1/without-sentry/delivery)查看主網seed信息。
 
 ### 啟動Delivery節點
 
@@ -265,11 +265,11 @@ nohup sh delivery-bridge-start.sh>>logs/bridge.log 2>&1 &
 
 BTTC創世文件路徑:`/data/bttc/node0/bttc/genesis.json`
 
-將[genesis.json](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/genesis.json)替換至上述路徑。
+將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/genesis.json)替換至上述路徑。
 
 #### 添加BTTC網絡種子節點的node-id
 
-將[static-nodes.json](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/static-nodes.json)替換到`/data/bttc/node0/bttc/static-nodes.json`。
+將[static-nodes-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/static-nodes.json)或[static-nodes-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/static-nodes.json)替換到`/data/bttc/node0/bttc/static-nodes.json`。
 
 ### 初始化BTTC節點
 

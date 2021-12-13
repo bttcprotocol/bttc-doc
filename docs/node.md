@@ -137,7 +137,7 @@ The steps to build Event Monitor are as follows:
 
 - Compile bttc-event-monitor
 
-    **Code** : 
+    **Code** :
 
     **Compile command** : `./gradlew build -x test`
 
@@ -237,11 +237,11 @@ tron_grid_url = "test-tronevent.bt.io"
 
 #### Replace Genesis file Configuration
 
-Replace delivery-genesis.json in [genesis.json](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json) with the path: `/data/bttc/node0/deliveryd/config/genesis.json`.
+Replace delivery-genesis.json in [genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json) or [genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/delivery/config/genesis.json) with the path: `/data/bttc/node0/deliveryd/config/genesis.json`.
 
 #### Add node-ids of the Delivery Layer
 
-Modify the seeds field of the configuration file `/data/bttc/node0/deliveryd/config/config.toml`. See the seed information in [here](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/without-sentry/delivery).
+Modify the seeds field of the configuration file `/data/bttc/node0/deliveryd/config/config.toml`. See the seed information in [here](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/without-sentry/delivery) for testnet or [here](https://github.com/bttcprotocol/launch/tree/master/mainnet-v1/without-sentry/delivery) for mainnet.
 
 ### Start the Delivery node
 
@@ -264,11 +264,11 @@ nohup sh delivery-bridge-start.sh>>logs/bridge.log 2>&1 &
 
 BTTC genesis file path: `/data/bttc/node0/bttc/genesis.json`
 
-Replace `bttc-genesis.json` in [genesis.json](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/genesis.json) with the above path.
+Replace `bttc-genesis.json` in [genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/genesis.json) or [genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/genesis.json) with the above path.
 
 #### Add node-ids of BTTC Seed Nodes
 
-Replace `static-nodes.json` in [static-nodes.json](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/static-nodes.json) with `/data/bttc/node0/bttc/static-nodes.json`.
+Replace `static-nodes.json` in [static-nodes-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/static-nodes.json) or [static-nodes-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/static-nodes.json) with `/data/bttc/node0/bttc/static-nodes.json`.
 
 ### Initialize the BTTC Node
 
