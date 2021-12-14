@@ -158,7 +158,7 @@ Then fill in the following questions one by one, please pay attention to the dif
 ? Please enter Bttc chain id 199
 ? Please enter Delivery chain id delivery-199
 ? Please enter Bttc branch or tag master
-? Please enter Delivery branch or tag release_1.0.0
+? Please enter Delivery branch or tag master
 ? Please enter Contracts branch or tag stake
 ? Please enter number of validator nodes 0 # number of block procducing nodes
 ? Please enter number of non-validator nodes 1 # number of full nodes
@@ -182,7 +182,7 @@ The mainnet does not provide public event monitoring services, please follow the
 ? Please enter Bttc chain id 1029
 ? Please enter Delivery chain id delivery-1029
 ? Please enter Bttc branch or tag master
-? Please enter Delivery branch or tag release_1.0.0
+? Please enter Delivery branch or tag master
 ? Please enter Contracts branch or tag stake
 ? Please enter number of validator nodes 0 # number of block procducing nodes
 ? Please enter number of non-validator nodes 1 # number of full nodes
