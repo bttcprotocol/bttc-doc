@@ -2,7 +2,17 @@
 
 ## Blockchain Explorer
 
-* Testnet：[https://scan.bt.io/](https://scan.bt.io/)
+* Testnet: [https://testscan.bt.io/](https://testscan.bt.io/)
+
+* Mainnet: [https://scan.bt.io/](https://scan.bt.io/)
+
+## Wallet
+
+[https://wallet.bt.io/](https://wallet.bt.io/)
+
+## Bridge
+
+[https://wallet.bt.io/bridge](https://wallet.bt.io/bridge)
 
 ## Contract Development
 
