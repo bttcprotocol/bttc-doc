@@ -24,9 +24,7 @@ Users can freely enter and exit the BTTC ecosystem via the PoS bridge. You can t
 
 Prior to introducing the use of PoS bridges, we recommend that you familiarize yourself with the following two concepts to ensure that you can interact with cross-chain bridges smoothly:
 
-+ [Token Mapping](mapping.md)
-
-To begin using a PoS bridge, a token mapping must be established. This asset cannot be transferred between the two chains until the root chain's token contract and the sub-token contract on the sub-chain are mapped. Kindly send us your request for token mapping through email.
+To begin using a PoS bridge, a token mapping must be established. This asset cannot be transferred between the two chains until the root chain's token contract and the sub-token contract on the sub-chain are mapped. Kindly send us your request for token mapping [here](https://docs.google.com/forms/d/e/1FAIpQLScP1R7iB6s16CNKAZGjFH8mwDBi74wH_swzZvz3FGmjgUG33w/viewform).
 
 After successful mapping, you can interact with the contract via the interface or via various SDKs.
 
