@@ -49,7 +49,7 @@ Please refer to the node setup [documentation](http://doc.bt.io/v1/doc/validator
 
 ### What is a Delegator
 
-A delegator does not need to host a full node to participate in the verification. They can stake BTT tokens to a super delegate and receive a portion of the reward in exchange. Because they share the reward with the super delegate, and because they share the reward with the super delegate, the delegate also shares the risk. Delegates play a crucial role in the system because they can choose the Validator as they wish.
+A delegator does not need to host a full node to participate in the verification. They can stake BTT tokens to a super delegate and receive a portion of the reward in exchange. Because they share the reward with the super delegate, the delegate also shares the risk. Delegates play a crucial role in the system because they can choose the Validator as they wish.
 
 ### To become a Delegator
 
