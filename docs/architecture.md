@@ -26,7 +26,7 @@ BTTC deploys a set of smart contracts on TRON to handle the following:
 
 The verification node works in conjunction with the TRON pledge contract to enable the BTTC network's PoS mechanism. We started with the TenderMint engine and added the necessary modifications. The verification layer is in charge of several critical tasks, including block verification, producer selection, and checkpoint submission.
 
-The verification layer aggregates the side chain's blocks into a Merkel tree and periodically sends it to TRON. This type of regularly transmitted content is referred to as checkpoint. A verification layer node requires the following for every few blocks on the side chain:
+The verification layer aggregates the side chain's blocks into a Merkel tree and periodically sends it to public blockchains connected to BTTC. This type of regularly transmitted content is referred to as checkpoint. A verification layer node requires the following for every few blocks on the side chain:
 
 + Verify all blocks created since the previous checkpoint.
 
