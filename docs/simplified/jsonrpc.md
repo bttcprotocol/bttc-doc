@@ -4,7 +4,9 @@
 
 ### Endpoint
 
-https://rpc.bt.io
+官方rpc服务：https://rpc.bt.io
+
+TronGrid提供的RPC服务：https://bttc.trongrid.io 
 
 ## Donau(ChainID 0x405, Decimal 1029)
 

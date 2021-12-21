@@ -45,7 +45,8 @@ BTTC的正式网从2021年12月12日起正式开始运行。同时有一个正�
 ### BTTC主网
 
 * 网络名称（Network Name）：BitTorrent Chain Mainnet
-* RPC URL（RPC URL）：https://rpc.bt.io
+* Official RPC URL（RPC URL）：https://rpc.bt.io
+* TronGrid RPC URL: https://bttc.trongrid.io
 * 智能链ID（ChainID）：199
 * 符号（Symbol）：BTT
 * 区块浏览器URL（Block Explorer URL）：https://scan.bt.io
