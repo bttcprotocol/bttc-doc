@@ -7,7 +7,7 @@ The BitTorrent Mainnet is launched on December 12, 2021. There is also a running
 * Network Name: BitTorrent Chain Mainnet
 * Official RPC URL (RPC URL): https://rpc.bt.io
 * TronGrid RPC URL: https://bttc.trongrid.io
-* Smart chain ID (ChainID): 199
+* ChainID: 199
 * Symbol: BTT
 * Block Explorer URL: https://scan.bt.io
 
@@ -17,7 +17,7 @@ The BitTorrent Mainnet is launched on December 12, 2021. There is also a running
 
 * Network Name: BitTorrent Chain Donau
 * RPC URL (RPC URL): https://pre-rpc.bt.io/
-* Smart chain ID (ChainID): 1029
+* ChainID: 1029
 * Symbol: BTT
 * Block Explorer URL: https://testscan.bt.io/
 

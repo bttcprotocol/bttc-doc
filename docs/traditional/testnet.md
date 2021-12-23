@@ -26,7 +26,7 @@ Goerli測試網的接入需要使用Metamask，並切換至Goerli測試網，申
 
 * 網絡名稱（Network Name）：Goerli - Testnet
 * RPC URL（RPC URL）：https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161
-* 智能鏈ID（ChainID）：5
+* 鏈ID（ChainID）：5
 * 符號（Symbol）：ETH
 * 區塊瀏覽器URL（Block Explorer URL）：https://goerli.etherscan.com
 
@@ -42,7 +42,7 @@ BSC測試網的接入需要使用Metamask，並切換至Goerli測試網，通過
 
 * 網絡名稱（Network Name）：Binace Smart Chain - Testnet
 * RPC URL（RPC URL）：https://data-seed-prebsc-1-s1.binance.org:8545/
-* 智能鏈ID（ChainID）：97
+* 鏈ID（ChainID）：97
 * 符號（Symbol）：BNB
 * 區塊瀏覽器URL（Block Explorer URL）：https://testnet.bscscan.com
 
@@ -56,7 +56,7 @@ BTTC測試網的接入需要使用Metamask，並使用Metamask添加BTTC測試�
 
 * 網絡名稱（Network Name）：BitTorrent Chain Donau
 * RPC URL（RPC URL）：https://pre-rpc.bt.io/ 
-* 智能鏈ID（ChainID）：1029
+* 鏈ID（ChainID）：1029
 * 符號（Symbol）：BTT
 * 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bt.io/
 
