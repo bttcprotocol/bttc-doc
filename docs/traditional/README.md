@@ -37,24 +37,3 @@ BTT是BTTC的原生代幣，類似於TRON上的TRX。要在BTTC上發送各種�
 如果您已經在TRON或以太坊上開發了dApp，那麼您就已經是BTTC的開發者了。在BTTC上您可以使用熟悉的工具來進行開發，比如Truffle、Remix等。您可以切換到BTTC的RPC並開始使用它。
 
 如果有現成的dApp，只要與EVM兼容，您可以直接在BTTC上部署您的智能合約，而無需擔心底層架構。
-
-## 網絡詳情
-
-BTTC的正式網從2021年12月12日起正式開始運行。同時有一個正在運行的測試網（Donau）。
-
-### BTTC主網
-
-* 網絡名稱（Network Name）：BitTorrent Chain Mainnet
-* Official RPC URL（RPC URL）：https://rpc.bt.io
-* TronGrid RPC URL: https://bttc.trongrid.io
-* 智能鏈ID（ChainID）：199
-* 符號（Symbol）：BTT
-* 區塊瀏覽器URL（Block Explorer URL）：https://scan.bt.io
-
-### BTTC測試網（Donau）
-
-* 網絡名稱（Network Name）：BitTorrent Chain Donau
-* RPC URL（RPC URL）：https://pre-rpc.bt.io/ 
-* 智能鏈ID（ChainID）：1029
-* 符號（Symbol）：BTT
-* 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bt.io/

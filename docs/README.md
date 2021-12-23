@@ -37,24 +37,3 @@ BTT is BTTC's native token, similiar to TRX on TRON. To send various transaction
 You are already a BTTC developer if you have developed a dApp on TRON or Ethereum. On BTTC, you can use familiar development tools like Truffle, Remix, and others. You can begin using BTTC's RPC by switching to it.
 
 You can deploy your smart contract on BTTC without worrying about the underlying architecture if you have a ready-made dApp that is compatible with EVM.
-
-## Network Details
-
-The BitTorrent Mainnet is launched on December 12, 2021. There is also a running testnet (Donau).
-
-### BTTC Mainnet
-
-* Network Name: BitTorrent Chain Mainnet
-* Official RPC URL (RPC URL): https://rpc.bt.io
-* TronGrid RPC URL: https://bttc.trongrid.io
-* Smart chain ID (ChainID): 199
-* Symbol: BTT
-* Block Explorer URL: https://scan.bt.io
-
-### BTTC Test Network (Donau)
-
-* Network Name: BitTorrent Chain Donau
-* RPC URL (RPC URL): https://pre-rpc.bt.io/
-* Smart chain ID (ChainID): 1029
-* Symbol: BTT
-* Block Explorer URL: https://testscan.bt.io/

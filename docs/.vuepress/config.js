@@ -31,9 +31,9 @@ module.exports = {
         sidebar : {
           '/': [
             '', 
+            'network',
             'architecture', 
             'wallets',
-            'jsonrpc',
             'testnet',
             'tools',
             'dapp',
@@ -52,9 +52,9 @@ module.exports = {
         sidebar: {
           '/simplified' : [
             '/simplified/', 
+            '/simplified/network',
             '/simplified/architecture', 
-            '/simplified/wallets',
-            '/simplified/jsonrpc',   
+            '/simplified/wallets',   
             '/simplified/testnet',
             '/simplified/tools',
             '/simplified/dapp',
@@ -73,9 +73,9 @@ module.exports = {
         sidebar: {
           '/traditional' : [
             '/traditional/', 
+            '/traditional/network',
             '/traditional/architecture', 
-            '/traditional/wallets',
-            '/traditional/jsonrpc',   
+            '/traditional/wallets',   
             '/traditional/testnet',
             '/traditional/tools',
             '/traditional/dapp',
