@@ -371,6 +371,8 @@ checkInclusion(
 
 **自定義子合約必須滿足如下條件：**
 
++ 繼承[IChildToken](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/IChildToken.sol)
+
 + 擁有一個存款方法。每當從根鏈上發起存款請求時，`ChildChainManagerProxy`合約都會調用這個函數。這個方法會在子鏈上鑄造代幣。
 
 + 擁有一個取款方法。您必須確保這個方法是始終可用的，因為它將被用於燃燒子鏈上的代幣。燃燒是取款過程的第一步，也是維持代幣總發行量不變的重要步驟。
