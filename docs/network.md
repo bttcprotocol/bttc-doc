@@ -13,13 +13,12 @@ The BitTorrent Mainnet is launched on December 12, 2021. There is also a running
 
 ## Donau(ChainID 0x405, Decimal 1029)
 
-### Endpoint
-
 * Network Name: BitTorrent Chain Donau
 * RPC URL (RPC URL): https://pre-rpc.bt.io/
 * ChainID: 1029
 * Symbol: BTT
 * Block Explorer URL: https://testscan.bt.io/
+* WebSocket: wss://pre-rpc.bt.io:8546
 
 ## JSON-RPC Methods
 

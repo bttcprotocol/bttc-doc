@@ -18,6 +18,7 @@ BTTC的正式網從2021年12月12日起正式開始運行。同時有一個正�
 * 鏈ID（ChainID）：1029
 * 符號（Symbol）：BTT
 * 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bt.io/
+* WebSocket：wss://pre-rpc.bt.io:8546
 
 ## JSON-RPC 方法
 
