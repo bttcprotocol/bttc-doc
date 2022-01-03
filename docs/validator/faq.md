@@ -19,3 +19,7 @@ Depending on network congestion, the arrival time is variable and usually takes 
 ## Why can't I pledge if I already have enough BTT?
 
 Please check if you have sufficient BTT in your wallet balance on the Tron network, under which all pledges are made. If your BTT is under another network, you need to convert it to native BTT and transfer it to your wallet on the Tron network.
+
+## Is there a safe height on BTTC?
+
+Please use the 128th block before the latest block as a safe height.
