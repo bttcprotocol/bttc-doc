@@ -18,7 +18,7 @@ When BTTC's mintable assets are transferred to the public blockchain, the token 
 
 You can deploy mintable tokens on BTTC, or you can automatically deploy mintable token contracts on BTTC by submitting a mapping request.
 
-If you plan to deploy the contract yourself, here are some contract code examples. You can make changes to these examples, but you must ensure that the contract uses the functions of `deposit`, `withdraw`, and `mint`.
+If you plan to deploy the contract yourself, here are some contract code examples. You can make changes to these examples, but you must ensure that the contract uses the functions of `deposit`, `withdrawTo`, and `mint`.
 
 ### Contract on Public Blockchains
 
@@ -44,7 +44,7 @@ The following is an illustration of how to create a customized child token:
 
 **Any child token contract must adhere to the following requirements:**
 
-+ Inherit [IChildToken](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/IChildToken.sol)
++ Inherit [ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol). Where the `childChainManager` address must be `0x5e87d84828eddd249e7463e9fbd06a49920114e9`.
 
 + Provide a method of deposit. This function is invoked whenever a deposit request is initiated from the root chain by the 'ChildChainManagerProxy' contract. This method is used to mint tokens on the child chain.
 

@@ -18,7 +18,7 @@
 
 您可以在BTTC上部署可鑄造的代幣，或者通過提交映射請求，在BTTC上自動部署可鑄造的代幣合約。
 
-如果您打算自行部署合約，下面是一些合約代碼示例。您可以對這些示例進行更改，但必須確保合約用有`deposit`、`withdraw`以及`mint`功能。
+如果您打算自行部署合約，下面是一些合約代碼示例。您可以對這些示例進行更改，但必須確保合約用有`deposit`、`withdrawTo`以及`mint`功能。
 
 ### 部署在公共區塊鏈上的合約
 
@@ -44,7 +44,7 @@
 
 **自定義子合約必須滿足如下條件：**
 
-+ 繼承[IChildToken](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/IChildToken.sol)
++ 繼承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManager`地址必須為`0x5e87d84828eddd249e7463e9fbd06a49920114e9`。
 
 + 擁有一個存款方法。每當從根鏈上發起存款請求時，`ChildChainManagerProxy`合約都會調用這個函數。這個方法會在子鏈上鑄造代幣。
 

@@ -18,7 +18,7 @@
 
 您可以在BTTC上部署可铸造的代币，或者通过提交映射请求，在BTTC上自动部署可铸造的代币合约。
 
-如果您打算自行部署合约，下面是一些合约代码示例。您可以对这些示例进行更改，但必须确保合约用有`deposit`、`withdraw`以及`mint`功能。
+如果您打算自行部署合约，下面是一些合约代码示例。您可以对这些示例进行更改，但必须确保合约用有`deposit`、`withdrawTo`以及`mint`功能。
 
 ### 部署在公共区块链上的合约
 
@@ -44,7 +44,7 @@
 
 **自定义子合约必须满足如下条件：**
 
-+ 继承[IChildToken](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/IChildToken.sol)
++ 继承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManager`地址必须为`0x5e87d84828eddd249e7463e9fbd06a49920114e9`。
 
 + 拥有一个存款方法。每当从根链上发起存款请求时，`ChildChainManagerProxy`合约都会调用这个函数。这个方法会在子链上铸造代币。
 
