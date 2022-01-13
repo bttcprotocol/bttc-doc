@@ -41,8 +41,7 @@ module.exports = {
             'tron-bttc',
             'del-val',
             'node',
-            // 'sentry',
-            // 'validator/node',
+            'contract',
             'validator/faq'
           ]
         }
