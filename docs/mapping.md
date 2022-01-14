@@ -16,7 +16,7 @@ When BTTC's mintable assets are transferred to the public blockchain, the token 
 
 ### Prerequisites
 
-You can deploy mintable tokens on BTTC, or you can automatically deploy mintable token contracts on BTTC by submitting a mapping request.
+You must deploy mintable tokens on BTTC and submit a mapping request by mail to establish a token mapping relationship.
 
 If you plan to deploy the contract yourself, here are some contract code examples. You can make changes to these examples, but you must ensure that the contract uses the functions of `deposit`, `withdrawTo`, and `mint`.
 
@@ -28,7 +28,7 @@ This role can be granted by calling the `grantRole` method of the token contract
 
 ## Standard Child Token
 
-If the token being mapped is a standard TRC-20 or TRC-721 contract, all you need to do is send us a mail, and our team will quickly deploy it on BTTC. Contract for standard sub-tokens.
+If the token you need to map is a standard TRC-20 or TRC-721 contract, please send an email to submit a map request after deploying the contract.
 
 You can determine whether your token is a standard contract by visiting the following link:
 
