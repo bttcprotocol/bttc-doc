@@ -10,21 +10,7 @@ If your token contract is currently deployed on the root chain and you wish to m
 
 Here are some contract code examples. You can make changes to these examples, but you must ensure that the contract on BTTC uses the functions of `deposit`, `withdrawTo`, and `mint`.
 
-## Standard Child Token
-
-If the token you need to map is a standard TRC-20 or TRC-721 contract, please send an email to submit a map request after deploying the contract.
-
-You can determine whether your token is a standard contract by visiting the following link:
-
-+ [TRC-20](https://github.com/tronprotocol/TIPs/blob/master/tip-20.md)
-
-+ [TRC-721](https://github.com/tronprotocol/tips/blob/master/tip-721.md)
-
-## Custom Child Token
-
-If you wish to map a non-standard (custom) token, you must first deploy a token contract on the sub-chain and then send us your mapping request. Please ensure that you submit the request with accurate token information.
-
-The following is an illustration of how to create a customized child token:
+## Child Token Contract
 
 **Any child token contract must adhere to the following requirements:**
 
@@ -33,6 +19,22 @@ The following is an illustration of how to create a customized child token:
 + Provide a method of deposit. This function is invoked whenever a deposit request is initiated from the root chain by the 'ChildChainManagerProxy' contract. This method is used to mint tokens on the child chain.
 
 + Have a method of withdrawal. This method must always be available, as it will be used to burn tokens on the sub-chain. Burning is the first step in the withdrawal process and a critical step in ensuring that the total number of tokens issued remains constant.
+
+### Standard Child Token
+
+If the token you need to map is a standard TRC-20 or TRC-721 contract, please submit a map request after deploying the contract [here](https://docs.google.com/forms/d/e/1FAIpQLScP1R7iB6s16CNKAZGjFH8mwDBi74wH_swzZvz3FGmjgUG33w/viewform).
+
+You can determine whether your token is a standard contract by visiting the following link:
+
++ [TRC-20](https://github.com/tronprotocol/TIPs/blob/master/tip-20.md)
+
++ [TRC-721](https://github.com/tronprotocol/tips/blob/master/tip-721.md)
+
+### Custom Child Token
+
+If you wish to map a non-standard (custom) token, you must first deploy a token contract on the sub-chain and then send us your mapping request [here](https://docs.google.com/forms/d/e/1FAIpQLScP1R7iB6s16CNKAZGjFH8mwDBi74wH_swzZvz3FGmjgUG33w/viewform). Please ensure that you submit the request with accurate token information.
+
+The following is an illustration of how to create a customized child token:
 
 ::: warning
 The constructor of the child token contract must not perform token minting.

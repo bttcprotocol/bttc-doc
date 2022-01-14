@@ -10,21 +10,7 @@
 
 下面是一些合約代碼示例。您可以對這些示例進行更改，但必須確保BTTC上的合約拥有`deposit`、`withdrawTo`以及`mint`功能。
 
-## 標準子代幣
-
-如果您需要映射的代幣是標準的TRC-20或TRC-721合約，請部署好合約後，發送郵件提交映射請求。
-
-您可以通過以下鏈接來確定您的代幣是否為標準合約：
-
-+ [TRC-20](https://github.com/tronprotocol/TIPs/blob/master/tip-20.md)
-
-+ [TRC-721](https://github.com/tronprotocol/tips/blob/master/tip-721.md)
-
-## 自定義子代幣
-
-如果您需要映射自定義（非標準）的代幣，首先您需要在子鏈上自行部署代幣合約，然後發送郵件進行映射請求。請確保在提交請求時您提供了準確的代幣信息。
-
-下面是一個創建自定義子代幣的例子：
+## 子代幣合約
 
 **自定義子合約必須滿足如下條件：**
 
@@ -33,6 +19,22 @@
 + 擁有一個存款方法。每當從根鏈上發起存款請求時，`ChildChainManagerProxy`合約都會調用這個函數。這個方法會在子鏈上鑄造代幣。
 
 + 擁有一個取款方法。您必須確保這個方法是始終可用的，因為它將被用於燃燒子鏈上的代幣。燃燒是取款過程的第一步，也是維持代幣總發行量不變的重要步驟。
+
+### 標準子代幣
+
+如果您需要映射的代幣是標準的TRC-20或TRC-721合約，請部署好合約後，在[這裡](https://docs.google.com/forms/d/e/1FAIpQLScP1R7iB6s16CNKAZGjFH8mwDBi74wH_swzZvz3FGmjgUG33w/viewform)提交映射請求。
+
+您可以通過以下鏈接來確定您的代幣是否為標準合約：
+
++ [TRC-20](https://github.com/tronprotocol/TIPs/blob/master/tip-20.md)
+
++ [TRC-721](https://github.com/tronprotocol/tips/blob/master/tip-721.md)
+
+### 自定義子代幣
+
+如果您需要映射自定義（非標準）的代幣，首先您需要在子鏈上自行部署代幣合約，在[這裡](https://docs.google.com/forms/d/e/1FAIpQLScP1R7iB6s16CNKAZGjFH8mwDBi74wH_swzZvz3FGmjgUG33w/viewform)提交映射請求。請確保在提交請求時您提供了準確的代幣信息。
+
+下面是一個創建自定義子代幣的例子：
 
 ::: warning
 子代幣合約的構造器中不進行代幣鑄造。

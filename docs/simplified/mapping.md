@@ -10,9 +10,19 @@
 
 下面是一些合约代码示例，您可以对这些示例进行更改，但BTTC上的代币必须确保合约拥有`deposit`、`withdrawTo`以及`mint`功能。
 
-## 标准子代币
+## 子代币合约
 
-如果您需要映射的代币是标准的TRC-20或TRC-721合约，请部署好合约后，发送邮件提交映射请求。
+**子合约必须满足如下条件：**
+
++ 继承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManager`地址必须为`0x5e87d84828eddd249e7463e9fbd06a49920114e9`。
+
++ 拥有一个存款方法。每当从根链上发起存款请求时，`ChildChainManagerProxy`合约都会调用这个函数。这个方法会在子链上铸造代币。
+
++ 拥有一个取款方法。您必须确保这个方法是始终可用的，因为它将被用于燃烧子链上的代币。燃烧是取款过程的第一步，也是维持代币总发行量不变的重要步骤。
+
+### 标准子代币
+
+如果您需要映射的代币是标准的TRC-20或TRC-721合约，请部署好合约后，在[这里](https://docs.google.com/forms/d/e/1FAIpQLScP1R7iB6s16CNKAZGjFH8mwDBi74wH_swzZvz3FGmjgUG33w/viewform)提交映射请求。
 
 您可以通过以下链接来确定您的代币是否为标准合约：
 
@@ -20,19 +30,11 @@
 
 + [TRC-721](https://github.com/tronprotocol/tips/blob/master/tip-721.md)
 
-## 自定义子代币
+### 自定义子代币
 
-如果您需要映射自定义（非标准）的代币，首先您需要在子链上自行部署代币合约，然后发送邮件进行映射请求。请确保在提交请求时您提供了准确的代币信息。
+如果您需要映射自定义（非标准）的代币，首先您需要在子链上自行部署代币合约，然后在[这里](https://docs.google.com/forms/d/e/1FAIpQLScP1R7iB6s16CNKAZGjFH8mwDBi74wH_swzZvz3FGmjgUG33w/viewform)提交映射请求。请确保在提交请求时您提供了准确的代币信息。
 
 下面是一个创建自定义子代币的例子：
-
-**自定义子合约必须满足如下条件：**
-
-+ 继承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManager`地址必须为`0x5e87d84828eddd249e7463e9fbd06a49920114e9`。
-
-+ 拥有一个存款方法。每当从根链上发起存款请求时，`ChildChainManagerProxy`合约都会调用这个函数。这个方法会在子链上铸造代币。
-
-+ 拥有一个取款方法。您必须确保这个方法是始终可用的，因为它将被用于燃烧子链上的代币。燃烧是取款过程的第一步，也是维持代币总发行量不变的重要步骤。
 
 ::: warning
 子代币合约的构造器中不进行代币铸造。
