@@ -4,7 +4,7 @@ Mapping is a critical step in transferring assets between chains. The term "mapp
 
 ## Introduction
 
-The "root chain" in the following description refers to public blockchains, such as TRON or Ethereum, and the "subchain" refers to the BTTC main network.
+In the following description, "root chain" or "public blockchain" refers to TRON or Ethereum, and "subchain" or "side chain" refers to the BTTC main network.
 
 If your token contract is currently deployed on the root chain and you wish to move it to a sub-chain, this document will provide sufficient guidance; if your token contract is currently deployed on a sub-chain, you will encounter a different type of situation, which we refer to as BTTC Mintable Assets.
 

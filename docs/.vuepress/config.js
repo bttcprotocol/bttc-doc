@@ -62,8 +62,7 @@ module.exports = {
             '/simplified/tron-bttc',
             '/simplified/del-val',
             '/simplified/node',
-            // '/simplified/sentry',
-            // '/simplified/validator/node',
+            '/simplified/contract',
             '/simplified/validator/faq'
           ]
         }
@@ -84,8 +83,7 @@ module.exports = {
             '/traditional/tron-bttc',
             '/traditional/del-val',
             '/traditional/node',
-            // '/traditional/sentry',
-            // '/traditional/validator/node',
+            '/traditional/contract',
             '/traditional/validator/faq'
           ]
         }
