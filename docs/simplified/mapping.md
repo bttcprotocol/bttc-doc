@@ -16,9 +16,11 @@
 
 + 继承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManager`地址必须为`0x5e87d84828eddd249e7463e9fbd06a49920114e9`。
 
-+ 拥有一个存款方法。每当从根链上发起存款请求时，`ChildChainManagerProxy`合约都会调用这个函数。这个方法会在子链上铸造代币。
+:::tip NOTE
+每当从根链上发起存款请求时，`ChildChainManagerProxy`合约都会调用`deposit`方法。这个方法会在子链上铸造代币。
 
-+ 拥有一个取款方法。您必须确保这个方法是始终可用的，因为它将被用于燃烧子链上的代币。燃烧是取款过程的第一步，也是维持代币总发行量不变的重要步骤。
+您必须确保`withdrawTo`是始终可用的，因为它将被用于燃烧子链上的代币。燃烧是取款过程的第一步，也是维持代币总发行量不变的重要步骤。
+:::
 
 ### 标准子代币
 
@@ -49,50 +51,78 @@
 :::
 
 ```js
-//SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.6.6;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {AccessControlMixin} from "../../common/AccessControlMixin.sol";
+import {IChildToken} from "./IChildToken.sol";
+import {NativeMetaTransaction} from "../../common/NativeMetaTransaction.sol";
+import {ContextMixin} from "../../common/ContextMixin.sol";
 
-contract SubToken is ERC20 {
 
-   address public childChainManagerProxy;
-   address private owner;
-  
-   constructor(string memory name, string memory symbol, uint8 decimals, address _childChainManagerProxy) public ERC20(name, symbol) {
-       _setupDecimals(decimals);
-       // minting in subcontract is restricted.
-       childChainManagerProxy = _childChainManagerProxy;
-       owner = msg.sender;
-   }
+contract ChildERC20 is
+    ERC20,
+    IChildToken,
+    AccessControlMixin,
+    NativeMetaTransaction,
+    ContextMixin
+{
+    bytes32 public constant DEPOSITOR_ROLE = keccak256("DEPOSITOR_ROLE");
 
-   function updateSubChainManager(address newChildChainManagerProxy) external {
-       require(newChildChainManagerProxy != address(0), "The proxy cannot be the blackhole.");
-       require(msg.sender == owner, "This can only be done by the owner.");
+    constructor(
+        string memory name_,
+        string memory symbol_,
+        uint8 decimals_,
+        address childChainManager
+    ) public ERC20(name_, symbol_) {
+        _setupContractId("ChildERC20");
+        _setupDecimals(decimals_);
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _setupRole(DEPOSITOR_ROLE, childChainManager);
+        _initializeEIP712(name_);
+    }
 
-       childChainManagerProxy = newChildChainManagerProxy;
-   }
+    // This is to support Native meta transactions
+    // never use msg.sender directly, use _msgSender() instead
+    function _msgSender()
+        internal
+        override
+        view
+        returns (address payable sender)
+    {
+        return ContextMixin.msgSender();
+    }
 
-   function deposit(address recipient, bytes calldata depositData) external {
-       require(msg.sender == childChainManagerProxy, "You are not allowed.");
+    /**
+     * @notice called when token is deposited on root chain
+     * @dev Should be callable only by ChildChainManager
+     * Should handle deposit by minting the required amount for user
+     * Make sure minting is done only by this function
+     * @param user user address for whom deposit is being done
+     * @param depositData abi encoded amount
+     */
+    function deposit(address user, bytes calldata depositData)
+        external
+        override
+        only(DEPOSITOR_ROLE)
+    {
+        uint256 amount = abi.decode(depositData, (uint256));
+        _mint(user, amount);
+    }
 
-       uint256 amount = abi.decode(depositData, (uint256));
+    /**
+     * @notice called when user wants to withdraw tokens back to root chain
+     * @dev Should burn user's tokens. This transaction will be verified when exiting on root chain
+     * @param amount amount of tokens to withdraw
+     */
+    function withdrawTo(address to, uint256 amount) public {
+        _burn(_msgSender(), amount);
+        emit WithdrawTo(to, address(0x00), amount);
+    }
 
-       // the 'amount' of tokens will be minted, and the same amount
-       // will be locked on the root chain in RootChainManager
-
-       _totalSupply += amount;
-       _balances[user] += amount;
-
-       emit Transfer(address(0), user, amount);
-   }
-
-   function withdraw(uint256 amount) external {
-       _balances[msg.sender] -= amount;
-       _totalSupply -= amount;
-
-       emit Transfer(msg.sender, address(0), amount);
-   }
+    function withdraw(uint256 amount) external {
+        withdrawTo(_msgSender(), amount);
+    }
 }
 ```
 
@@ -100,9 +130,9 @@ contract SubToken is ERC20 {
 
 + 在根链上部署根代币，例如：TRON
 
-+ 确保子代币有deposit以及withdraw方法
++ 确保子代币有`deposit`以及`withdrawTo`方法，并继承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)
 
-+ 在子链上部署子代币，即BTTC
++ 在BTTC上部署子代币，
 
 + 提交一个映射请求
 
