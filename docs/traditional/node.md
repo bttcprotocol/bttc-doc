@@ -161,7 +161,7 @@ bttc-cli setup devnet
 ? Please enter Bttc branch or tag master
 ? Please enter Delivery branch or tag master
 ? Please enter Contracts branch or tag stake
-? Please enter number of validator nodes 0 # number of block procducing nodes
+? Please enter number of validator nodes 0 # number of validator nodes,if you want deploy only one fullnode, use 0 instead of 1
 ? Please enter number of non-validator nodes 1 # number of full nodes
 ? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://bsc-dataseed.binance.org/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
@@ -185,7 +185,7 @@ bttc-cli setup devnet
 ? Please enter Bttc branch or tag master
 ? Please enter Delivery branch or tag master
 ? Please enter Contracts branch or tag stake
-? Please enter number of validator nodes 0 # number of block procducing nodes
+? Please enter number of validator nodes 0 # number of validator nodes,if you want deploy only one fullnode, use 0 instead of 1
 ? Please enter number of non-validator nodes 1 # number of full nodes
 ? Please enter ETH url https://goerli.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://data-seed-prebsc-1-s1.binance.org:8545/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
@@ -200,19 +200,19 @@ bttc-cli setup devnet
 ![image](../pics/node/node-dir.png)
 
 ::: tip NOTE
-在每個 .sh 文件中，請確保 `NODE_DIR` 是正確的。在這個例子中，`NODE_DIR` 應該是 `/data/bttc/node0`。
+在每個 .sh 文件中，請確保 `NODE_DIR` 是正確的。在這個例子中，`NODE_DIR` 應該是 `/data/bttc/node`。
 :::
 
 ## validator配置
 
-假設節點的根目錄在`/data/bttc/node0`。
+假設節點的根目錄在`/data/bttc/node`。
 
 ### 配置delivery種子節點
 
 #### 節點API_KEY配置
 
 修改delivery-config文件
-目錄：`/data/bttc/node0/deliveryd/config/delivery-config.toml`
+目錄：`/data/bttc/node/deliveryd/config/delivery-config.toml`
 
 **配置說明：**
 
@@ -227,7 +227,7 @@ bttc-cli setup devnet
 **DEMO：**
 
 ```conf
-vim /data/bttc/node0/deliveryd/config/delivery-config.toml
+vim /data/bttc/node/deliveryd/config/delivery-config.toml
   
 eth_rpc_url = "https://goerli.infura.io/v3/<YOUR_INFURA_KEY>"
 bsc_rpc_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
@@ -237,11 +237,11 @@ tron_grid_url = "https://test-tronevent.bt.io"
 
 #### 替換創世文件配置
 
-將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/delivery/config/genesis.json)替換至路徑：`/data/bttc/node0/deliveryd/config/genesis.json`。
+將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/delivery/config/genesis.json)替換至路徑：`/data/bttc/node/deliveryd/config/genesis.json`。
 
 #### 添加delivery層的node-id
 
-修改配置文件`/data/bttc/node0/deliveryd/config/config.toml`的seeds字段。在[這裡](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/without-sentry/delivery)查看測試網seed信息，或在[這裡](https://github.com/bttcprotocol/launch/tree/master/mainnet-v1/without-sentry/delivery)查看主網seed信息。
+修改配置文件`/data/bttc/node/deliveryd/config/config.toml`的seeds字段。在[這裡](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/without-sentry/delivery)查看測試網seed信息，或在[這裡](https://github.com/bttcprotocol/launch/tree/master/mainnet-v1/without-sentry/delivery)查看主網seed信息。
 
 ### 啟動Delivery節點
 
@@ -262,13 +262,13 @@ nohup sh delivery-bridge-start.sh>>logs/bridge.log 2>&1 &
 
 #### 替換BTTC的創世文件
 
-BTTC創世文件路徑:`/data/bttc/node0/bttc/genesis.json`
+BTTC創世文件路徑:`/data/bttc/node/bttc/genesis.json`
 
 將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/genesis.json)替換至上述路徑。
 
 #### 添加BTTC網絡種子節點的node-id
 
-將[static-nodes-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/static-nodes.json)或[static-nodes-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/static-nodes.json)替換到`/data/bttc/node0/bttc/static-nodes.json`。
+將[static-nodes-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/static-nodes.json)或[static-nodes-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/static-nodes.json)替換到`/data/bttc/node/bttc/static-nodes.json`。
 
 ### 初始化BTTC節點
 
@@ -277,6 +277,96 @@ sh bttc-setup.sh
 ```
 
 ### 啟動BTTC節點
+
+```sh
+nohup sh bttc-start.sh >>logs/bttc-start.log 2>&1 &
+```
+
+
+
+## validator節點配置
+
+假設validator節點的根目錄在`/data/bttc/node`。
+
+### 配置delivery validator節點
+
+#### 節點API_KEY配置
+
+修改delivery-config文件
+目錄：`/data/bttc/node/deliveryd/config/delivery-config.toml`
+
+**配置說明：**
+
+- eth_rpc_url: 以太坊網絡rpc地址。需要自己生成 INFURA_KEY 以便跟以太坊通信。 [API_KEY申請教程](https://ethereumico.io/knowledge-base/infura-api-key-guide)
+
+- tron_rpc_url: TRON網絡節點的RPC地址。
+
+- tron_grid_url: TRON網絡事件服務查詢url。
+
+- bsc_rpc_url：BSC網絡節點的RPC地址。
+
+**DEMO：**
+
+```conf
+vim /data/bttc/node/deliveryd/config/delivery-config.toml
+  
+eth_rpc_url = "https://goerli.infura.io/v3/<YOUR_INFURA_KEY>"
+bsc_rpc_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
+tron_rpc_url = "47.252.19.181:50051"
+tron_grid_url = "https://test-tronevent.bt.io"
+```
+#### 替換創世文件配置
+
+將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/delivery/config/genesis.json)替換至路徑：`/data/bttc/node/deliveryd/config/genesis.json`。
+
+#### 配置config.toml 
+
+修改配置文件`/data/bttc/node/deliveryd/config/config.toml`的seeds字段。
+在config.toml中，改變以下内容。
+
+  ##### seeds - 種子節點地址由一個節點ID、一個IP地址和一個端口組成。使用上面配置的哨兵節點的node_id，它可能看起來像:
+        seeds="node_id_of_your_sentry_node@ip_of_your_sentry_node:26656"
+
+### 啟動Delivery validator節點
+
+#### 啟動delivery
+
+```sh
+nohup sh delivery-start.sh>>logs/deliveryd.log 2>&1 &
+```
+
+#### 啟動後續服務
+
+```sh
+nohup sh delivery-server-start.sh>>logs/rest-server.log 2>&1 &
+nohup sh delivery-bridge-start.sh>>logs/bridge.log 2>&1 &
+```
+
+### 配置BTTC validator節點
+
+#### 替換BTTC的創世文件
+
+BTTC創世文件路徑:`/data/bttc/node/bttc/genesis.json`
+
+將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/validator/bttc/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/validator/bttc/genesis.json)替換至上述路徑。
+
+#### 配置 static_nodes.json
+
+修改static_nodes.json文件`/data/bttc/node/bttc/static_nodes.json`的種子字段。
+
+在static_nodes.json中，編輯該文件並添加上面配置的bttc哨兵節點信息，看起來像:
+     [
+      "enode://enode_id_of_your_sentry_node@_of_your_sentry_node:30303"
+     ]
+
+    
+### 初始化BTTC validator節點
+
+```sh
+sh bttc-setup.sh
+```
+
+### 啟動BTTC validator節點
 
 ```sh
 nohup sh bttc-start.sh >>logs/bttc-start.log 2>&1 &
