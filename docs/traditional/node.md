@@ -161,7 +161,7 @@ bttc-cli setup devnet
 ? Please enter Bttc branch or tag master
 ? Please enter Delivery branch or tag master
 ? Please enter Contracts branch or tag stake
-? Please enter number of validator nodes 0 # number of validator nodes,if you want deploy only one fullnode, use 0 instead of 1
+? Please enter number of validator nodes 0 # number of validator nodes,if you want to deploy only one fullnode, use 0 instead of 1
 ? Please enter number of non-validator nodes 1 # number of full nodes
 ? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://bsc-dataseed.binance.org/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
@@ -185,7 +185,7 @@ bttc-cli setup devnet
 ? Please enter Bttc branch or tag master
 ? Please enter Delivery branch or tag master
 ? Please enter Contracts branch or tag stake
-? Please enter number of validator nodes 0 # number of validator nodes,if you want deploy only one fullnode, use 0 instead of 1
+? Please enter number of validator nodes 0 # number of validator nodes,if you want to deploy only one fullnode, use 0 instead of 1
 ? Please enter number of non-validator nodes 1 # number of full nodes
 ? Please enter ETH url https://goerli.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://data-seed-prebsc-1-s1.binance.org:8545/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
