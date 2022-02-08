@@ -62,86 +62,6 @@ npm install -g @bttcnetwork/bttc-cli
 bttc-cli -V
 ```
 
-## Event Monitor服務器搭建
-
-Event Monitor用於查詢波場上的合約事件。僅Validator需要搭建。使用bttc-cli時，對應TRON grid url一欄。
-
-Event Monitor的搭建步驟如下：
-
-- 安裝MongoDB，要求collection為空
-
-- 編譯event plugin
-
-    **代碼地址**：https://github.com/tronprotocol/event-plugin
-
-    **編譯命令**：`./gradlew build -x test`
-
-    **編譯結果**：eventplugin/build/plugins/plugin-mongodb-1.0.0.zip，將其放到TRON fullnode配置文件的指定位置（event.subscribe.path）
-
-- 編譯TRON fullnode
-
-    **代碼地址**：https://github.com/tronprotocol/java-tron
-
-    **編譯命令**：`./gradlew build -x test`
-
-    **修改配置文件**：
-
-    ```conf
-    event.subscribe = {
-  native = {
-    useNativeQueue = false // if true, use native message queue, else use event plugin.
-  }
- 
-    path = "/data/bttc-jsonrpc/servers/fullnode/plugin-mongodb-1.0.0.zip" // absolute path of plugin
-    server = "127.0.0.1:27017" // target server address to receive event triggers
-    dbconfig = "eventlog|tron|123456|2" // dbname|username|password
-    topics = [
-        {
-          triggerName = "block" // block trigger, the value can't be modified
-          enable = true
-          topic = "block" // plugin topic, the value could be modified
-          solidified = true
-        },
-        {
-          triggerName = "transaction"
-          enable = true
-          topic = "transaction"
-          ethCompatible = true
-          solidified = true
-        },
-        {
-          triggerName = "solidity" // solidity block event trigger, the value can't be modified
-          enable = true            // the default value is true
-          topic = "solidity"
-        },
-        {
-          triggerName = "soliditylog"
-          enable = true
-          redundancy = true
-          topic = "soliditylog"
-        }
-    ]
- 
-    filter = {
-       fromblock = "" // the value could be "", "earliest" or a specified block number as the beginning of the queried range
-       toblock = "" // the value could be "", "latest" or a specified block number as end of the queried range
-       contractAddress = [
-           // contract address you want to subscribe, if it's set to "", you will receive contract logs/events with any contract address.
-       ]
- 
-       contractTopic = [
-           "" // contract topic you want to subscribe, if it's set to "", you will receive contract logs/events with any contract topic.
-       ]
-    }
-    ```
-
-- 編譯bttc-event-monitor
-
-    **代碼地址**：
-
-    **編譯命令**：`./gradlew build -x test`
-
-    **參考啟動命令**：`nohup java -Xmx1g -XX:+UseConcMarkSweepGC -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails -Xloggc:./gc.log -XX:+PrintGCDateStamps -XX:+CMSParallelRemarkEnabled -XX:ReservedCodeCacheSize=256m -XX:+CMSScavengeBeforeRemark -jar -Dspring.config.location=application.yml  bttc-event-monitor-0.0.1-SNAPSHOT.jar >> bttc-event-monitor.log 2>&1 &`
 
 ## 部署節點
 
@@ -173,16 +93,11 @@ bttc-cli setup devnet
 ? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://bsc-dataseed.binance.org/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
 ? Please enter TRON rpc url grpc.trongrid.io:50051
-? Please enter TRON grid url  # Please build your own event service
+? Please enter TRON grid url  https://tronevent.bt.io
 ? Please select devnet type remote
 ? Please enter comma separated hosts/IPs
 ```
 
-::: tip NOTE
-僅Validator需要搭建事件監控服務（即TRON grid url對應的url）。普通用戶請輸入以"http://"開頭的任意內容佔位即可。
-
-主網不提供公共的事件監控服務，請按照上面的教程自行搭建。
-:::
 
 ### BTTC測試網（Donau, 1029）
 
