@@ -67,7 +67,7 @@ bttc-cli -V
 
 ::: tip NOTE
 Run this section both on the sentry and the validator machines.
-A sentry node(full node) is a node running both the Delivery node and the Bttc node to download the data from other nodes on the network and to propagate the validator data on the network.
+A sentry node(full node) is a node running both the Delivery node and the BTTC node to download the data from other nodes on the network and to propagate the validator data on the network.
 A sentry node(full node) is open to all other sentry nodes on the network.
 A validator node is only open to its sentry node and closed to the rest of the network.
 :::
