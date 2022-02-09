@@ -163,7 +163,7 @@ tron_grid_url = "https://test-tronevent.bt.io"
 
 #### 添加delivery層的node-id
 
-修改配置文件`/data/bttc/node/deliveryd/config/config.toml`的seeds字段。在[這裡](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/without-sentry/delivery)查看測試網seed信息，或在[這裡](https://github.com/bttcprotocol/launch/tree/master/mainnet-v1/without-sentry/delivery)查看主網seed信息。
+修改配置文件`/data/bttc/node/deliveryd/config/config.toml`的seeds字段。在[這裡](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/sentry/sentry/delivery)查看測試網seed信息，或在[這裡](https://github.com/bttcprotocol/launch/tree/master/mainnet-v1/sentry/sentry/delivery)查看主網seed信息。
 
 ### 啟動Delivery節點
 

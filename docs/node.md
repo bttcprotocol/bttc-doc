@@ -241,7 +241,7 @@ tron_grid_url = "https://test-tronevent.bt.io"
 
 Replace delivery-genesis.json in [genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/validator/delivery/config/genesis.json) or [genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/validator/delivery/config/genesis.json) with the path: `/data/bttc/node/deliveryd/config/genesis.json`.
 
-#### configure the config.toml 
+#### Configure the config.toml 
 
 Modify the seeds field of the configuration file `/data/bttc/node/deliveryd/config/config.toml`. 
 
@@ -252,13 +252,13 @@ In config.toml, change the following:
 
 ### Start the Delivery validator node
 
-#### Start Delivery
+#### Start Delivery 
 
 ```sh
 nohup sh delivery-start.sh>>logs/deliveryd.log 2>&1 &
 ```
 
-#### Start Follow-up Service
+#### Start Other Delivery Service
 
 ```sh
 nohup sh delivery-server-start.sh>>logs/rest-server.log 2>&1 &
@@ -273,7 +273,7 @@ BTTC genesis file path: `/data/bttc/node/bttc/genesis.json`
 
 Replace `bttc-genesis.json` in [genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/validator/bttc/genesis.json) or [genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/validator/bttc/genesis.json) with the above path.
 
-#### configure the static_nodes.json
+#### Configure the static_nodes.json
 
 Modify the seeds field of the static_nodes.json file `/data/bttc/node/bttc/static_nodes.json`. 
 
