@@ -77,7 +77,7 @@ contract ChildERC20 is
     ) public ERC20(name_, symbol_) {
         _setupContractId("ChildERC20");
         _setupDecimals(decimals_);
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender()); //Optional. Required for extra issurance on BTTC
         _setupRole(DEPOSITOR_ROLE, childChainManager);
         _initializeEIP712(name_);
     }
@@ -135,6 +135,12 @@ contract ChildERC20 is
 + 在BTTC上部署子代币，
 
 + 提交一个映射请求
+
+::: tip NOTE
+多数情况下，代币无需在BTTC上增发，仅`ChildChainManager`合约拥有该代币在BTTC上的铸币权（即`_setupRole(DEPOSITOR_ROLE, childChainManager)`）。无需在BTTC上增发时，除`ChildChainManager`之外的任何账户或合约拥有铸币权都会导致审核失败，因为多余的授权会带来增发的风险。
+
+对于无需在BTTC上增发的代币，若已经部署且授权，可以通过调用`revoke`或`renounce`方法放弃自己的权限，我们将会审核多余的铸币权是否已被放弃；如果无法放弃权限，请重新部署合约。
+:::
 
 ## 可铸造代币
 

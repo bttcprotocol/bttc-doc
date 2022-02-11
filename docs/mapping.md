@@ -77,7 +77,7 @@ contract ChildERC20 is
     ) public ERC20(name_, symbol_) {
         _setupContractId("ChildERC20");
         _setupDecimals(decimals_);
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender()); //Optional. Required for extra issurance on BTTC
         _setupRole(DEPOSITOR_ROLE, childChainManager);
         _initializeEIP712(name_);
     }
@@ -135,6 +135,12 @@ Steps:
 + Deploy sub-token on BTTC
 
 + Submit a mapping request
+
+::: tip NOTE
+In most cases, for the token does not need to be issued on BTTC, only the `ChildChainManager` contract has the power to mint the token on BTTC (ie `_setupRole(DEPOSITOR_ROLE, childChainManager)`). When there is no need for additional issuance on BTTC, any account or contract other than `ChildChainManager` with minting powers will lead to audit failure, because redundant authorization will bring the risk of additional issuance.
+
+For tokens that do not need to be issued on BTTC, if they have been deployed and authorized, they can give up their permissions by calling the `revoke` or `renounce` methods, and we will review whether the excess minting rights have been abandoned; Please redeploy the contract.
+:::
 
 ## Mintable Assets
 
