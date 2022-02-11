@@ -14,7 +14,7 @@
 
 **自定義子合約必須滿足如下條件：**
 
-+ 繼承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManager`地址必須為`0x5e87d84828eddd249e7463e9fbd06a49920114e9`。
++ 繼承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManagerProxy`地址必須為`0x9a15f3a682d086c515be4037bda3b0676203a8ef`。
 
 + 擁有一個存款方法。每當從根鏈上發起存款請求時，`ChildChainManagerProxy`合約都會調用這個函數。這個方法會在子鏈上鑄造代幣。
 

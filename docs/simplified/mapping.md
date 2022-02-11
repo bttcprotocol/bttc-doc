@@ -14,7 +14,7 @@
 
 **子合约必须满足如下条件：**
 
-+ 继承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManager`地址必须为`0x5e87d84828eddd249e7463e9fbd06a49920114e9`。
++ 继承[ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol)。其中`childChainManagerProxy`地址必须为`0x9a15f3a682d086c515be4037bda3b0676203a8ef`。
 
 :::tip NOTE
 每当从根链上发起存款请求时，`ChildChainManagerProxy`合约都会调用`deposit`方法。这个方法会在子链上铸造代币。

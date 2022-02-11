@@ -14,7 +14,7 @@ Here are some contract code examples. You can make changes to these examples, bu
 
 **Any child token contract must adhere to the following requirements:**
 
-+ Inherit [ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol). Where the `childChainManager` address must be `0x5e87d84828eddd249e7463e9fbd06a49920114e9`.
++ Inherit [ChildERC20](https://github.com/bttcprotocol/pos-portal/blob/master/contracts/child/ChildToken/ChildERC20.sol). Where the `childChainManagerProxy` address must be `0x9a15f3a682d086c515be4037bda3b0676203a8ef`.
 
 :::tip NOTE
 Provide a method of deposit. This function is invoked whenever a deposit request is initiated from the root chain by the 'ChildChainManagerProxy' contract. This method is used to mint tokens on the child chain.
