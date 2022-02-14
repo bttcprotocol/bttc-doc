@@ -91,7 +91,7 @@ bttc-cli setup devnet
 ? Please enter number of non-validator nodes 1 # number of sentry nodes(full node)
 ? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
 ? Please enter BSC url https://bsc-dataseed.binance.org/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
-? Please enter TRON rpc url grpc.trongrid.io:50051
+? Please enter TRON rpc url grpc.trongrid.io:50051 # or choose from https://developers.tron.network/docs/official-public-node
 ? Please enter TRON grid url https://tronevent.bt.io/
 ? Please select devnet type remote
 ? Please enter comma separated hosts/IPs
