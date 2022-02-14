@@ -97,7 +97,6 @@ bttc-cli setup devnet
 ? Please enter comma separated hosts/IPs
 ```
 
-
 ### BTTC测试网（Donau, 1029）
 
 ```sh
@@ -244,8 +243,7 @@ tron_grid_url = "https://test-tronevent.bt.io"
 修改配置文件`/data/bttc/node/deliveryd/config/config.toml`的seeds字段。
 在config.toml中，改变以下内容。
 
-  ##### seeds - 种子节点地址由一个节点ID、一个IP地址和一个端口组成。使用上面配置的哨兵节点的node_id，它可能看起来像:
-        seeds="node_id_of_your_sentry_node@ip_of_your_sentry_node:26656"
+**seeds - 种子节点地址由一个节点ID、一个IP地址和一个端口组成。使用上面配置的哨兵节点的node_id，它可能看起来像:`seeds="node_id_of_your_sentry_node@ip_of_your_sentry_node:26656"`**
 
 ### 启动Delivery validator节点
 
@@ -274,12 +272,8 @@ BTTC创世文件路径:`/data/bttc/node/bttc/genesis.json`
 
 修改static_nodes.json文件`/data/bttc/node/bttc/static_nodes.json`的种子字段。
 
-在static_nodes.json中，编辑该文件并添加上面配置的bttc哨兵节点信息，看起来像:
-     [
-      "enode://enode_id_of_your_sentry_node@_of_your_sentry_node:30303"
-     ]
+在static_nodes.json中，编辑该文件并添加上面配置的bttc哨兵节点信息，看起来像:`enode://enode_id_of_your_sentry_node@_of_your_sentry_node:30303`
 
-    
 ### 初始化BTTC validator节点
 
 ```sh

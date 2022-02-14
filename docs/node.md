@@ -98,7 +98,6 @@ Then fill in the following questions one by one, please pay attention to the dif
 ? Please enter comma separated hosts/IPs
 ```
 
-
 ### BTTC Test Net (Donau, 1029)
 
 ```sh
@@ -204,7 +203,6 @@ sh bttc-setup.sh
 nohup sh bttc-start.sh >>logs/bttc-start.log 2>&1 &
 ```
 
-
 ## Configure the validator node
 
 Assume that the root directory of the node is in `/data/bttc/node`.
@@ -247,8 +245,7 @@ Modify the seeds field of the configuration file `/data/bttc/node/deliveryd/conf
 
 In config.toml, change the following:
 
-  ##### seeds — the seed node addresses consisting of a node ID, an IP address, and a port.Use the node value of the sentry node which configured above,which may look like :
-        seeds="node_id_of_your_sentry_node@ip_of_your_sentry_node:26656"
+**seeds — the seed node addresses consisting of a node ID, an IP address, and a port.Use the node value of the sentry node which configured above,which may look like: `seeds="node_id_of_your_sentry_node@ip_of_your_sentry_node:26656"`**
 
 ### Start the Delivery validator node
 
@@ -277,11 +274,7 @@ Replace `bttc-genesis.json` in [genesis-1029](https://github.com/bttcprotocol/la
 
 Modify the seeds field of the static_nodes.json file `/data/bttc/node/bttc/static_nodes.json`. 
 
-In static_nodes.json, edit this file and add the bttc sentry node info which configured above,which may look like :
-     [
-      "enode://enode_id_of_your_sentry_node@_of_your_sentry_node:30303"
-     ]
-
+In static_nodes.json, edit this file and add the bttc sentry node info which configured above,which may look like `enode://enode_id_of_your_sentry_node@_of_your_sentry_node:30303`
 
 ### Initialize the BTTC validator Node
 

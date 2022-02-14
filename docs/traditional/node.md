@@ -98,7 +98,6 @@ bttc-cli setup devnet
 ? Please enter comma separated hosts/IPs
 ```
 
-
 ### BTTC測試網（Donau, 1029）
 
 ```sh
@@ -237,17 +236,17 @@ bsc_rpc_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 tron_rpc_url = "47.252.19.181:50051"
 tron_grid_url = "https://test-tronevent.bt.io"
 ```
+
 #### 替換創世文件配置
 
 將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/delivery/config/genesis.json)替換至路徑：`/data/bttc/node/deliveryd/config/genesis.json`。
 
-#### 配置config.toml 
+#### 配置config.toml
 
 修改配置文件`/data/bttc/node/deliveryd/config/config.toml`的seeds字段。
 在config.toml中，改變以下内容。
 
-  ##### seeds - 種子節點地址由一個節點ID、一個IP地址和一個端口組成。使用上面配置的哨兵節點的node_id，它可能看起來像:
-        seeds="node_id_of_your_sentry_node@ip_of_your_sentry_node:26656"
+**seeds - 種子節點地址由一個節點ID、一個IP地址和一個端口組成。使用上面配置的哨兵節點的node_id，它可能看起來像:`seeds="node_id_of_your_sentry_node@ip_of_your_sentry_node:26656"`**
 
 ### 啟動Delivery validator節點
 
@@ -276,12 +275,8 @@ BTTC創世文件路徑:`/data/bttc/node/bttc/genesis.json`
 
 修改static_nodes.json文件`/data/bttc/node/bttc/static_nodes.json`的種子字段。
 
-在static_nodes.json中，編輯該文件並添加上面配置的bttc哨兵節點信息，看起來像:
-     [
-      "enode://enode_id_of_your_sentry_node@_of_your_sentry_node:30303"
-     ]
+在static_nodes.json中，編輯該文件並添加上面配置的bttc哨兵節點信息，看起來像:`"enode://enode_id_of_your_sentry_node@_of_your_sentry_node:30303`
 
-    
 ### 初始化BTTC validator節點
 
 ```sh
