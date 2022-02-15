@@ -79,7 +79,7 @@ Related contractual methods: `ValidatorShare:(uint256, uint256)`
 Parameters:
 
 + uint256 claimAmount：claiming amount
-+ uint256 maximumSharesToBurn：可接受的燃烧最大代理币数量
++ uint256 maximumSharesToBurn：acceptable maximum number to burn
 
 ### Reward reinvestment
 
@@ -89,10 +89,10 @@ Related contractual methods: `ValidatorShare:reStake()`
 
 Related contractual methods: `StakeManagerProxy:sellVoucher_new(uint256, uint256)`
 
-参数：
+Parameters：
 
-+ uint256 claimAmount：解释数量
-+ uint256 maximumSharesToBurn：可接受的燃烧最大代理币数量
++ uint256 claimAmount：claiming amount
++ uint256 maximumSharesToBurn：acceptable maximum number to burn
 
 ## Validator
 
