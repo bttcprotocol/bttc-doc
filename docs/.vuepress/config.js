@@ -41,6 +41,7 @@ module.exports = {
             'tron-bttc',
             'del-val',
             'node',
+            'validator-node-system-requirements',
             'contract',
             'validator/faq'
           ]
@@ -62,6 +63,7 @@ module.exports = {
             '/simplified/tron-bttc',
             '/simplified/del-val',
             '/simplified/node',
+            '/simplified/validator-node-system-requirements',
             '/simplified/contract',
             '/simplified/validator/faq'
           ]
@@ -83,6 +85,7 @@ module.exports = {
             '/traditional/tron-bttc',
             '/traditional/del-val',
             '/traditional/node',
+            '/simplified/validator-node-system-requirements',
             '/traditional/contract',
             '/traditional/validator/faq'
           ]
