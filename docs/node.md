@@ -1,3 +1,6 @@
+# Node Deployment
+
+
 This section guides you through starting and running the validator node.
 
 For the system requirements, see [Validator Node System Requirements](https://doc.bt.io/v1/doc/validator-node-system-requirements).

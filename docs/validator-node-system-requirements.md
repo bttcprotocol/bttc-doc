@@ -1,3 +1,6 @@
+# Validator Node System Requirements
+
+
 ## Overview
 
 The system requirements listed in this section are both for the sentry node and the validator node.
