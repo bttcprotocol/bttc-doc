@@ -1,6 +1,5 @@
 # Node Deployment
 
-
 This section guides you through starting and running the validator node.
 
 For the system requirements, see [Validator Node System Requirements](https://doc.bt.io/v1/doc/validator-node-system-requirements).
@@ -128,7 +127,7 @@ Example:
 git checkout v1.0.1
 ```
 
-Install Bttc:
+Install BTTC:
 
 ```sh
 make bttc-all
@@ -162,7 +161,8 @@ Clone the [launch repository](https://github.com/bttcprotocol/launch):
 ```sh
 git clone https://github.com/bttcprotocol/launch
 ```
-:::tip note 
+
+:::tip note
 Choose the correct folder,if you want to join the mainnet,choose mainnet-v1.otherwise,if you want to join the testnet,choose testnet-1029.make sure don't misuse.
 :::
 
@@ -266,7 +266,6 @@ In `config.toml`, change the following:
 
 Save the changes in `config.toml`.
 
-
 Open for editing `vim ~/.deliveryd/config/delivery-config.toml`.
 
 In `delivery-config.toml`, change the following:
@@ -289,6 +288,7 @@ bsc_rpc_url = "https://bsc-dataseed.binance.org/"
 tron_rpc_url = "grpc.trongrid.io:50051" 
 tron_grid_url = "https://tronevent.bt.io/"
 ```
+
 **Example(testnet-1029):**
 
 ```conf
@@ -299,7 +299,6 @@ bsc_rpc_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 tron_rpc_url = "47.252.19.181:50051" 
 tron_grid_url = "https://test-tronevent.bt.io"
 ```
-
 
 ### Configure the Bttc Service
 
@@ -439,7 +438,6 @@ In `delivery-config.toml`, change the following:
 
 * `bsc_rpc_url`: RPC address of BSC network node.[official-rpc-node](https://docs.binance.org/smart-chain/developer/rpc.html)
 
-
 **Example(mainnet):**
 
 ```conf
@@ -450,6 +448,7 @@ bsc_rpc_url = "https://bsc-dataseed.binance.org/"
 tron_rpc_url = "grpc.trongrid.io:50051" 
 tron_grid_url = "https://tronevent.bt.io/"
 ```
+
 **Example(testnet-1029):**
 
 ```conf

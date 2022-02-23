@@ -6,7 +6,7 @@
 
 :::tip 備註
 
-按本節提示操作的過程中，您需要等待 Delivery 服務和 BTTC 服務完全同步， 整個過程約需幾個小時。
+按本節提示操作的過程中，您需要等待Delivery服務和BTTC服務完全同步， 整個過程約需幾個小時。
 
 驗證者名額有限， 只有當現任活躍驗證者解綁後新驗證者才能加入活躍驗證者集合。
 :::
@@ -67,7 +67,6 @@
 
 ### 安裝 Delivery
 
-
 克隆 [Delivery 倉庫](https://github.com/bttcprotocol/delivery/):
 
 ```sh
@@ -102,9 +101,9 @@ make install
 deliveryd version --long
 ```
 
-### 安裝  Bttc
+### 安裝BTTC
 
-克隆 the [Bttc 倉庫](https://github.com/bttcprotocol/bttc):
+克隆 the [BTTC倉庫](https://github.com/bttcprotocol/bttc):
 
 ```sh
 git clone https://github.com/bttcprotocol/bttc
@@ -155,12 +154,13 @@ bttc version
 
 ### 獲取launch倉庫
 
-克隆 [launch 倉庫](https://github.com/bttcprotocol/launch):
+克隆 [launch倉庫](https://github.com/bttcprotocol/launch):
 
 ```sh
 git clone https://github.com/bttcprotocol/launch
 ```
-:::tip 備註 
+
+:::tip 備註
 選擇正確的檔案夾。如要接入主網，請選擇 mainnet-v1；如要接入測試網，請選擇 testnet-1029。請確保選擇無誤。
 :::
 
@@ -448,6 +448,7 @@ bsc_rpc_url = "https://bsc-dataseed.binance.org/"
 tron_rpc_url = "grpc.trongrid.io:50051" 
 tron_grid_url = "https://tronevent.bt.io/"
 ```
+
 **示例（測試網-1029）:**
 
 ```conf

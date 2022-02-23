@@ -67,7 +67,6 @@
 
 ### 安装 Delivery
 
-
 克隆 [Delivery 仓库](https://github.com/bttcprotocol/delivery/):
 
 ```sh
@@ -110,7 +109,7 @@ deliveryd version --long
 git clone https://github.com/bttcprotocol/bttc
 ```
 
-检出正确的[发布版本 ](https://github.com/bttcprotocol/bttc/releases):
+检出正确的[发布版本](https://github.com/bttcprotocol/bttc/releases):
 
 ```sh
 git checkout RELEASE_TAG
@@ -160,7 +159,8 @@ bttc version
 ```sh
 git clone https://github.com/bttcprotocol/launch
 ```
-:::tip 备注 
+
+:::tip 备注
 选择正确的文件夹。如要接入主网，请选择 mainnet-v1；如要接入测试网，请选择 testnet-1029。请确保选择无误。
 :::
 
@@ -287,6 +287,7 @@ bsc_rpc_url = "https://bsc-dataseed.binance.org/"
 tron_rpc_url = "grpc.trongrid.io:50051" 
 tron_grid_url = "https://tronevent.bt.io/"
 ```
+
 **示例（测试网-1029）:**
 
 ```conf
@@ -393,7 +394,6 @@ cd ~/node/bttc
 bash start.sh
 ```
 
-
 ## 配置validator 节点
 
 :::tip 备注
@@ -448,6 +448,7 @@ bsc_rpc_url = "https://bsc-dataseed.binance.org/"
 tron_rpc_url = "grpc.trongrid.io:50051" 
 tron_grid_url = "https://tronevent.bt.io/"
 ```
+
 **示例（测试网-1029）:**
 
 ```conf
