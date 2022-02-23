@@ -4,7 +4,7 @@
 
 如需了解系统要求，请参阅 [验证者节点系统要求](https://doc.bt.io/v1/doc/validator-node-system-requirements).
 
-:::注意
+:::tip 注意
 
 按本节提示操作的过程中，您需要等待 Delivery 服务和 BTTC 服务完全同步， 整个过程约需几个小时。
 
@@ -49,7 +49,7 @@
 1. 启动验证者节点.
 1. 与社区共同检查节点健康状态.
 
-:::备注
+:::tip 备注
 
 请严格遵守上述操作顺序，否则将会出错。
 
@@ -59,7 +59,7 @@
 
 ## 安装二进制文件
 
-:::备注
+:::tip 备注
 
 在哨兵节点和验证者节点上运行此部分。
 
@@ -147,7 +147,7 @@ bttc version
 
 ## 设置节点文件
 
-:::note
+:::tip 备注
 
 在哨兵节点和验证者节点上运行此部分。
 
@@ -160,7 +160,7 @@ bttc version
 ```sh
 git clone https://github.com/bttcprotocol/launch
 ```
-:::note 
+:::tip 备注 
 选择正确的文件夹。如要接入主网，请选择 mainnet-v1；如要接入测试网，请选择 testnet-1029。请确保选择无误。
 :::
 
@@ -196,7 +196,7 @@ cp -rf launch/mainnet-v1/sentry/validator/* ~/node
 
 ### 设置网络目录
 
-:::note
+:::tip 备注
 
 在哨兵节点和验证者节点上运行此部分。
 
@@ -326,7 +326,7 @@ tron_grid_url = "https://test-tronevent.bt.io"
 
 首先启动 Delivery 服务。 Delivery 服务同步后，您需要启动 BTTC 服务。
 
-:::note
+:::tip 备注
 
 Delivery 服务需要几个小时才能完全同步.
 
@@ -352,7 +352,7 @@ bash delivery-start.sh
 bash delivery-server-start.sh 
 ```
 
-:::note
+:::tip 备注
 
 您可能在日志中检查到以下错误:
 
@@ -396,7 +396,7 @@ bash start.sh
 
 ## 配置validator 节点
 
-:::note
+:::tip 备注
 
 要完成这一步，您须准备好已完成同步的以太坊主网节点的 RPC 接口, BSC RPC接口 ,TRON  RPC接口。
 

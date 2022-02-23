@@ -5,7 +5,7 @@ This section guides you through starting and running the validator node.
 
 For the system requirements, see [Validator Node System Requirements](https://doc.bt.io/v1/doc/validator-node-system-requirements).
 
-:::note
+:::tip note
 
 Steps in this guide involve waiting for the Delivery and Bttc services to fully sync. This process takes several hours to complete.
 
@@ -51,7 +51,7 @@ To get to a running validator node, do the following:
 1. Start the validator node.
 1. Check node health with the community.
 
-:::note
+:::tip note
 
 You must follow the exact outlined sequence of actions, otherwise you will run into issues.
 
@@ -61,7 +61,7 @@ For example, a sentry node must always be set up before the validator node.
 
 ## Install binaries
 
-:::note
+:::tip note
 
 Run this section both on the sentry and the validator machines.
 
@@ -149,7 +149,7 @@ bttc version
 
 ## Set up node files
 
-:::note
+:::tip note
 
 Run this section both on the sentry and the validator machines.
 
@@ -162,7 +162,7 @@ Clone the [launch repository](https://github.com/bttcprotocol/launch):
 ```sh
 git clone https://github.com/bttcprotocol/launch
 ```
-:::note 
+:::tip note 
 Choose the correct folder,if you want to join the mainnet,choose mainnet-v1.otherwise,if you want to join the testnet,choose testnet-1029.make sure don't misuse.
 :::
 
@@ -198,7 +198,7 @@ cp -rf launch/mainnet-v1/sentry/validator/* ~/node
 
 ### Set up the network directories
 
-:::note
+:::tip note
 
 Run this section both on the sentry and the validator machines.
 
@@ -328,7 +328,7 @@ The sentry machine must have the following ports open to the world `0.0.0.0/0`:
 
 You will first start the Delivery service. Once the Delivery service syncs, you will start the Bttc service.
 
-:::note
+:::tip note
 
 The Delivery service takes several hours to fully sync from scratch.
 
@@ -354,7 +354,7 @@ Start the Delivery rest-server:
 bash delivery-server-start.sh 
 ```
 
-:::note
+:::tip note
 
 In the logs, you may see the following errors:
 
@@ -398,7 +398,7 @@ bash start.sh
 
 ## Configure the validator node
 
-:::note
+:::tip note
 
 To complete this section, you must have an RPC endpoint of your fully synced Ethereum mainnet node ready.
 
