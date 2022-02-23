@@ -1,290 +1,608 @@
 # 節點部署
 
-## 相關依賴及工具
+本節旨在介紹如何從二進制文件啟動併運行驗證者節點。
 
-- Git v2.30.1
-- g++
-- Go 1.16 +
-- Nodejs v11.0
-- Rabbitmq(latest stable version)
-- Solc v0.5.11^
+如需了解繫統要求，請參閱 [驗證者節點繫統要求](https://doc.bt.io/v1/doc/validator-node-system-requirements).
 
-## 編譯安裝Delivery和BTTC二進制包
+:::tip 備註
 
-::: tip NOTE
-部署需要的創世配置以及節點id等，均放在[launch倉庫](https://github.com/bttcprotocol/launch.git)
+按本節提示操作的過程中，您需要等待 Delivery 服務和 BTTC 服務完全同步， 整個過程約需幾個小時。
+
+驗證者名額有限， 只有當現任活躍驗證者解綁後新驗證者才能加入活躍驗證者集合。
 :::
 
-### clone delivery代碼
+## 前置要求
+
+* 兩臺機器——一臺哨兵節點和一臺驗證者節點。
+* 在哨兵節點和驗證者節點設備上均安裝`build-essential` (可選).
+
+  安裝（僅 Ubuntu 繫統需要安裝）:
+
+  ```sh
+  sudo apt-get install build-essential
+  ```
+
+* 在哨兵節點和驗證者節點設備上均安裝Go 1.17.
+
+  安裝:
+
+  ```sh
+  wget https://gist.githubusercontent.com/ssandeep/a6c7197811c83c71e5fead841bab396c/raw/go-install.sh
+  bash go-install.sh
+  sudo ln -nfs ~/.go/bin/go /usr/bin/go
+  ```
+
+* 在哨兵節點和驗證者節點設備上均安裝 RabbitMQ。 檢視[下載和安裝 RabbitMQ](https://www.rabbitmq.com/download.html).
+
+## 概覽
+
+請執行以下操作以運行驗證者節點:
+
+1. 准備兩臺設備.
+1. 在哨兵節點和驗證者節點設備上安裝 Delivery 二進制文件和 BTTC 二進制文件.
+1. 在哨兵節點和驗證者節點設備上設定好 Delivery 服務文件和 BTTC 服務文件.
+1. 在哨兵節點和驗證者節點設備上設定好 Delivery 服務和 BTTC 服務.
+1. 配置哨兵節點.
+1. 啟動哨兵節點.
+1. 配置驗證者節點.
+1. 設定所有者密鑰和簽名者密鑰.
+1. 啟動驗證者節點.
+1. 與社區共同檢查節點健康狀態.
+
+:::備註
+
+請嚴格遵守上述操作順序，否則將會出錯。
+
+例如，必須先設定哨兵節點，然後再設定驗證者節點。
+
+:::
+
+## 安裝二進制文件
+
+:::備註
+
+在哨兵節點和驗證者節點上運行此部分。
+
+:::
+
+### 安裝 Delivery
+
+
+克隆 [Delivery 倉庫](https://github.com/bttcprotocol/delivery/):
 
 ```sh
-git clone https://github.com/bttcprotocol/delivery.git
+git clone https://github.com/bttcprotocol/delivery
 ```
 
-### 安裝delivery
+檢出正確的 [PO版本](https://github.com/bttcprotocol/delivery/releases):
 
 ```sh
-cd delivery
+git checkout RELEASE_TAG
+```
+
+其中
+
+* RELEASE_TAG — 即為您安裝的PO版本標簽。
+
+例:
+
+```sh
+git checkout v1.0.0
+```
+
+安裝 Delivery:
+
+```sh
 make install
 ```
 
-::: tip NOTE
-當在某些環境下`make install`失敗時，請使用`make build`，並將`delivery-start.sh`中的`deliveryd`替換為build文件夾下deliverd的路徑。
-:::
+檢查安裝:
 
-### clone BTTC代碼
+```sh
+deliveryd version --long
+```
+
+### 安裝  Bttc
+
+克隆 the [Bttc 倉庫](https://github.com/bttcprotocol/bttc):
 
 ```sh
 git clone https://github.com/bttcprotocol/bttc
 ```
 
-### 安裝BTTC
+檢出正確的[PO版本 ](https://github.com/bttcprotocol/bttc/releases):
 
 ```sh
-cd bttc
-make bttc
+git checkout RELEASE_TAG
 ```
 
-## 安裝bttc-cli腳本
+其中
 
-::: tip NOTE
-當bttc-cli有更新時，請先卸載本地舊版本，再重新安裝最新版本。
+* RELEASE_TAG — 即為您安裝的PO版本標簽.
+
+例:
+
+```sh
+git checkout v1.0.1
+```
+
+安裝 Bttc:
+
+```sh
+make bttc-all
+```
+
+創建符號鏈接:
+
+```sh
+sudo ln -nfs ~/bttc/build/bin/bttc /usr/bin/bttc
+sudo ln -nfs ~/bttc/build/bin/bootnode /usr/bin/bootnode
+```
+
+檢查安裝:
+
+```sh
+bttc version
+```
+
+## 設定節點文件
+
+:::tip 備註
+
+在哨兵節點和驗證者節點上運行此部分。
+
 :::
 
-```sh
-npm uninstall -g bttc-cli
-npm install -g @bttcnetwork/bttc-cli
-```
+### 獲取launch倉庫
 
-### 檢查bttc-cli版本
+克隆 [launch 倉庫](https://github.com/bttcprotocol/launch):
 
 ```sh
-bttc-cli -V
+git clone https://github.com/bttcprotocol/launch
 ```
-
-
-## 部署節點
-
-::: tip NOTE
-在哨兵機和驗證機上都要運行這一部分。
-哨兵節點（全節點）是一個同時運行Delivery節點和BTTC節點的節點，用於從網絡上的其他節點下載數據，並在網絡上傳播驗證器數據。
-一個哨兵節點（全節點）對網絡上所有其他哨兵節點開放。
-一個驗證器節點只對其哨兵節點開放，而對網絡的其他節點關閉。
+:::tip 備註 
+選擇正確的檔案夾。如要接入主網，請選擇 mainnet-v1；如要接入測試網，請選擇 testnet-1029。請確保選擇無誤。
 :::
 
-使用如下命令初始化節點目錄：
+### 設定啟動目錄
+
+#### 在哨兵節點上
+
+創建 `node` 目錄:
 
 ```sh
-bttc-cli setup devnet
+mkdir -p node
 ```
 
-然後依次填寫以下問題，請注意主網和測試網的區別
-
-### BTTC主網 (199)
+將文件和腳本從`launch`目錄復制到`node`目錄:
 
 ```sh
-? Please enter Bttc chain id 199
-? Please enter Delivery chain id delivery-199
-? Please enter Bttc branch or tag master
-? Please enter Delivery branch or tag master
-? Please enter Contracts branch or tag stake
-? Please enter number of validator nodes 0 # number of validator nodes,if you want to deploy only one fullnode, use 0 instead of 1
-? Please enter number of non-validator nodes 1 # number of full nodes
-? Please enter ETH url https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>
-? Please enter BSC url https://bsc-dataseed.binance.org/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
-? Please enter TRON rpc url grpc.trongrid.io:50051 # or choose from https://developers.tron.network/docs/official-public-node
-? Please enter TRON grid url  https://tronevent.bt.io/
-? Please select devnet type remote
-? Please enter comma separated hosts/IPs
+cp -rf launch/mainnet-v1/sentry/sentry/* ~/node
 ```
 
-### BTTC測試網（Donau, 1029）
+#### 在驗證者節點上
+
+創建 `node` 目錄:
 
 ```sh
-? Please enter Bttc chain id 1029
-? Please enter Delivery chain id delivery-1029
-? Please enter Bttc branch or tag master
-? Please enter Delivery branch or tag master
-? Please enter Contracts branch or tag stake
-? Please enter number of validator nodes 0 # number of validator nodes,if you want to deploy only one fullnode, use 0 instead of 1
-? Please enter number of non-validator nodes 1 # number of full nodes
-? Please enter ETH url https://goerli.infura.io/v3/<YOUR_INFURA_KEY>
-? Please enter BSC url https://data-seed-prebsc-1-s1.binance.org:8545/ # or choose from https://docs.binance.org/smart-chain/developer/rpc.html
-? Please enter TRON rpc url 47.252.19.181:50051
-? Please enter TRON grid url https://test-tronevent.bt.io
-? Please select devnet type remote
-? Please enter comma separated hosts/IPs
+mkdir -p node
 ```
 
-運行上述腳本後，會生成如下的node目錄
+將文件和腳本從`launch`目錄復制到`node`目錄:
 
-![image](../pics/node/node-dir.png)
+```sh
+cp -rf launch/mainnet-v1/sentry/validator/* ~/node
+```
 
-::: tip NOTE
-在每個 .sh 文件中，請確保 `NODE_DIR` 是正確的。在這個例子中，`NODE_DIR` 應該是 `/data/bttc/node`。
+### 設定網路目錄
+
+:::tip 備註
+
+在哨兵節點和驗證者節點上運行此部分。
+
 :::
 
-## validator配置
+#### 設定 Delivery
 
-假設節點的根目錄在`/data/bttc/node`。
+切換至`node`目錄:
 
-### 配置delivery種子節點
+```sh
+cd ~/node/delivery
+```
 
-#### 節點API_KEY配置
+運行設定腳本:
 
-修改delivery-config文件
-目錄：`/data/bttc/node/deliveryd/config/delivery-config.toml`
+```sh
+bash setup.sh
+```
 
-**配置說明：**
+#### 設定 Bttc
 
-- eth_rpc_url: 以太坊網絡rpc地址。需要自己生成 INFURA_KEY 以便跟以太坊通信。 [API_KEY申請教程](https://ethereumico.io/knowledge-base/infura-api-key-guide)
+切換至`node`目錄:
 
-- tron_rpc_url: TRON網絡節點的RPC地址。
+```sh
+cd ~/node/bttc
+```
 
-- tron_grid_url: TRON網絡事件服務查詢url。
+運行設定腳本:
 
-- bsc_rpc_url：BSC網絡節點的RPC地址。
+```sh
+bash setup.sh
+```
 
-**DEMO：**
+## 配置哨兵節點
+
+登入遠程哨兵節點。
+
+### 配置 Delivery 服務
+
+打開編輯  `vim ~/.deliveryd/config/config.toml`.
+
+在 `config.toml`,  中修改如下內容:
+
+* `moniker` — 任何名稱。 示例: `moniker = "my-sentry-node"`.
+* `seeds` — seed 節點地址由節點ID、IP 地址、端口三部分組成.
+
+  使用以下來自 ~/node/delivery/delivery-seeds.txt的值:
+
+  ```toml
+  seeds="161c2cbe07fccc8c8a3b10ccdea608569a202c06@54.157.35.210:26656,f3f21c82c04003e3c6ee14eb4d11d5dd0b1f201e@107.20.250.182:26656,ed080edbac1a1a285d265e3e87269aea9f6693b7@54.219.27.155:26656,3114d9ebc7254a27de7092b071bd698d250748aa@54.241.235.101:26656"
+  ```
+
+* `pex` — 將值設定為 true，開啟 PEX。 示例: `pex = true`.
+* `private_peer_ids` — 在驗證者節點設定的 Delivery 節點 ID.
+
+  在驗證者節點上獲取 Delivery 節點 ID:
+
+  1. 登入驗證者節點.
+  1. 運行 `deliveryd tendermint show-node-id`.
+
+  示例: `private_peer_ids = "e2c6a611e449b61f2266f0054a315fad6ce607ba"`.
+
+* `prometheus` — 將值設定為 true，啟用 Prometheus 指標。 示例: `prometheus = true`.
+* `max_open_connections` — 將值設定為 `100`。 示例 : `max_open_connections = 100`.
+
+在 config.toml 中保存更改.
+
+
+打開編輯 `vim ~/.deliveryd/config/delivery-config.toml`.
+
+在 `delivery-config.toml`, 中修改如下內容:
+
+* `eth_rpc_url`: 以太坊網路 RPC 地址。 您需自行生成 INFURA_KEY 以連接以太坊網路。 [API_KEY 應用教程](https://ethereumico.io/knowledge-base/infura-api-key-guide)
+
+* `tron_rpc_url`: 波場網路節點的 RPC 地址 [官方-公共-節點](https://developers.tron.network/docs/official-public-node)
+
+* `tron_grid_url`: 波場網路事件服務查詢 URL。
+
+* `bsc_rpc_url`: BSC 網路節點的 RPC 地址。[官方-公共-節點](https://docs.binance.org/smart-chain/developer/rpc.html)
+
+**示例（主網:**
 
 ```conf
-vim /data/bttc/node/deliveryd/config/delivery-config.toml
+vim ~/.deliveryd/config/delivery-config.toml
   
-eth_rpc_url = "https://goerli.infura.io/v3/<YOUR_INFURA_KEY>"
+eth_rpc_url = "https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>" 
+bsc_rpc_url = "https://bsc-dataseed.binance.org/" 
+tron_rpc_url = "grpc.trongrid.io:50051" 
+tron_grid_url = "https://tronevent.bt.io/"
+```
+**示例（測試網-1029）:**
+
+```conf
+vim ~/.deliveryd/config/delivery-config.toml
+  
+eth_rpc_url = "https://goerli.infura.io/v3/<YOUR_INFURA_KEY>" 
 bsc_rpc_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
-tron_rpc_url = "47.252.19.181:50051"
+tron_rpc_url = "47.252.19.181:50051" 
 tron_grid_url = "https://test-tronevent.bt.io"
 ```
 
-#### 替換創世文件配置
 
-將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/delivery/config/genesis.json)替換至路徑：`/data/bttc/node/deliveryd/config/genesis.json`。
+### 配置 Bttc 服務
 
-#### 添加delivery層的node-id
+打開編輯 `vi ~/node/bttc/start.sh`.
 
-修改配置文件`/data/bttc/node/deliveryd/config/config.toml`的seeds字段。在[這裡](https://github.com/bttcprotocol/launch/tree/master/testnet-1029/sentry/sentry/delivery)查看測試網seed信息，或在[這裡](https://github.com/bttcprotocol/launch/tree/master/mainnet-v1/sentry/sentry/delivery)查看主網seed信息。
+在`start.sh`中，將以下行輸入至末尾處，以添加由節點 ID、IP 地址和端口組成的啟動節點地址:
 
-### 啟動Delivery節點
-
-#### 啟動delivery
-
-```sh
-nohup sh delivery-start.sh>>logs/deliveryd.log 2>&1 &
+```config
+--bootnodes 
+"enode://8ef920be1d44ad7c41a517a6420e43511f2e30d1c35a4bb05954c9f413b1712dae6e9e05f56595966470506891ff05d203e233c2e8f6df8c72621537a3d783e9@54.157.35.210:30303","enode://f3a2534ac30db7387f84c1262bce9a0737c46a8b5627f8193d412a4bde415c191191bbf984f51e04e5d974e62b70fab148f38522c5e2917ca1f1860361f14cc9@107.20.250.182:30303","enode://268cc5c4062b4c30f7ae972322ec119465655d9b3f7220df4614f2890b5cef6ac350d65890f8ecebfe6c5ce0af635f7ae420db84de7677c54b35ed1ce6bb4fbd@54.219.27.155:30303","enode://a9aa7a7ec5b34485c73436d311d86c55f900db4008058231a2fd2fb8ee7ad1b68d7d5a64acbf1f62b8d5f25388b492d16befb686d6146b374a85a6ea7d5a95c9@54.241.235.101:30303"
 ```
 
-#### 啟動後續服務
+在 `start.sh` 中保存更改 .
+
+### 配置防火墻
+
+哨兵節點必須將以下端口對所有人開放`0.0.0.0/0`:
+
+* 26656- 您的 Delivery 服務將連接您與其他 Delivery 服務的節點e.
+
+* 30303- 您的 BTTC 服務將連接您與其他 BTTC 服務的節點。
+
+* 22- 驗證者無論身處何處都能使用 ssh。
+
+## 啟動哨兵節點
+
+首先啟動 Delivery 服務。 Delivery 服務同步後，您需要啟動 BTTC 服務。
+
+:::tip 備註
+
+Delivery 服務需要幾個小時才能完全同步.
+
+:::
+
+### 啟動 Delivery 服務
+
+切換至`~/node/delivery`目錄:
 
 ```sh
-nohup sh delivery-server-start.sh>>logs/rest-server.log 2>&1 &
-nohup sh delivery-bridge-start.sh>>logs/bridge.log 2>&1 &
+cd ~/node/delivery
 ```
 
-### 配置BTTC種子節點
-
-#### 替換BTTC的創世文件
-
-BTTC創世文件路徑:`/data/bttc/node/bttc/genesis.json`
-
-將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/genesis.json)替換至上述路徑。
-
-#### 添加BTTC網絡種子節點的node-id
-
-將[static-nodes-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/bttc/static-nodes.json)或[static-nodes-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/bttc/static-nodes.json)替換到`/data/bttc/node/bttc/static-nodes.json`。
-
-### 初始化BTTC節點
+啟動 Delivery 服務:
 
 ```sh
-sh bttc-setup.sh
+bash delivery-start.sh
 ```
 
-### 啟動BTTC節點
+啟動 Delivery rest-server 服務:
 
 ```sh
-nohup sh bttc-start.sh >>logs/bttc-start.log 2>&1 &
+bash delivery-server-start.sh 
+```
+
+:::tip 備註
+
+您可能在日誌中檢查到以下錯誤:
+
+* `Stopping peer for error`
+* `MConnection flush failed`
+* `use of closed network connection`
+
+這錶明網路上的一個節點拒絕連接到您的節點。 您無需處理這些錯誤， 只需等待您的節點在網路上爬取更多節點.
+
+:::
+
+檢查 Delivery 的同步狀態:
+
+```sh
+curl localhost:26657/status
+```
+
+在輸出中，`catching_up` 值為:
+
+* `true` — Delivery 服務正在同步.
+* `false` — Delivery 服務已完全同步.
+
+等待 Delivery 服務完全同步.
+
+### 啟動 Bttc 服務
+
+Delivery 服務同步後，將啟動 BTTC 服務.
+
+切換至`~/node/bttc`目錄:
+
+```sh
+cd ~/node/bttc
+```
+
+啟動 Bttc 服務:
+
+```sh
+bash start.sh
 ```
 
 
+## 配置validator 節點
 
-## validator節點配置
+:::tip 備註
 
-假設validator節點的根目錄在`/data/bttc/node`。
+要完成這一步，您須准備好已完成同步的以太坊主網節點的 RPC 接口, BSC RPC接口 ,TRON  RPC接口。
 
-### 配置delivery validator節點
+:::
 
-#### 節點API_KEY配置
+### 配置Delivery 服務
 
-修改delivery-config文件
-目錄：`/data/bttc/node/deliveryd/config/delivery-config.toml`
+登入遠程驗證者節點.
 
-**配置說明：**
+打開編輯 `vi ~/.deliveryd/config/config.toml`.
 
-- eth_rpc_url: 以太坊網絡rpc地址。需要自己生成 INFURA_KEY 以便跟以太坊通信。 [API_KEY申請教程](https://ethereumico.io/knowledge-base/infura-api-key-guide)
+在 `config.toml`,  中修改如下內容:
 
-- tron_rpc_url: TRON網絡節點的RPC地址。
+* `moniker` — 任何名稱。 示例: `moniker = "my-sentry-node"`.
+* `pex` — 將值設定為 false，關閉 PEX。 示例: `pex = false`.
+* `private_peer_ids` — 註釋掉該值。 示例: `# private_peer_ids = ""`.
 
-- tron_grid_url: TRON網絡事件服務查詢url。
+  在哨兵節點上獲取 Delivery 節點 ID:
 
-- bsc_rpc_url：BSC網絡節點的RPC地址。
+  1. 登入哨兵節點.
+  1. 運行 `deliveryd tendermint show-node-id`.
 
-**DEMO：**
+示例: `persistent_peers = "sentry_machineNodeID@sentry_instance_ip:26656"`
+
+* `prometheus` — 將值設定為 true，啟用 Prometheus 指標。 示例: `prometheus = true`.
+
+在 config.toml 中保存更改.
+
+打開編輯 `vim ~/.deliveryd/config/delivery-config.toml`.
+
+在 `delivery-config.toml`, 中修改如下內容:
+
+* `eth_rpc_url`: 以太坊網路 RPC 地址。 您需自行生成 INFURA_KEY 以連接以太坊網路。 [API_KEY 應用教程](https://ethereumico.io/knowledge-base/infura-api-key-guide)
+
+* `tron_rpc_url`: 波場網路節點的 RPC 地址 [官方-公共-節點](https://developers.tron.network/docs/official-public-node)
+
+* `tron_grid_url`: 波場網路事件服務查詢 URL。
+
+* `bsc_rpc_url`: BSC 網路節點的 RPC 地址。[官方-公共-節點](https://docs.binance.org/smart-chain/developer/rpc.html)
+
+
+**示例（主網:**
 
 ```conf
-vim /data/bttc/node/deliveryd/config/delivery-config.toml
+vim ~/.deliveryd/config/delivery-config.toml
   
-eth_rpc_url = "https://goerli.infura.io/v3/<YOUR_INFURA_KEY>"
+eth_rpc_url = "https://mainnet.infura.io/v3/<YOUR_INFURA_KEY>" 
+bsc_rpc_url = "https://bsc-dataseed.binance.org/" 
+tron_rpc_url = "grpc.trongrid.io:50051" 
+tron_grid_url = "https://tronevent.bt.io/"
+```
+**示例（測試網-1029）:**
+
+```conf
+vim ~/.deliveryd/config/delivery-config.toml
+  
+eth_rpc_url = "https://goerli.infura.io/v3/<YOUR_INFURA_KEY>" 
 bsc_rpc_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
-tron_rpc_url = "47.252.19.181:50051"
+tron_rpc_url = "47.252.19.181:50051" 
 tron_grid_url = "https://test-tronevent.bt.io"
 ```
 
-#### 替換創世文件配置
+### 配置 Bttc 服務
 
-將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/sentry/delivery/config/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/sentry/delivery/config/genesis.json)替換至路徑：`/data/bttc/node/deliveryd/config/genesis.json`。
+打開編輯 `vi ~/.bttc/data/bor/static-nodes.json`.
 
-#### 配置config.toml
+在 `static-nodes.json` 中修改如下內容:
 
-修改配置文件`/data/bttc/node/deliveryd/config/config.toml`的seeds字段。
-在config.toml中，改變以下内容。
+* `"<replace with enode://sentry_machine_enodeID@sentry_machine_ip:30303>"` — 在哨兵節點上設定的 BTTC 節點 ID 和 IP 地址.
 
-**seeds - 種子節點地址由一個節點ID、一個IP地址和一個端口組成。使用上面配置的哨兵節點的node_id，它可能看起來像:`seeds="node_id_of_your_sentry_node@ip_of_your_sentry_node:26656"`**
+  在哨兵節點上獲取 BTTC 節點 ID:
 
-### 啟動Delivery validator節點
+  1. 登入哨兵節點.
+  1. 運行 `bootnode -nodekey ~/.bttc/data/bor/nodekey -writeaddress`.
 
-#### 啟動delivery
+  示例: `"enode://8ef920be1d44ad7c41a517a6420e43511f2e30d1c35a4bb05954c9f413b1712dae6e9e05f56595966470506891ff05d203e233c2e8f6df8c72621537a3d783e9@54.157.35.210:30303"`.
+
+在 `static-nodes.json` 中保存更改.
+
+## 設定所有者和簽名者密鑰
+
+我們建議您在 BTTC 上設定不同的所有者和簽名者密鑰。
+
+* 簽名者——簽名檢查點交易的地址。 建議在簽名者地址上保留至少 1 個 ETH 代幣，20,000TRX, 0.5BNB.
+* 所有者——進行質押交易的地址。 建議在所有者地址上保留 BTT 代幣.
+
+### 生成 Delivery 私鑰
+
+您必須在驗證者節點上生成 Delivery 私鑰， 請勿在哨兵節點上生成 Delivery 私鑰。
+
+要生成私鑰，請運行:
 
 ```sh
-nohup sh delivery-start.sh>>logs/deliveryd.log 2>&1 &
+deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
 ```
 
-#### 啟動後續服務
+其中
+
+* ETHEREUM_PRIVATE_KEY — 是您的以太坊錢包私鑰.
+
+這樣將生成`priv_validator_key.json`文件。 將生成的 JSON 文件移到 Delivery 配置目錄中。:
 
 ```sh
-nohup sh delivery-server-start.sh>>logs/rest-server.log 2>&1 &
-nohup sh delivery-bridge-start.sh>>logs/bridge.log 2>&1 &
+mv ./priv_validator_key.json ~/.deliveryd/config
 ```
 
-### 配置BTTC validator節點
+### 生成 BTTC Keystore 文件
 
-#### 替換BTTC的創世文件
+您必須在驗證者節點上生成 BTTC Keystore 文件， 請勿在哨兵節點上生成 BTTC Keystore 文件。
 
-BTTC創世文件路徑:`/data/bttc/node/bttc/genesis.json`
-
-將[genesis-1029](https://github.com/bttcprotocol/launch/blob/master/testnet-1029/sentry/validator/bttc/genesis.json)或[genesis-199](https://github.com/bttcprotocol/launch/blob/master/mainnet-v1/sentry/validator/bttc/genesis.json)替換至上述路徑。
-
-#### 配置 static_nodes.json
-
-修改static_nodes.json文件`/data/bttc/node/bttc/static_nodes.json`的種子字段。
-
-在static_nodes.json中，編輯該文件並添加上面配置的bttc哨兵節點信息，看起來像:`"enode://enode_id_of_your_sentry_node@_of_your_sentry_node:30303`
-
-### 初始化BTTC validator節點
+要生成私鑰，請運行:
 
 ```sh
-sh bttc-setup.sh
+deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
 ```
 
-### 啟動BTTC validator節點
+其中
+
+* ETHEREUM_PRIVATE_KEY — 是您的以太坊私鑰.
+
+根據提示設定 Keystore 文件的密碼.
+
+這樣將生成一個 `UTC-<time>-<address>` 文件.
+
+將生成的 Keystore 文件移至 BTTC 配置目錄中:
 
 ```sh
-nohup sh bttc-start.sh >>logs/bttc-start.log 2>&1 &
+mv ./UTC-<time>-<address> ~/.bttc/keystore/
+mv ./nodekey ~/.bttc/
+```
+
+### 添加 password.txt
+
+請確保先創建 `password.txt`文件，然後在`~/.bttc/password.txt`文件中添加 BTTC Keystore 文件密碼。
+
+### 添加您的以太坊地址
+
+請確保先創建 `address.txt` 文件，然後在 `~/.bttc/address.txt` 文件中添加 BTTC 地址文件。
+打開編輯 `vi ~/.bttc/address.txt`。
+
+在 `address.txt`, 中添加您的以太坊地址， 例如: `0xca67a8D767e45056DC92384b488E9Af654d78DE2`.
+
+在 `address.txt` 中保存更改.
+
+## 啟動驗證者節點
+
+在此環節，您必須滿足下列條件：
+
+* 哨兵節點的 Delivery 服務已完全同步且處於運行狀態。
+* 哨兵節點的 BTTC 服務處於運行狀態。
+* 驗證者節點的 Delivery 服務與 BTTC 服務已完成配置。
+* 您的所有者密鑰與簽名者密鑰均已完成配置。
+
+### 啟動 Delivery 服務
+
+您需要在驗證者節點上啟動 Delivery 服務。 Delivery 服務同步後，您需要在驗證者節點上啟動 BTTC 服務。
+
+切換至 `~/node/delivery` 目錄:
+
+```sh
+cd ~/node/delivery
+```
+
+啟動 Delivery 服務:
+
+```sh
+bash delivery-start.sh
+```
+
+啟動 Delivery rest-server:
+
+```sh
+bash delivery-server-start.sh
+```
+
+啟動 Delivery bridge:
+
+```sh
+bash delivery-bridge-start.sh 
+```
+
+檢查 Delivery 的同步狀態:
+
+```sh
+curl localhost:26657/status
+```
+
+在輸出中，`catching_up` 值為:
+
+* `true` — Delivery 服務正在同步。
+* `false` — Delivery 服務已完全同步。
+
+等待 Delivery 服務完全同步。
+
+### 啟動 BTTC 服務
+
+驗證者節點上的 Delivery 服務完全同步後，您需要在驗證者節點上啟動BTTC 服務
+
+切換至`~/node/bttc` 目錄:
+
+```sh
+cd ~/node/bttc
+```
+
+啟動 BTTC 服務：
+
+```sh
+bash start.sh
 ```
