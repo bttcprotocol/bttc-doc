@@ -277,7 +277,7 @@ bash setup.sh
 
 * `bsc_rpc_url`: BSC 网络节点的 RPC 地址。[官方-公共-节点](https://docs.binance.org/smart-chain/developer/rpc.html)
 
-**示例（主网:**
+**示例（主网):**
 
 ```conf
 vim ~/.deliveryd/config/delivery-config.toml
@@ -438,7 +438,7 @@ bash start.sh
 * `bsc_rpc_url`: BSC 网络节点的 RPC 地址。[官方-公共-节点](https://docs.binance.org/smart-chain/developer/rpc.html)
 
 
-**示例（主网:**
+**示例（主网):**
 
 ```conf
 vim ~/.deliveryd/config/delivery-config.toml
@@ -481,7 +481,7 @@ tron_grid_url = "https://test-tronevent.bt.io"
 我们建议您在 BTTC 上设置不同的所有者和签名者密钥。
 
 * 签名者——签名检查点交易的地址。 建议在签名者地址上保留至少 1 个 ETH 代币，20,000TRX, 0.5BNB.
-* 所有者——进行质押交易的地址。 建议在所有者地址上保留 BTT 代币.
+* 所有者——进行质押交易的地址。 建议在所有者地址上保留 BTT 代币.
 
 ### 生成 Delivery 私钥
 
