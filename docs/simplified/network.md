@@ -9,7 +9,8 @@ BTTC的正式网从2021年12月12日起正式开始运行。同时有一个正�
 * TronGrid RPC URL: https://bttc.trongrid.io
 * 区块链ID（ChainID）：199
 * 符号（Symbol）：BTT
-* 区块浏览器URL（Block Explorer URL）：https://scan.bt.io
+* 区块浏览器 1 URL（Block Explorer 1 URL）：https://scan.bt.io
+* 区块浏览器 2 URL（Block Explorer 2 URL）：https://bttcscan.com/
 
 ## Donau(ChainID 0x405, 十进制 1029)
 
@@ -17,7 +18,8 @@ BTTC的正式网从2021年12月12日起正式开始运行。同时有一个正�
 * RPC URL（RPC URL）：https://pre-rpc.bt.io/ 
 * 区块链ID（ChainID）：1029
 * 符号（Symbol）：BTT
-* 区块浏览器URL（Block Explorer URL）：https://testscan.bt.io/
+* 区块浏览器 1 URL（Block Explorer 1 URL）：https://testscan.bt.io/
+* 区块浏览器 2 URL（Block Explorer 2 URL）：https://testnet.bttcscan.com/
 * WebSocket：wss://pre-rpc.bt.io:8546
 
 ## JSON-RPC 方法

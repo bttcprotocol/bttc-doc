@@ -9,7 +9,8 @@ The BitTorrent Mainnet is launched on December 12, 2021. There is also a running
 * TronGrid RPC URL: https://bttc.trongrid.io
 * ChainID: 199
 * Symbol: BTT
-* Block Explorer URL: https://scan.bt.io
+* Block Explorer 1 URL: https://scan.bt.io
+* Block Explorer 2 URL: https://bttcscan.com/
 
 ## Donau(ChainID 0x405, Decimal 1029)
 
@@ -17,7 +18,8 @@ The BitTorrent Mainnet is launched on December 12, 2021. There is also a running
 * RPC URL (RPC URL): https://pre-rpc.bt.io/
 * ChainID: 1029
 * Symbol: BTT
-* Block Explorer URL: https://testscan.bt.io/
+* Block Explorer 1 URL: https://testscan.bt.io/
+* Block Explorer 2 URL: https://testnet.bttcscan.com/
 * WebSocket: wss://pre-rpc.bt.io:8546
 
 ## JSON-RPC Methods
