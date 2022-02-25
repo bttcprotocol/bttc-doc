@@ -2,7 +2,7 @@
 
 本節旨在介紹如何從二進制文件啟動併運行驗證者節點。
 
-如需了解繫統要求，請參閱 [驗證者節點繫統要求](https://doc.bt.io/v1/doc/validator-node-system-requirements).
+如需了解繫統要求，請參閱 [驗證者節點繫統要求](https://doc.bt.io/v1/doc/traditional/validator-node-system-requirements.html).
 
 :::tip 備註
 

@@ -2,7 +2,7 @@
 
 本节旨在介绍如何从二进制文件启动并运行验证者节点。
 
-如需了解系统要求，请参阅 [验证者节点系统要求](https://doc.bt.io/v1/doc/validator-node-system-requirements).
+如需了解系统要求，请参阅 [验证者节点系统要求](https://doc.bt.io/v1/doc/simplified/validator-node-system-requirements.html).
 
 :::tip 注意
 
