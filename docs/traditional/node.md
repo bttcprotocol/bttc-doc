@@ -2,7 +2,7 @@
 
 本節旨在介紹如何從二進制文件啟動併運行驗證者節點。
 
-如需了解繫統要求，請參閱 [驗證者節點繫統要求](https://doc.bt.io/v1/doc/validator-node-system-requirements.html).
+如需了解繫統要求，請參閱 [驗證者節點繫統要求](https://doc.bt.io/v1/doc/traditional/validator-node-system-requirements.html).
 
 :::tip 備註
 
@@ -49,7 +49,7 @@
 1. 啟動驗證者節點.
 1. 與社區共同檢查節點健康狀態.
 
-:::備註
+:::tip 備註
 
 請嚴格遵守上述操作順序，否則將會出錯。
 
@@ -59,7 +59,7 @@
 
 ## 安裝二進制文件
 
-:::備註
+:::tip 備註
 
 在哨兵節點和驗證者節點上運行此部分。
 
@@ -73,7 +73,7 @@
 git clone https://github.com/bttcprotocol/delivery
 ```
 
-檢出正確的 [PO版本](https://github.com/bttcprotocol/delivery/releases):
+檢出正確的 [release版本](https://github.com/bttcprotocol/delivery/releases):
 
 ```sh
 git checkout RELEASE_TAG
@@ -81,7 +81,7 @@ git checkout RELEASE_TAG
 
 其中
 
-* RELEASE_TAG — 即為您安裝的PO版本標簽。
+* RELEASE_TAG — 即為您安裝的release版本標簽。
 
 例:
 
@@ -109,7 +109,7 @@ deliveryd version --long
 git clone https://github.com/bttcprotocol/bttc
 ```
 
-檢出正確的[PO版本](https://github.com/bttcprotocol/bttc/releases):
+檢出正確的[release版本 ](https://github.com/bttcprotocol/bttc/releases):
 
 ```sh
 git checkout RELEASE_TAG
@@ -117,7 +117,7 @@ git checkout RELEASE_TAG
 
 其中
 
-* RELEASE_TAG — 即為您安裝的PO版本標簽.
+* RELEASE_TAG — 即為您安裝的release版本標簽.
 
 例:
 
@@ -277,7 +277,7 @@ bash setup.sh
 
 * `bsc_rpc_url`: BSC 網路節點的 RPC 地址。[官方-公共-節點](https://docs.binance.org/smart-chain/developer/rpc.html)
 
-**示例（主網:**
+**示例（主網):**
 
 ```conf
 vim ~/.deliveryd/config/delivery-config.toml
@@ -437,7 +437,8 @@ bash start.sh
 
 * `bsc_rpc_url`: BSC 網路節點的 RPC 地址。[官方-公共-節點](https://docs.binance.org/smart-chain/developer/rpc.html)
 
-**示例（主網:**
+
+**示例（主網):**
 
 ```conf
 vim ~/.deliveryd/config/delivery-config.toml
@@ -481,7 +482,7 @@ tron_grid_url = "https://test-tronevent.bt.io"
 我們建議您在 BTTC 上設定不同的所有者和簽名者密鑰。
 
 * 簽名者——簽名檢查點交易的地址。 建議在簽名者地址上保留至少 1 個 ETH 代幣，20,000TRX, 0.5BNB.
-* 所有者——進行質押交易的地址。 建議在所有者地址上保留 BTT 代幣.
+* 所有者——進行質押交易的地址。 建議在所有者地址上保留 BTT 代幣.
 
 ### 生成 Delivery 私鑰
 
