@@ -74,7 +74,7 @@ Parameters:
 
 ### Cancelling a vote
 
-Related contractual methods: `ValidatorShare:(uint256, uint256)`
+Related contractual methods: `StakeManagerProxy:sellVoucher_new:(uint256, uint256)`
 
 Parameters:
 
@@ -87,7 +87,7 @@ Related contractual methods: `ValidatorShare:reStake()`
 
 ### Transfer Vote
 
-Related contractual methods: `StakeManagerProxy:sellVoucher_new(uint256, uint256)`
+Related contractual methods: `StakeManagerProxy:migrateDelegation(uint256, uint256)`
 
 Parameters：
 

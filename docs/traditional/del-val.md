@@ -76,7 +76,7 @@ BitTorrent-Chain的代碼庫，用於了解BitTorrent-Chain 核心組件如何�
 
 ### 取消投票
 
-相關合約方法：`ValidatorShare:(uint256, uint256)`
+相關合約方法：`StakeManagerProxy:sellVoucher_new:(uint256, uint256)`
 
 參數：
 
@@ -89,7 +89,7 @@ BitTorrent-Chain的代碼庫，用於了解BitTorrent-Chain 核心組件如何�
 
 ### 轉移投票
 
-相關合約方法：`StakeManagerProxy:sellVoucher_new(uint256, uint256)`
+相關合約方法：`StakeManagerProxy:migrateDelegation(uint256, uint256)`
 
 參數：
 
