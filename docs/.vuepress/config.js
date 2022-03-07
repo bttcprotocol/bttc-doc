@@ -42,6 +42,7 @@ module.exports = {
             'del-val',
             'node',
             'validator-node-system-requirements',
+            'snapshots-instructions',
             'contract',
             'validator/faq'
           ]
@@ -64,6 +65,7 @@ module.exports = {
             '/simplified/del-val',
             '/simplified/node',
             '/simplified/validator-node-system-requirements',
+            '/simplified/snapshots-instructions',
             '/simplified/contract',
             '/simplified/validator/faq'
           ]
@@ -86,6 +88,7 @@ module.exports = {
             '/traditional/del-val',
             '/traditional/node',
             '/traditional/validator-node-system-requirements',
+            '/traditional/snapshots-instructions',
             '/traditional/contract',
             '/traditional/validator/faq'
           ]
