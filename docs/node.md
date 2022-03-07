@@ -8,6 +8,11 @@ For the system requirements, see [Validator Node System Requirements](https://do
 
 Steps in this guide involve waiting for the Delivery and Bttc services to fully sync. This process takes several hours to complete.
 
+
+Alternatively, you can use the official maintained snapshot, which will reduce the sync time to a few minutes. For detailed instructions, see Snapshot Instructions for [Delivery and Bttc](https://doc.bt.io/v1/doc/snapshots-instructions.html).
+
+For snapshot download links, see [BTTC Chains Snapshots](https://snapshots.bt.io/).
+
 There is limited space for accepting new validators. New validators can only join the active set when a currently active validator unbonds.
 
 :::

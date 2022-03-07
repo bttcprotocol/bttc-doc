@@ -8,6 +8,10 @@
 
 按本節提示操作的過程中，您需要等待Delivery服務和BTTC服務完全同步， 整個過程約需幾個小時。
 
+或者，你可以使用官方維護的快照，這將把同步時間減少到幾分鐘。詳細說明請見[Delivery and Bttc](https://doc.bt.io/v1/doc/traditional/snapshots-instructions.html)的快照說明。
+
+關於快照的下載鏈接，請參見[BTTC鏈快照](https://snapshots.bt.io/)。
+
 驗證者名額有限， 只有當現任活躍驗證者解綁後新驗證者才能加入活躍驗證者集合。
 :::
 
