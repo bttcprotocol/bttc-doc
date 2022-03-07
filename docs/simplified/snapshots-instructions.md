@@ -7,7 +7,7 @@
 # 使用方法 
 
 ## 第1步：准备
-- 确保你的硬件符合[建议要求](https://doc.bt.io/v1/doc/validator-node-system-requirements.html).
+- 确保你的硬件符合[建议要求](https://doc.bt.io/v1/doc/simplified/validator-node-system-requirements.html).
 - 一个有足够自由存储空间的磁盘，至少是快照大小的两倍。
 
 ##  第2步：下载&&解压
