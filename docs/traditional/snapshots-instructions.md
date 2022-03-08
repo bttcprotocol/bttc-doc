@@ -76,14 +76,14 @@ tar -xzvf bttc-mainnet-snapshot-2022_03_03.tar.gz ./
     例如:
 
     ```sh
-    cp /root/.deliveryd/data /root/.deliveryd/data_backup
+    cp -r /root/.deliveryd/data /root/.deliveryd/data_backup
     ```
 
 -   替換數據: `cp -r ./${delivery_snapshot_file} ${Delivery_DataDir}/`
     例如:
 
     ```sh
-    cp ./delivery_data/* /root/.deliveryd/data/
+    cp -r ./delivery_data/* /root/.deliveryd/data/
     ```   
 -   再次啟動Delivery客戶端並檢查日誌
 
@@ -96,13 +96,13 @@ tar -xzvf bttc-mainnet-snapshot-2022_03_03.tar.gz ./
     例如:
 
     ```sh
-    cp /root/.bttc/data/ /root/.bttc/data_backup
+    cp -r /root/.bttc/data/ /root/.bttc/data_backup
     ```
 
 -   替換數據: `cp -r ./${bttc_snapshot_file} ${BTTC_DataDir}/; `
     例如:
 
     ```sh
-    cp ./bttc_data/* /root/.bttc/data/bor/
+    cp -r ./bttc_data/* /root/.bttc/data/bor/
     ```   
 -   再次啟動BTTC客戶端並檢查日誌
