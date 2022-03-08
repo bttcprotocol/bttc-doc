@@ -87,12 +87,13 @@ Related contractual methods: `ValidatorShare:reStake()`
 
 ### Transfer Vote
 
-Related contractual methods: `StakeManagerProxy:migrateDelegation(uint256, uint256)`
+Related contract methods: `StakeManagerProxy:migrateDelegation(uint256, uint256, uint256)`
 
-Parameters：
+Parameters:
 
-+ uint256 claimAmount：claiming amount
-+ uint256 maximumSharesToBurn：acceptable maximum number to burn
++ uint256 fromValidatorId: source validator id
++ uint256 toValidatorId: target validator id
++ uint256 amount: transfer amount
 
 ## Validator
 

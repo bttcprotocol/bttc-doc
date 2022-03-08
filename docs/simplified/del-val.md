@@ -89,12 +89,13 @@ BitTorrent-Chain的代码库，用于了解BitTorrent-Chain 核心组件如何�
 
 ### 转移投票
 
-相关合约方法：`StakeManagerProxy:migrateDelegation(uint256, uint256)`
+相关合约方法：`StakeManagerProxy:migrateDelegation(uint256, uint256, uint256)`
 
 参数：
 
-+ uint256 claimAmount：解释数量
-+ uint256 maximumSharesToBurn：可接受的燃烧最大代理币数量
++ uint256 fromValidatorId：源validator id
++ uint256 toValidatorId：目标validator id
++ uint256 amount：转移数量
 
 ## 验证人
 
