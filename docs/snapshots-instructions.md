@@ -80,14 +80,14 @@ When this command completes, you can delete the tar file to reclaim space.
     For example:
 
     ```sh
-    cp /root/.deliveryd/data /root/.deliveryd/data_backup
+    cp -r /root/.deliveryd/data /root/.deliveryd/data_backup
     ```
 
 -   Replace the data: `cp -r ./${delivery_snapshot_file} ${Delivery_DataDir}/`
     For example:
 
     ```sh
-    cp ./delivery_data/* /root/.deliveryd/data/
+    cp -r ./delivery_data/* /root/.deliveryd/data/
     ```   
 -   Start the delivery client again and check the logs
 
@@ -100,13 +100,13 @@ When this command completes, you can delete the tar file to reclaim space.
     For example:
 
     ```sh
-    cp /root/.bttc/data/ /root/.bttc/data_backup
+    cp -r /root/.bttc/data/ /root/.bttc/data_backup
     ```
 
 -   Replace the data: `cp -r ./${bttc_snapshot_file} ${BTTC_DataDir}/; `
     For example:
 
     ```sh
-    cp ./bttc_data/* /root/.bttc/data/bor/
+    cp -r ./bttc_data/* /root/.bttc/data/bor/
     ```   
 -   Start the BTTC client again and check the logs
