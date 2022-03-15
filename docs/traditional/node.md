@@ -482,18 +482,18 @@ tron_grid_url = "https://test-tronevent.bt.io"
 
 在 `static-nodes.json` 中保存更改.
 
-## 設定所有者和簽名者密鑰
+## 設定Signer密鑰
 
 我們建議您在 BTTC 上設定不同的所有者和簽名者密鑰。
 
-* 簽名者——簽名檢查點交易的地址。 建議在簽名者地址上保留至少 1 個 ETH 代幣，20,000TRX, 0.5BNB.
-* 所有者——進行質押交易的地址。 建議在所有者地址上保留 BTT 代幣.
+* Signer——簽名檢查點交易的地址。 建議在簽名者地址上保留至少 1 個 ETH 代幣，20,000TRX, 0.5BNB.
+* Owner ——提交質押交易的地址。 建議在所有者地址上保留 BTT 代幣.
 
-### 生成 Delivery 私鑰
+### 使用Signer 私鑰配置 Delivery
 
-您必須在驗證者節點上生成 Delivery 私鑰， 請勿在哨兵節點上生成 Delivery 私鑰。
+您必須在驗證者節點上設置 Delivery 私鑰， 請勿在哨兵節點上生成 Delivery 私鑰。
 
-要生成私鑰，請運行:
+要設置私鑰，請運行:
 
 ```sh
 deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
@@ -501,7 +501,7 @@ deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
 
 其中
 
-* ETHEREUM_PRIVATE_KEY — 是您的以太坊錢包私鑰.
+* ETHEREUM_PRIVATE_KEY — 是您的Signer以太坊錢包私鑰.
 
 這樣將生成`priv_validator_key.json`文件。 將生成的 JSON 文件移到 Delivery 配置目錄中。:
 
@@ -509,11 +509,11 @@ deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
 mv ./priv_validator_key.json ~/.deliveryd/config
 ```
 
-### 生成 BTTC Keystore 文件
+### 使用Signer 私鑰配置 BTTC
 
 您必須在驗證者節點上生成 BTTC Keystore 文件， 請勿在哨兵節點上生成 BTTC Keystore 文件。
 
-要生成私鑰，請運行:
+要使用Signer 私鑰生成bttc私鑰文件，請運行:
 
 ```sh
 deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
@@ -521,7 +521,7 @@ deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
 
 其中
 
-* ETHEREUM_PRIVATE_KEY — 是您的以太坊私鑰.
+* ETHEREUM_PRIVATE_KEY — 是您的Signer以太坊私鑰.
 
 根據提示設定 Keystore 文件的密碼.
 
@@ -553,7 +553,7 @@ mv ./UTC-<time>-<address> ~/.bttc/keystore/
 * 哨兵節點的 Delivery 服務已完全同步且處於運行狀態。
 * 哨兵節點的 BTTC 服務處於運行狀態。
 * 驗證者節點的 Delivery 服務與 BTTC 服務已完成配置。
-* 您的所有者密鑰與簽名者密鑰均已完成配置。
+* 您的簽名者密鑰已完成配置。
 
 ### 啟動 Delivery 服務
 

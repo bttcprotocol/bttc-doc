@@ -484,18 +484,18 @@ In `static-nodes.json`, change the following:
 
 Save the changes in `static-nodes.json`.
 
-## Set the owner and signer key
+## Set the signer key
 
 On Bttc, it is recommended that you keep the owner and signer keys different.
 
 * Signer — the address that signs the checkpoint transactions. The recommendation is to keep at least 2 ETH, 20,000TRX, 0.5BNB on the signer address.
 * Owner — the address that does the staking transactions. The recommendation is to keep the BTT tokens on the owner address.
 
-### Generate a Delivery private key
+### Configuring Delivery with the Signer Private Key
 
-You must generate a Delivery private key only on the validator machine. Do not generate a Delivery private key on the sentry machine.
+You must set a Delivery private key only on the validator machine. Do not set a Delivery private key on the sentry machine.
 
-To generate the private key, run:
+To set the private key on delivery, run:
 
 ```sh
 deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
@@ -503,7 +503,7 @@ deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
 
 where
 
-* ETHEREUM_PRIVATE_KEY — your Ethereum private key.
+* ETHEREUM_PRIVATE_KEY — your signer Ethereum private key.
 
 This will generate `priv_validator_key.json`. Move the generated JSON file to the Delivery configuration directory:
 
@@ -511,11 +511,11 @@ This will generate `priv_validator_key.json`. Move the generated JSON file to th
 mv ./priv_validator_key.json ~/.deliveryd/config
 ```
 
-### Generate a Bttc keystore file
+### Configuring BTTC with the Signer Private Key
 
-You must generate a Bttc keystore file only on the validator machine. Do not generate a Bttc keystore file on the sentry machine.
+You must generate a Bttc keystore file with the signer private key only on the validator machine. Do not generate a Bttc keystore file on the sentry machine.
 
-To generate the private key, run:
+To set the private key on bttc, run:
 
 ```sh
 deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
@@ -523,7 +523,7 @@ deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
 
 where
 
-* ETHEREUM_PRIVATE_KEY — your Ethereum private key.
+* ETHEREUM_PRIVATE_KEY — your signer Ethereum private key.
 
 When prompted, set up a password to the keystore file.
 
@@ -555,7 +555,7 @@ At this point, you must have:
 * The Delivery service on the sentry machine fully synced and running.
 * The Bttc service on the sentry machine running.
 * The Delivery service and the Bttc service on the validator machine configured.
-* Your owner and signer keys configured.
+* Your signer keys configured.
 
 ### Start the Delivery service
 
