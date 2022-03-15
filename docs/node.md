@@ -252,8 +252,14 @@ In `config.toml`, change the following:
 
   Use the following values from ~/node/delivery/delivery-seeds.txt:
 
+  Example(mainnet):
   ```toml
   seeds="161c2cbe07fccc8c8a3b10ccdea608569a202c06@54.157.35.210:26656,f3f21c82c04003e3c6ee14eb4d11d5dd0b1f201e@107.20.250.182:26656,ed080edbac1a1a285d265e3e87269aea9f6693b7@54.219.27.155:26656,3114d9ebc7254a27de7092b071bd698d250748aa@54.241.235.101:26656"
+  ```
+
+  Example(testnet-1029):
+  ```toml
+  seeds="3f562eed0fcfabc848db5ebed81633e340352c0c@52.53.72.234:26656,65f774fece098327b595c971b507db24356000fd@54.176.105.93:26656,8a8944fcaddb46ff18ec59a3197af1c5763eb824@50.18.50.100:26656,7ece43f437d4dc419bdf9c09604ebed084699779@54.215.2.221:26656"
   ```
 
 * `pex` — set the value to `true` to enable the peer exchange. Example: `pex = true`.
@@ -313,9 +319,15 @@ Open for editing `vi ~/node/bttc/start.sh`.
 
 In `start.sh`, add the boot node addresses consisting of a node ID, an IP address, and a port by adding the following line at the end:
 
+Example(mainnet):
 ```config
 --bootnodes 
 "enode://8ef920be1d44ad7c41a517a6420e43511f2e30d1c35a4bb05954c9f413b1712dae6e9e05f56595966470506891ff05d203e233c2e8f6df8c72621537a3d783e9@54.157.35.210:30303,enode://f3a2534ac30db7387f84c1262bce9a0737c46a8b5627f8193d412a4bde415c191191bbf984f51e04e5d974e62b70fab148f38522c5e2917ca1f1860361f14cc9@107.20.250.182:30303,enode://268cc5c4062b4c30f7ae972322ec119465655d9b3f7220df4614f2890b5cef6ac350d65890f8ecebfe6c5ce0af635f7ae420db84de7677c54b35ed1ce6bb4fbd@54.219.27.155:30303,enode://a9aa7a7ec5b34485c73436d311d86c55f900db4008058231a2fd2fb8ee7ad1b68d7d5a64acbf1f62b8d5f25388b492d16befb686d6146b374a85a6ea7d5a95c9@54.241.235.101:30303"
+```
+
+Example(testnet-1029):
+```config
+--bootnodes "enode://2e6a732ba9d0fcf102a4f4bda7d76f28095c9f03ee56bc89dc5c2235cd527c914b6063b0c76598cc37287f0594ae4022df550c592b3ba2a56a9f02810edbeee1@52.53.72.234:30303,enode://3d7da6d583072fbbe733135047010698e8b6a24c9315ce953b09dddbfabb2476c8b720b2ff2beb2ec73ef111b691c7dcd87f5e42bcba4a7bc385b7f728b2ab44@54.176.105.93:30303"
 ```
 
 Save the changes in `start.sh`.
@@ -484,18 +496,18 @@ In `static-nodes.json`, change the following:
 
 Save the changes in `static-nodes.json`.
 
-## Set the owner and signer key
+## Set the signer key
 
 On Bttc, it is recommended that you keep the owner and signer keys different.
 
 * Signer — the address that signs the checkpoint transactions. The recommendation is to keep at least 2 ETH, 20,000TRX, 0.5BNB on the signer address.
 * Owner — the address that does the staking transactions. The recommendation is to keep the BTT tokens on the owner address.
 
-### Generate a Delivery private key
+### Configuring Delivery with the Signer Private Key
 
-You must generate a Delivery private key only on the validator machine. Do not generate a Delivery private key on the sentry machine.
+You must set a Delivery private key only on the validator machine. Do not set a Delivery private key on the sentry machine.
 
-To generate the private key, run:
+To set the private key on delivery, run:
 
 ```sh
 deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
@@ -503,7 +515,7 @@ deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
 
 where
 
-* ETHEREUM_PRIVATE_KEY — your Ethereum private key.
+* ETHEREUM_PRIVATE_KEY — your signer Ethereum private key.
 
 This will generate `priv_validator_key.json`. Move the generated JSON file to the Delivery configuration directory:
 
@@ -511,11 +523,11 @@ This will generate `priv_validator_key.json`. Move the generated JSON file to th
 mv ./priv_validator_key.json ~/.deliveryd/config
 ```
 
-### Generate a Bttc keystore file
+### Configuring BTTC with the Signer Private Key
 
-You must generate a Bttc keystore file only on the validator machine. Do not generate a Bttc keystore file on the sentry machine.
+You must generate a Bttc keystore file with the signer private key only on the validator machine. Do not generate a Bttc keystore file on the sentry machine.
 
-To generate the private key, run:
+To set the private key on bttc, run:
 
 ```sh
 deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
@@ -523,7 +535,7 @@ deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
 
 where
 
-* ETHEREUM_PRIVATE_KEY — your Ethereum private key.
+* ETHEREUM_PRIVATE_KEY — your signer Ethereum private key.
 
 When prompted, set up a password to the keystore file.
 
@@ -555,7 +567,7 @@ At this point, you must have:
 * The Delivery service on the sentry machine fully synced and running.
 * The Bttc service on the sentry machine running.
 * The Delivery service and the Bttc service on the validator machine configured.
-* Your owner and signer keys configured.
+* Your signer keys configured.
 
 ### Start the Delivery service
 

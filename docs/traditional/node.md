@@ -249,8 +249,14 @@ bash setup.sh
 
   使用以下來自 ~/node/delivery/delivery-seeds.txt的值:
 
+  主網配置
   ```toml
   seeds="161c2cbe07fccc8c8a3b10ccdea608569a202c06@54.157.35.210:26656,f3f21c82c04003e3c6ee14eb4d11d5dd0b1f201e@107.20.250.182:26656,ed080edbac1a1a285d265e3e87269aea9f6693b7@54.219.27.155:26656,3114d9ebc7254a27de7092b071bd698d250748aa@54.241.235.101:26656"
+  ```
+
+  1029測試網配置
+  ```toml
+  seeds="3f562eed0fcfabc848db5ebed81633e340352c0c@52.53.72.234:26656,65f774fece098327b595c971b507db24356000fd@54.176.105.93:26656,8a8944fcaddb46ff18ec59a3197af1c5763eb824@50.18.50.100:26656,7ece43f437d4dc419bdf9c09604ebed084699779@54.215.2.221:26656"
   ```
 
 * `pex` — 將值設定為 true，開啟 PEX。 示例: `pex = true`.
@@ -309,9 +315,15 @@ tron_grid_url = "https://test-tronevent.bt.io"
 
 在`start.sh`中，將以下行輸入至末尾處，以添加由節點 ID、IP 地址和端口組成的啟動節點地址:
 
+主網配置
 ```config
 --bootnodes 
 "enode://8ef920be1d44ad7c41a517a6420e43511f2e30d1c35a4bb05954c9f413b1712dae6e9e05f56595966470506891ff05d203e233c2e8f6df8c72621537a3d783e9@54.157.35.210:30303,enode://f3a2534ac30db7387f84c1262bce9a0737c46a8b5627f8193d412a4bde415c191191bbf984f51e04e5d974e62b70fab148f38522c5e2917ca1f1860361f14cc9@107.20.250.182:30303,enode://268cc5c4062b4c30f7ae972322ec119465655d9b3f7220df4614f2890b5cef6ac350d65890f8ecebfe6c5ce0af635f7ae420db84de7677c54b35ed1ce6bb4fbd@54.219.27.155:30303,enode://a9aa7a7ec5b34485c73436d311d86c55f900db4008058231a2fd2fb8ee7ad1b68d7d5a64acbf1f62b8d5f25388b492d16befb686d6146b374a85a6ea7d5a95c9@54.241.235.101:30303"
+```
+
+1029測試網配置
+```config
+--bootnodes "enode://2e6a732ba9d0fcf102a4f4bda7d76f28095c9f03ee56bc89dc5c2235cd527c914b6063b0c76598cc37287f0594ae4022df550c592b3ba2a56a9f02810edbeee1@52.53.72.234:30303,enode://3d7da6d583072fbbe733135047010698e8b6a24c9315ce953b09dddbfabb2476c8b720b2ff2beb2ec73ef111b691c7dcd87f5e42bcba4a7bc385b7f728b2ab44@54.176.105.93:30303"
 ```
 
 在 `start.sh` 中保存更改 .
@@ -482,18 +494,18 @@ tron_grid_url = "https://test-tronevent.bt.io"
 
 在 `static-nodes.json` 中保存更改.
 
-## 設定所有者和簽名者密鑰
+## 設定Signer密鑰
 
 我們建議您在 BTTC 上設定不同的所有者和簽名者密鑰。
 
-* 簽名者——簽名檢查點交易的地址。 建議在簽名者地址上保留至少 1 個 ETH 代幣，20,000TRX, 0.5BNB.
-* 所有者——進行質押交易的地址。 建議在所有者地址上保留 BTT 代幣.
+* Signer——簽名檢查點交易的地址。 建議在簽名者地址上保留至少 1 個 ETH 代幣，20,000TRX, 0.5BNB.
+* Owner ——提交質押交易的地址。 建議在所有者地址上保留 BTT 代幣.
 
-### 生成 Delivery 私鑰
+### 使用Signer 私鑰配置 Delivery
 
-您必須在驗證者節點上生成 Delivery 私鑰， 請勿在哨兵節點上生成 Delivery 私鑰。
+您必須在驗證者節點上設置 Delivery 私鑰， 請勿在哨兵節點上生成 Delivery 私鑰。
 
-要生成私鑰，請運行:
+要設置私鑰，請運行:
 
 ```sh
 deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
@@ -501,7 +513,7 @@ deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
 
 其中
 
-* ETHEREUM_PRIVATE_KEY — 是您的以太坊錢包私鑰.
+* ETHEREUM_PRIVATE_KEY — 是您的Signer以太坊錢包私鑰.
 
 這樣將生成`priv_validator_key.json`文件。 將生成的 JSON 文件移到 Delivery 配置目錄中。:
 
@@ -509,11 +521,11 @@ deliverycli generate-validatorkey ETHEREUM_PRIVATE_KEY
 mv ./priv_validator_key.json ~/.deliveryd/config
 ```
 
-### 生成 BTTC Keystore 文件
+### 使用Signer 私鑰配置 BTTC
 
 您必須在驗證者節點上生成 BTTC Keystore 文件， 請勿在哨兵節點上生成 BTTC Keystore 文件。
 
-要生成私鑰，請運行:
+要使用Signer 私鑰生成bttc私鑰文件，請運行:
 
 ```sh
 deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
@@ -521,7 +533,7 @@ deliverycli generate-keystore ETHEREUM_PRIVATE_KEY
 
 其中
 
-* ETHEREUM_PRIVATE_KEY — 是您的以太坊私鑰.
+* ETHEREUM_PRIVATE_KEY — 是您的Signer以太坊私鑰.
 
 根據提示設定 Keystore 文件的密碼.
 
@@ -553,7 +565,7 @@ mv ./UTC-<time>-<address> ~/.bttc/keystore/
 * 哨兵節點的 Delivery 服務已完全同步且處於運行狀態。
 * 哨兵節點的 BTTC 服務處於運行狀態。
 * 驗證者節點的 Delivery 服務與 BTTC 服務已完成配置。
-* 您的所有者密鑰與簽名者密鑰均已完成配置。
+* 您的簽名者密鑰已完成配置。
 
 ### 啟動 Delivery 服務
 
