@@ -68,15 +68,11 @@ BitTorrent-Chain的代碼庫，用於了解BitTorrent-Chain 核心組件如何�
 
 ### 領取獎勵
 
-相關合約方法：`StakeManagerProxy:withdrawRewards(uint256)`
-
-參數：
-
-+ validatorId：領取獎勵的validator id
+相關合約方法：`ValidatorShare:withdrawRewards()`
 
 ### 取消投票
 
-相關合約方法：`StakeManagerProxy:sellVoucher_new:(uint256, uint256)`
+相關合約方法：`ValidatorShare:sellVoucher_new:(uint256, uint256)`
 
 參數：
 

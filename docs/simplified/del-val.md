@@ -68,15 +68,11 @@ BitTorrent-Chain的代码库，用于了解BitTorrent-Chain 核心组件如何�
 
 ### 领取奖励
 
-相关合约方法：`StakeManagerProxy:withdrawRewards(uint256)`
-
-参数：
-
-+ validatorId：领取奖励的validator id
+相关合约方法：`ValidatorShare:withdrawRewards()`
 
 ### 取消投票
 
-相关合约方法：`StakeManagerProxy:sellVoucher_new:(uint256, uint256)`
+相关合约方法：`ValidatorShare:sellVoucher_new:(uint256, uint256)`
 
 参数：
 

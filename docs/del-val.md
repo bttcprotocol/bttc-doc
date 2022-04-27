@@ -66,15 +66,11 @@ Parameters:
 
 ### Claiming rewards
 
-Related contractual methods: `StakeManagerProxy:withdrawRewards(uint256)`
-
-Parameters:
-
-+ validatorId：The id of the validator claiming the reward
+Related contractual methods: `ValidatorShare:withdrawRewards()`
 
 ### Cancelling a vote
 
-Related contractual methods: `StakeManagerProxy:sellVoucher_new:(uint256, uint256)`
+Related contractual methods: `ValidatorShare:sellVoucher_new:(uint256, uint256)`
 
 Parameters:
 
