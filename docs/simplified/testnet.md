@@ -4,7 +4,7 @@ BitTorrent Chain（BTTC）测试网现已正式开启，目前已支持TRON测�
 
 | 公链  |  测试网络名称 |  URL |
 | ------------ | ------------ | ------------ |
-| TRON  | Nile  |  [Nile Faucet](https://nileex.io/join/getJoinPage) |
+| TRON  | Nile  |  [Nile Faucet](https://testfaucet.bt.io/#/tron) |
 |  ETH |  Goerli | [Goerli Faucet](https://faucet.goerli.mudit.blog/)  |
 |  BSC |  BSC测试网 | [BSC Faucet](https://testnet.binance.org/faucet-smart)  |
 |  BTTC | BitTorrent Chain Donau  | [Donau Faucet](https://testfaucet.bt.io/#)  |
@@ -13,7 +13,7 @@ BitTorrent Chain（BTTC）测试网现已正式开启，目前已支持TRON测�
 
 Tron Nile测试网的接入需要使用Tronlink Chrome插件，并且Tronlink已支持Nile，用户在登录Tronlink钱包后需要切换至Nile测试网，通过水龙头申请测试币并发送至Tronlink账号，即可完成Nile测试网环境准备。
 
-* Nile测试网代币申请URL：https://nileex.io/join/getJoinPage
+* Nile测试网代币申请URL：https://testfaucet.bt.io/#/tron
 * Nile测试网官网地址：https://nileex.io/
 * Nile测试网区块浏览器：https://nile.tronscan.org/
 * Nile测试网开发资源：​​https://nileex.io/status/getStatusPage

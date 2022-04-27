@@ -4,7 +4,7 @@ The BitTorrent Chain (BTTC) test network is open now. Currently, it supports TRO
 
 | Chain  |  Test network name |  URL |
 | ------------ | ------------ | ------------ |
-| TRON  | Nile  |  [Nile Faucet](https://nileex.io/join/getJoinPage) |
+| TRON  | Nile  |  [Nile Faucet](https://testfaucet.bt.io/#/tron) |
 |  ETH |  Goerli | [Goerli Faucet](https://faucet.goerli.mudit.blog/)  |
 |  BSC |  BSC Testnet | [BSC Faucet](https://testnet.binance.org/faucet-smart)  |
 |  BTTC | BitTorrent Chain Donau | [Donau Faucet](https://testfaucet.bt.io/#)  |
@@ -15,7 +15,7 @@ The access to the Tron Nile testnet requires the Tronlink Chrome plug-in, and Tr
 
 After logging in to the Tronlink wallet, users need to switch to the Nile testnet, apply for a test coin through the faucet with a Tronlink account to complete the Nile testnet environment configuration.
 
-* Faucet: https://nileex.io/join/getJoinPage
+* Faucet: https://testfaucet.bt.io/#/tron
 * Official website: https://nileex.io/
 * Block explorer: https://nile.tronscan.org/
 * Status: ​​https://nileex.io/status/getStatusPage
