@@ -47,49 +47,61 @@ Please refer to the node setup [documentation](http://doc.bt.io/v1/doc/validator
 
 ## Delegator
 
-### What is a Delegator
+There are no prerequisites to become a delegator of BitTorrent-Chain, only a TRON account is required. 
 
-A delegator does not need to host a full node to participate in the verification. They can stake BTT tokens to a super delegate and receive a portion of the reward in exchange. Because they share the reward with the super delegate, the delegate also shares the risk. Delegates play a crucial role in the system because they can choose the Validator as they wish.
+A delegator does not need to host a full node to participate in the verification. They can stake BTT tokens to a validator and receive a portion of the reward in exchange. Because they share the reward with the validator, the delegator also shares the risk. Delegators play a crucial role in the system because they can choose the Validator as they wish.
 
-### To become a Delegator
+### Voting related contract interface description
+#### How to vote for a Validator
 
-Delegators are token holders who cannot, or do not want to run a validator themselves. They can delegate staking tokens to a validator and obtain a part of their revenue in exchange. There are no prerequisites to become a principal of BitTorrent-Chain, only a TRON account is required.
+* Contract method:`ValidatorShare:buyVoucher(uint256, uint256)`
+* Parameters:
+    * `_amount`：vote amount
+    * `_minSharesToMint`：minimum amount of the proxy token
+* Illustration
+    1. Before calling buyVoucher, you need to authorize the contract [`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code) to transfer [`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code) from validator account, that is, you need to call the `approve` method of BTT first.
+    2. Each validator has a corresponding ValidatorShare contract. You can access the validators[validatorId].contractAddress of StakeManagerProxy to obtain the ValidatorShare contract address of a validator
+    3. This method can also used as adding votes for validators
 
-### How to vote for a Validator
+#### Claim rewards
 
-Related contractual methods:`ValidatorShare:buyVoucher(uint256, uint256)`
+* Contract method: `ValidatorShare:withdrawRewards()`
+* parameters: none
+* Illustration
+    1. The delegator calls the withdrawRewards method of the validator's ValidatorShare contract to withdraw the reward. After the execution is successful, the reward immediately reaches the delegator's account.
 
-Parameters:
+#### Cancel a vote
 
-+ `_amount`：vote amount
-+ `_minSharesToMint`：minimum amount of the staking token
+* Contract method: `ValidatorShare:sellVoucher_new:(uint256, uint256)`
+* Parameters:
+    * uint256 claimAmount：claiming amount
+    * uint256 maximumSharesToBurn：acceptable maximum number of proxy token to burn
+* Illustration
+    1. Cancellation vote can be done in multiple times, but the interval between each time is at least one checkpoint.
+    2. After the vote is cancelled, the staked BTT needs to go through a lock-up period of 80 checkpoints before it can be withdrawn.
 
-### Claiming rewards
-
-Related contractual methods: `ValidatorShare:withdrawRewards()`
-
-### Cancelling a vote
-
-Related contractual methods: `ValidatorShare:sellVoucher_new:(uint256, uint256)`
-
-Parameters:
-
-+ uint256 claimAmount：claiming amount
-+ uint256 maximumSharesToBurn：acceptable maximum number to burn
+#### Withdraw staked BTT
+* Contract method: ValidatorShare:unstakeClaimTokens_new(uint256)
+* Parameter
+    * uint256 unbondNonce: nonce of cancelling vote 
+* Illustrate
+    1. This method can only be called after a lock-up period of 80 checkpoints has elapsed after the vote is cancelled.
 
 ### Reward reinvestment
+The reward re-investment is to vote the reward to the validator to obtain more voting rewards.
+* Contract method: ValidatorShare:reStake()
+* parameter: none
 
-Related contractual methods: `ValidatorShare:reStake()`
+#### Transfer vote
+To transfer votes is to transfer a portion of the votes to another validator.
+* Contract method: StakeManagerProxy:migrateDelegation(uint256, uint256, uint256)
+* parameter
+    * uint256 fromValidatorId: source validator id
+    * uint256 toValidatorId: target validator id
+    * uint256 amount: transfer amount
+* illustrate
+    1. Only can transfer to validators whoes validatorID is greater than 7
 
-### Transfer Vote
-
-Related contract methods: `StakeManagerProxy:migrateDelegation(uint256, uint256, uint256)`
-
-Parameters:
-
-+ uint256 fromValidatorId: source validator id
-+ uint256 toValidatorId: target validator id
-+ uint256 amount: transfer amount
 
 ## Validator
 
@@ -172,36 +184,6 @@ The next proponent then sends a confirmation transaction to prove that the previ
 
 The BitTorrent-chain contracts deployed on chains such as TRON & Ethereum are considered to be the ultimate source of truth, so all verification is done by querying the BitTorrent-chain contracts on chains such as TRON & Ethereum.
 
-#### Stake
-
-For BitTorrent-chains, any participant can qualify as a BitTorrent-chain Validator by running a full node, and their main motivation for becoming a super delegate is to earn rewards and transaction fees.
-
-The Validator has two addresses.
-
-* Owner address: from this address the Validator can handle administration-related functions such as canceling collateral, getting rewards, and setting stake parameters.
-* Signer address: from this address the validator signs checkpoints and runs nodes.
-
-##### Stake Related Contracts Interface Description
-
-|Contracts|Methods|Parameters|Remarks|
-|--------|--------|--------|--------|
-| StakeManagerProxy | stakeFor | address user：Stake Account Address<br>uint256 amount：Number of stake tokens with precision<br>uint256 deliveryFee：fee<br>bool acceptDelegation：Accepting agents or not<br>bytes memory signerPubkey：signerPubkey | Stake become validator，Valid if the validator set is not full, otherwise the validator set is full error |
-|StakeManagerProxy|restake|uint256 validatorId：validator id<br>uint256 amount：Number of stake<br>bool stakeRewards：Whether the award is added to the stake|restake|
-|StakeManagerProxy|withdrawRewards|uint256 validatorId：validator id|Receive your award|
-|StakeManagerProxy|unstake|uint256 validatorId：validator id|unstake|
-|StakeManagerProxy|unstakeClaim|uint256 validatorId：validator id|Collect the stake and release the stake after WITHDRAWAL_DELAY an epoch|
-|StakeManagerProxy|updateSigner|uint256 validatorId：validator id<br>bytes memory signerPubkey：signerPubkey|Update validator signerPubkey|
-|StakeManagerProxy|topUpForFee|user：Account address of the recipient of the fee<br>deliveryFee：deliveryFee amount with precision|stakedeliveryFee|
-|StakeManagerProxy|claimFee|uint256 accumFeeAmount：Number of fees received<br>uint256 index：bytes memory proof：proof data
-|claimFee|
-|StakeManagerProxy|updateCommissionRate|uint256 validatorId：validator id<br>uint256 newCommissionRate：newCommissionRate，<=100|updateCommissionRate|
-|ValidatorShare|buyVoucher|uint256 _amount：Number of votes<br>uint256 _minSharesToMint：Minimum number of coins acceptable|Vote and add vote|
-|StakeManagerProxy|migrateDelegation|uint256 fromValidatorId：from validator id<br>uint256 toValidatorId： to validator id<br>uint256 amount：Number of delegation |migrateDelegation|
-|ValidatorShare|sellVoucher_new|uint256 claimAmount：claimAmount<br>uint256 maximumSharesToBurn：Maximum number of coins burn|Cancellation of vote|
-|ValidatorShare|unstakeClaimTokens_new|uint256 unbondNonce：unbond Nonce|Withdraw the vote and collect it after WITHDRAWAL_DELAY epoch after unvoting|
-|ValidatorShare|restake|None|Reward reinvestment|
-|ValidatorShare|withdrawRewards|None|Receive your voting reward|
-
 #### Transaction Fees
 
 Each block producer in the BitTorrent-chain layer will receive a percentage of the transaction fees charged for each block.
@@ -220,3 +202,89 @@ What the Dapp/user needs to do is work with the state-sync.
 4. Once a state sync transaction on the Validator layer is included in a block, it is added to the pending state sync list.
 5. BitTorrent-chain layer nodes fetch the pending state sync event from the DanValidator via an API call.
 6. The receiver contract inherits the IStateReceiver interface and the custom logic to decode the data bytes and perform any actions is located in the onStateReceive function.
+
+
+### Stake Related Contracts Interface Description
+#### Stake
+* Contract method: StakeManagerProxy:stakeFor(address, uint256, uint256, bool, bytes memory)
+* parameter
+    * address user: stake account address, namely Address_A
+    * uint256 amount: the amount of staked BTT; note: the stake amount should be less than the authorized amount, and the precision of BTT is 18
+    * uint256 deliveryFee: delivery fee; greater than or equal to 1 BTT, the precision of BTT is 18
+    * bool acceptDelegation: false (if it is true, stakeFor cannot be called through tronscan, because the tronscan fee is limited to 300TRX, but it can be called through wallet cli, API, etc.)
+    * bytes memory signerPubkey: the public key of the signature account; that is, the public key of Address_A, the leading "04" needs to be removed
+* illustration
+    1. Before calling stakeFor, you need to authorize [`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code) contract to transfer [`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code) from the stake account address, that is, you need to call the approve method of BTT first.
+    2. After the user stakes BTT successfully, the validatorID can be obtained through `stakeManagerProxy:getValidatorId` , and then the validator's detailed information can be obtained through `stakeManagerProxy:validators` method.
+
+#### Stake more
+* Contract method: StakeManagerProxy:restake(uint256, uint256, bool)
+* parameter
+    * uint256 validatorId: the validator id
+    * uint256 amount: stake amount
+    * bool stakeRewards: whether to stake the reward
+
+
+#### Claim rewards
+* Contract method: StakeManagerProxy:withdrawRewards(uint256)
+* parameter
+    * uint256 validatorId: validator id
+* illustration
+    1. The validator can claim the reward through the withdrawRewards method. After successfully execution, the reward will be immediately put into the validator's account.
+
+
+#### Unstake
+Validators can unstake BTT when they want to exit the system, stop validating blocks and commit checkpoints. In order to ensure good participation, the staked BTT of validators will be locked for withdrawalDelay checkpoints.
+
+* Contract method: StakeManagerProxy:unstake(uint256)
+* parameter
+    * uint256 validatorId: validator id
+* illustration
+    1. The validator can cancel the stake through the unstake method, and immediately return the reward tokens to the validator's account after canceling the stake, but the staked tokens need to be claimed through the unstakeClaim function.
+    2. The unstakeClaim method must wait for withdrawalDelay (currently 80) checkpoints before it can be called.
+
+#### Withdraw the staked BTT
+* Contract method: StakeManagerProxy:unstakeClaim(uint256)
+* parameter
+    * uint256 validatorId: validator id 
+* illustration
+    1. After unstake, you need to wait for withdrawalDelay (currently the value is 80) checkpoints before calling this method to claim the previously staked BTT.
+
+#### Update signer public key of validator  
+* Contract method: StakeManagerProxy:updateSigner(uint256, bytes memory)
+* parameter
+    * uint256 validatorId: validator id
+    * bytes memory signerPubkey: new signer public key
+* illustration
+    1. The validator can update the signer account, but the time interval between two update operations needs to be greater than signerUpdateLimit (currently 100) checkpoints.
+
+#### Update commission rate
+* Contract method: StakeManagerProxy:updateCommissionRate(uint256, uint256)
+* parameter
+    * uint256 validatorId: validator id
+    * uint256 newCommissionRate: new commission rate
+* illustration
+    1. Validators can update the commission ratio, but the time interval between two update operations needs to be greater than WITHDRAWAL_DELAY (currently 80) checkpoints.
+    2. The commission ratio needs to be less than or equal to 100
+
+#### Deposit delivery fee
+* Contract method: StakeManagerProxy:topUpForFee(address, uint256)
+* parameter
+    * address user: the account address of the recipient of the fee, that is, the signer address
+    * uint256 deliveryFee: fee amount
+* illustration
+    1. Before calling this interface, the validator needs to call the approve method of BTT to authorize StakeManagerProxy to transfer BTT.
+    2. The minimum value that can be set for deliveryFee is StakeManagerProxy: minHeimdallFee (currently 100000BTT)
+
+
+#### Claim fee
+* Contract method: StakeManagerProxy:claimFee(uint256, uint256, bytes memory)
+* parameter
+    * uint256 accumFeeAmount: the amount of fee to withdraw
+    * uint256 index
+    * bytes memory proof: proof data
+* illustration
+    1. After the call excutes successfully, the claimed fee will immediately reach the validator account
+
+
+

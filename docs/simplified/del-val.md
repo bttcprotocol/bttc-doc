@@ -49,53 +49,62 @@ BitTorrent-Chain的代码库，用于了解BitTorrent-Chain 核心组件如何�
 
 成为 BitTorrent-chain 的委托人没有先决条件。您所要做的就是拥有一个TRON帐户。
 
-### 什么是委托人
-
 委托人无需托管完整节点即可参与验证。他们可以将BTT代币投票给验证人，并获得部分奖励作为交换。因为他们与验证人共享奖励，所以委托人也分担了风险。委托人在系统中起着至关重要的作用，因为他们可以根据自己的意愿选择验证人。
 
-### 成为委托人
+### 投票相关合约接口说明
+#### 为验证人投票
+* 合约方法：ValidatorShare:buyVoucher(uint256, uint256)
+* 参数：
+    * _amount：投票数量
+    * _minSharesToMint：可接受的最少代理币数量
+* 说明：
+    1. 在调用buyVoucher之前，需要先为[`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code)合约授权转账[`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code)，即需要先调用BTT的approve方法。
+    2. 每一个验证人都有对应的ValidatorShare合约， 可以访问StakeManagerProxy的validators[validatorId].contractAddress来获取某一个验证人对应的ValidatorShare合约地址
+    3. 此方法也可为验证人追加投票
 
-委托人可以将BTT代币委托给validator，并获得部分收入作为交换。成为BitTorrent-Chain 的委托人没有先决条件，只需要拥有一个TRON账户。
 
-### 如何为验证人投票
+#### 领取奖励
+* 合约方法：ValidatorShare:withdrawRewards()
+* 参数：无
+* 说明
+    1. 委托人调用验证人的ValidatorShare合约的withdrawRewards方法来为提取奖励，执行成功后奖励立刻到达委托人账户。
 
-相关合约方法：`ValidatorShare:buyVoucher(uint256, uint256)`
+#### 取消投票
+* 合约方法：ValidatorShare:sellVoucher_new:(uint256, uint256)
+* 参数：
+    * uint256 claimAmount：取消的投票数量
+    * uint256 maximumSharesToBurn：可接受的燃烧最大代理币数量
+* 说明
+    1. 取消投票可以分多次进行，但是每次之间至少间隔1个检查点。
+    2. 取消投票后，质押金需要经过80个检查点的锁定期，才可提取。
 
-参数：
 
-+ `_amount`：投票数量
-+ `_minSharesToMint`：可接受的最少代理币数量
+#### 提取投票所质押的BTT
+* 合约方法：ValidatorShare:unstakeClaimTokens_new(uint256) 
+* 参数
+    * uint256 unbondNonce：解绑nonce，即提取第几次的取消投票
+* 说明
+    1. 该方法需要在取消投票后，经过80个检查点的锁定期后，才可调用。
 
-### 领取奖励
 
-相关合约方法：`ValidatorShare:withdrawRewards()`
+#### 奖励复投
+奖励复投是将为验证人投票获得的BTT奖励，再投票给验证人，以获取更多的投票奖励。
+* 合约方法：ValidatorShare:reStake()
+* 参数：无
 
-### 取消投票
 
-相关合约方法：`ValidatorShare:sellVoucher_new:(uint256, uint256)`
+#### 转移投票
+转移投票是转移一部分票数给另一个验证人。
+* 合约方法：StakeManagerProxy:migrateDelegation(uint256, uint256, uint256)
+* 参数
+    * uint256 fromValidatorId：源validator id
+    * uint256 toValidatorId：目标validator id
+    * uint256 amount：转移数量
+* 说明
+    1. 只能转移给validatorID 大于7的验证人
 
-参数：
-
-+ uint256 claimAmount：数量
-+ uint256 maximumSharesToBurn：可接受的燃烧最大代理币数量
-
-### 奖励复投
-
-相关合约方法：`ValidatorShare:reStake()`
-
-### 转移投票
-
-相关合约方法：`StakeManagerProxy:migrateDelegation(uint256, uint256, uint256)`
-
-参数：
-
-+ uint256 fromValidatorId：源validator id
-+ uint256 toValidatorId：目标validator id
-+ uint256 amount：转移数量
 
 ## 验证人
-
-### 什么是验证人
 
 验证人(Validator)是网络中的参与者，他将代币锁定在网络中并运行验证人节点以帮助运行网络。验证人有以下职责：
 
@@ -179,67 +188,11 @@ BitTorrent-chain层中的区块生产者，BitTorrent-chain层中的VM与EVM兼�
 
 部署在TRON&Ethereum等链上的BitTorrent-chain合约被认为是最终的真相来源，因此所有的验证都是通过查询TRON&Ethereum等链上的BitTorrent-chain合约完成的。
 
-#### 质押
-
-对于BitTorrent-chain来说，任何参与者都可以通过运行全节点有资格成为BitTorrent-chain的验证人，他们的成为验证人的主要动机是赚取奖励和交易费。
-
-Validator有两个地址：
-
-1. Owner 地址：验证人可以从该地址处理与管理相关的功能，比如取消抵押、获取奖励、设置委托参数。
-2. Signer 地址：验证人从这个地址签署检查点并运行节点。
-
-##### 质押流程
-
-* 保证卡槽数量validatorThreshold（StakeManagerProxy读方法查询）大于当前validator数量（通过StakeManagerProxy合约validatorState方法查看）。
-* 准备一个拥有至少500TRX的TRON地址Address_A。
-* 给地址Address_A转一定数量BTT，至少2个token（注意精度的18个0）。
-* 地址Address_A调用StakeManagerProxy的approve方法进行指定数量的BTT。
-* 使用地址Address_A调用StakeManagerProxy的stakeFor方法进行质押，参数如下
- user：账户A地址
-
- amount：质押量，小于授权量，需精度的18个0
- deliveryFee：手续费，大于等于1个token，需精度的18个0
-
- acceptDelegation：false（如果为true的话，stakeFor不能通过tronscan调用，因为tronscan费用限制为300TRX，可通过wallet cli、API等调用
-
- signerPubkey：账户A公钥，需要把前导“04”去掉
-
-* 交易执行成功即质押成功。
-* 用户质押成功后可通过地址Address_A的address，访问stakeManagerProxy的getValidatorId方法获取validator id，然后通过validators方法，输入id获取validator详细信息，判断质押是否成功。
-
-##### 取消质押流程
-
-当验证人想退出系统，停止验证区块和提交检查点时，验证人可以取消质押。为了保证良好的参与度，取消质押的验证人的质押部分代币将被锁定withdrawalDelay个周期。
-
-* 后续用户可通过unstake方法来退出，退出后立马返还奖励代币。质押部分的代币需要通过unclaim函数来申领
-* unclaim方法必须等待withdrawalDelay个周期后才可以
-
-##### 质押相关合约接口说明
-
-|合约|方法|参数|备注|
-|--------|--------|--------|--------|
-| StakeManagerProxy | stakeFor | address user：质押账号地址<br>uint256 amount：质押代币数量，带精度<br>uint256 deliveryFee：手续费<br>bool acceptDelegation：是否接受代理<br>bytes memory signerPubkey：签名账号公钥 | 质押成为validator，validator集合未满时有效，否则报validator集合已满 |
-|StakeManagerProxy|restake|uint256 validatorId：质押的validator id<br>uint256 amount：质押数量<br>bool stakeRewards：奖励是否加入质押|追加质押|
-|StakeManagerProxy|withdrawRewards|uint256 validatorId：领取奖励的validator id|领取奖励|
-|StakeManagerProxy|unstake|uint256 validatorId：解除质押的validator id|解除质押|
-|StakeManagerProxy|unstakeClaim|uint256 validatorId：领取质押的validator id|领取质押，解除质押后WITHDRAWAL_DELAY个epoch后可领取|
-|StakeManagerProxy|updateSigner|uint256 validatorId：validator id<br>bytes memory signerPubkey：新签名公钥|更新validator签名公钥|
-|StakeManagerProxy|topUpForFee|user：手续费接收者的账号地址<br>deliveryFee：手续费金额，带精度|存delivery层手续费|
-|StakeManagerProxy|claimFee|uint256 accumFeeAmount：领取手续费数量<br>uint256 index：bytes memory proof：证明数据|领取手续费|
-|StakeManagerProxy|updateCommissionRate|uint256 validatorId：validator id<br>uint256 newCommissionRate：新佣金比例，<=100|更新佣金比例|
-|ValidatorShare|buyVoucher|uint256 _amount：投票数量<br>uint256 _minSharesToMint：可接受的最少代理币数量|投票和追加投票|
-|StakeManagerProxy|migrateDelegation|uint256 fromValidatorId：源validator id<br>uint256 toValidatorId： 目的validator id<br>uint256 amount：转移数量|转移投票|
-|ValidatorShare|sellVoucher_new|uint256 claimAmount：解释数量<br>uint256 maximumSharesToBurn：可接受的燃烧最大代理币数量|解除投票|
-|ValidatorShare|unstakeClaimTokens_new|uint256 unbondNonce：解绑nonce|提取投票，解除投票后WITHDRAWAL_DELAY个epoch后可领取|
-|ValidatorShare|restake|无|奖励复投|
-|ValidatorShare|withdrawRewards|无|领取投票奖励|
-
-
 #### 交易费用
 
 BitTorrent-chain层的每个区块生产者都将获得每个区块收取的一定比例的交易费用。
 
-## 状态同步机制
+#### 状态同步机制
 
 Validator层上的验证人接收StateSynced事件并将其传递给BitTorrent-chain层。
 
@@ -251,5 +204,90 @@ Dapp/用户 需要做的事情是与state-sync 一起工作。
 2. 上述函数将触发`StateSynced(uint256 indexed id, address indexed contractAddress, bytes data);`事件
 3. Validator层上的所有验证人都会收到这个事件。
 4. 一旦Validator层上的状态同步交易被包含在一个区块中，它就会被添加到待定状态同步列表中。
-5. BitTorrent-chain层节点通过API调用从旦Validator上获取待定的状态同步事件。
+5. BitTorrent-chain层节点通过API调用从Validator上获取待定的状态同步事件。
 6. 接收者合同继承了IStateReceiver接口，解码数据字节和执行任何行动的自定义逻辑位于onStateReceive函数中。
+
+### 质押相关合约接口说明
+#### 质押
+* 合约方法：StakeManagerProxy:stakeFor(address, uint256, uint256, bool, bytes memory)
+* 参数
+    * address user：质押账号地址，即Address_A
+    * uint256 amount：质押的BTT数量；注意：质押量应小于授权量，BTT精度为18 
+    * uint256 deliveryFee：手续费；大于等于1个BTT，精度为18
+    * bool acceptDelegation：false（如果为true的话，stakeFor不能通过tronscan调用，因为tronscan费用限制为300TRX，可通过wallet cli、API等调用 ）
+    * bytes memory signerPubkey：签名账户公钥；即Address_A的公钥，需要把前导“04”去掉
+* 说明
+    1. 在调用stakeFor之前，需要先为[`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code)合约授权转账[`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code)，即需要先调用BTT的approve方法。
+    2. 用户质押成功后可通过stakeManagerProxy的getValidatorId方法获取到validatorID，然后通过validators方法，输入validatorID获取到validator的详细信息。
+
+#### 追加质押
+* 合约方法：StakeManagerProxy:restake(uint256，uint256，bool)
+* 参数
+    * uint256 validatorId：质押的validator id 
+    * uint256 amount：质押数量
+    * bool stakeRewards：奖励是否加入质押
+
+
+#### 领取奖励
+* 合约方法：StakeManagerProxy:withdrawRewards(uint256)
+* 参数
+    * uint256 validatorId：领取奖励的validator id 
+* 说明
+    1. 验证人可通过withdrawRewards方法来领取奖励，执行成功后奖励立刻到达验证人账户。
+
+
+#### 取消质押
+当验证人想退出系统，停止验证区块和提交检查点时，验证人可以取消质押。为了保证良好的参与度，取消质押的验证人的质押代币将被锁定withdrawalDelay个周期。
+
+* 合约方法：StakeManagerProxy:unstake(uint256)
+* 参数
+    * uint256 validatorId：解除质押的validator id 
+* 说明
+    1. 验证人可通过unstake方法来取消质押，取消质押后立刻返还奖励代币到验证人账户，但质押部分的代币需要通过unstakeClaim函数来申领。
+    2. unstakeClaim方法必须等待withdrawalDelay（目前为80）个检查点后才可以被调用。
+
+#### 取消质押后，领取质押的BTT
+* 合约方法：StakeManagerProxy:unstakeClaim(uint256)
+* 参数
+    * uint256 validatorId：领取质押金的validator id 
+* 说明
+    1. 在取消质押后，需要等待withdrawalDelay（目前为80）个检查点后，才可以调用此方法来领取之前质押的BTT。
+
+#### 更新validator签名公钥
+* 合约方法：StakeManagerProxy:updateSigner(uint256，bytes memory)
+* 参数
+    * uint256 validatorId：validator id
+    * bytes memory signerPubkey：新签名公钥 
+* 说明
+    1. 验证者可以更新签名账户，但是两次更新操作的时间间隔需要满足大于signerUpdateLimit（目前为100）个检查点。
+
+#### 更新佣金比例
+* 合约方法：StakeManagerProxy:updateCommissionRate(uint256，uint256)
+* 参数
+    * uint256 validatorId：validator id
+    * uint256 newCommissionRate：新佣金比例
+* 说明
+    1. 验证者可以更新佣金比例，但是两次更新操作的时间间隔需要满足大于WITHDRAWAL_DELAY（目前为80）个检查点。
+    2. 佣金比例需要小于等于100
+
+#### 存入delivery层手续费
+* 合约方法：StakeManagerProxy:topUpForFee(address，uint256)
+* 参数
+    * address user：手续费接收者的账号地址，即signer地址
+    * uint256 deliveryFee：手续费金额
+* 说明
+    1. 验证人在调用此接口之前，需要先调用BTT的approve方法，来授权StakeManagerProxy可以转账BTT。
+    2. deliveryFee可设置的最小值为StakeManagerProxy：minHeimdallFee（目前为100000BTT）
+
+
+#### 领取手续费
+* 合约方法：StakeManagerProxy:claimFee(uint256，uint256，bytes memory)
+* 参数
+    * uint256 accumFeeAmount：领取手续费数量
+    * uint256 index
+    * bytes memory proof：证明数据
+* 说明
+    1. 调用成功后，领取的手续费立刻到达验证人账户
+
+
+
