@@ -52,14 +52,13 @@ BitTorrent-Chain的代碼庫，用於了解BitTorrent-Chain 核心組件如何�
 委託人無需託管完整節點即可參與驗證。他們可以將BTT代幣投票給驗證人，並獲得部分獎勵作為交換。因為他們與驗證人共享獎勵，所以委託人也分擔了風險。委託人在系統中起着至關重要的作用，因為他們可以根據自己的意願選擇驗證人。
 
 ### 投票相關合約接口說明
-
 #### 為驗證人投票
 * 合約方法：ValidatorShare:buyVoucher(uint256, uint256)
 * 參數：
     * _amount：投票數量
-    * _minSharesToMint：可接受的最少代理幣數量
+    * _minSharesToMint：可接受的最少份額幣數量，委託人為驗證人投票的BTT會轉化為份額幣，以表示用戶為驗證人所投票數佔總票數的份額。委託人可通過驗證人的ValidatorShare合約的balanceOf方法來查詢他所擁有的份額幣數量。
 * 說明：
-    1. 在調用buyVoucher之前，需要先為[`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code)合約授權轉賬[`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code)，即需要先調用BTT的approve方法。
+    1. 在調用buyVoucher方法之前，需要先調用[`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code)的approve方法授權大於投票數量的BTT給[`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code)合約。
     2. 每一個驗證人都有對應的ValidatorShare合約， 可以訪問StakeManagerProxy的validators[validatorId].contractAddress來獲取某一個驗證人對應的ValidatorShare合約地址
     3. 此方法也可為驗證人追加投票
 
@@ -73,23 +72,23 @@ BitTorrent-Chain的代碼庫，用於了解BitTorrent-Chain 核心組件如何�
 #### 取消投票
 * 合約方法：ValidatorShare:sellVoucher_new:(uint256, uint256)
 * 參數：
-    * uint256 claimAmount：取消的投票數量
-    * uint256 maximumSharesToBurn：可接受的燃燒最大代理幣數量
+    * uint256 claimAmount：取消投票的BTT數量；委託人為驗證人投票的總BTT數量，可通過ValidatorShare:getTotalStake方法獲取。
+    * uint256 maximumSharesToBurn：可接受燃燒的最大份額幣數量；委託人所擁有的份額幣數量可通過ValidatorShare:balanceOf方法獲取。
 * 說明
     1. 取消投票可以分多次進行，但是每次之間至少間隔1個檢查點。
-    2. 取消投票後，質押金需要經過80個檢查點的鎖定期，才可提取。
+    2. 取消投票後，質押金BTT需要經過80個檢查點的鎖定期，才可提取。
 
 
 #### 提取投票所質押的BTT
 * 合約方法：ValidatorShare:unstakeClaimTokens_new(uint256) 
 * 參數
-    * uint256 unbondNonce：解綁nonce，即提取第幾次的取消投票
+    * uint256 unbondNonce：`取消投票`操作對應的nonce，即提取第nonce次`取消投票`的BTT。委託人總的取消投票次數可以通過ValidatorShare:unbondNonces方法查詢。
 * 說明
     1. 該方法需要在取消投票後，經過80個檢查點的鎖定期後，才可調用。
 
 
 #### 獎勵复投
-獎勵复投是將為驗證人投票獲得的BTT獎勵，再投票給驗證人，以獲取更多的投票獎勵。
+獎勵复投是將已獲得但未提取的BTT投票獎勵再次投票給驗證人，以獲取更多的投票獎勵。
 * 合約方法：ValidatorShare:reStake()
 * 參數：無
 
@@ -100,9 +99,10 @@ BitTorrent-Chain的代碼庫，用於了解BitTorrent-Chain 核心組件如何�
 * 參數
     * uint256 fromValidatorId：源validator id
     * uint256 toValidatorId：目標validator id
-    * uint256 amount：轉移數量
+    * uint256 amount：轉移的BTT數量
 * 說明
     1. 只能轉移給validatorID 大於7的驗證人
+    2. 轉移投票會自動觸發領取獎勵操作
 
 
 ## 驗證人
@@ -114,6 +114,11 @@ BitTorrent-Chain的代碼庫，用於了解BitTorrent-Chain 核心組件如何�
 * 因停機等活動而受到處罰
 
 區塊鏈驗證人是負責驗證區塊鏈內交易的人，對於 BitTorrent-Chain，任何參與者都可以通過運行全節點獲得獎勵和交易費用，從而有資格成為BitTorrent-Chain的驗證人。BitTorrent-Chain中的驗證人是通過定期發生的鏈上拍賣過程選擇的，這些選定的驗證人將作為區塊生產者和驗證者參與。
+
+Validator需要有兩個地址：
+
+1. Owner 地址：驗證人可以通過該地址處理`與管理相關`的功能，比如取消抵押、獲取獎勵、設置委託參數。
+2. Signer 地址：驗證人從這個地址簽署檢查點並運行節點。
 
 ### 架構
 
@@ -213,14 +218,17 @@ Dapp/用戶 需要做的事情是與state-sync 一起工作。
 #### 質押
 * 合約方法：StakeManagerProxy:stakeFor(address, uint256, uint256, bool, bytes memory)
 * 參數
-    * address user：質押賬號地址，即Address_A
-    * uint256 amount：質押的BTT數量；注意：質押量應小於授權量，BTT精度為18 
-    * uint256 deliveryFee：手續費；大於等於1個BTT，精度為18
-    * bool acceptDelegation：false（如果為true的話，stakeFor不能通過tronscan調用，因為tronscan費用限制為300TRX，可通過wallet cli、API等調用 ）
-    * bytes memory signerPubkey：簽名賬戶公鑰；即Address_A的公鑰，需要把前導“04”去掉
+    * address user：質押賬號地址，即驗證人的owner地址
+    * uint256 amount：質押的BTT數量
+    * uint256 deliveryFee：存入的手續費；驗證人為檢查點簽名需要支付一定的手續費，因此需要預先為signer地址存入一定的手續費。
+    * bool acceptDelegation：驗證人是否接受委託人的投票
+    * bytes memory signerPubkey：簽名賬戶公鑰；即驗證人的signer地址的公鑰，需要把前導“04”去掉
 * 說明
-    1. 在調用stakeFor之前，需要先為[`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code)合約授權轉賬[`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code)，即需要先調用BTT的approve方法。
-    2. 用戶質押成功後可通過stakeManagerProxy的getValidatorId方法獲取到validatorID，然後通過validators方法，輸入validatorID獲取到validator的詳細信息。
+    1. 參數`amount`允許的最小值可通過StakeManagerProxy:minDeposit方法查詢（目前為10^30， 也就是10^12個BTT）。
+    2. 參數`deliveryFee`允許的最小值可通過StakeManagerProxy:minHeimdallFee方法查詢（目前為10^23，也就是100000個BTT）。
+    3. 參數`acceptDelegation`：true表示接受委託人的投票，false表示不接受委託人的投票；後期可通過可通過ValidatorShare:updateDelegation方法更改該屬性值。
+    4. 在調用stakeFor方法之前，需要先調用[`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code)的approve方法授權大於質押數量的BTT給[`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code)合約。
+    5. 用戶質押成功後，可通過stakeManagerProxy:getValidatorId方法獲取到驗證人的validatorID，然後通過stakeManagerProxy:validators方法獲取到validator的詳細信息。
 
 #### 追加質押
 * 合約方法：StakeManagerProxy:restake(uint256，uint256，bool)
@@ -228,7 +236,8 @@ Dapp/用戶 需要做的事情是與state-sync 一起工作。
     * uint256 validatorId：質押的validator id 
     * uint256 amount：質押數量
     * bool stakeRewards：獎勵是否加入質押
-
+* 說明
+    1. 調用此方法的前提條件是成功調用了StakeManagerProxy:stakeFor方法並成為驗證人。
 
 #### 領取獎勵
 * 合約方法：StakeManagerProxy:withdrawRewards(uint256)
@@ -245,10 +254,10 @@ Dapp/用戶 需要做的事情是與state-sync 一起工作。
 * 參數
     * uint256 validatorId：解除質押的validator id 
 * 說明
-    1. 驗證人可通過unstake方法來取消質押，取消質押後立刻返還獎勵代幣到驗證人賬戶，但質押部分的代幣需要通過unstakeClaim函數來申領。
+    1. 驗證人可通過unstake方法來取消質押，取消質押後立刻返還獎勵的代幣到驗證人賬戶，但質押的代幣需要通過unstakeClaim函數來申領。
     2. unstakeClaim方法必須等待withdrawalDelay（目前為80）個檢查點後才可以被調用。
 
-#### 取消質押後，領取質押的BTT
+#### 領取質押的BTT
 * 合約方法：StakeManagerProxy:unstakeClaim(uint256)
 * 參數
     * uint256 validatorId：領取質押金的validator id 
@@ -271,23 +280,4 @@ Dapp/用戶 需要做的事情是與state-sync 一起工作。
 * 說明
     1. 驗證者可以更新佣金比例，但是兩次更新操作的時間間隔需要滿足大於WITHDRAWAL_DELAY（目前為80）個檢查點。
     2. 佣金比例需要小於等於100
-
-#### 存入delivery層手續費
-* 合約方法：StakeManagerProxy:topUpForFee(address，uint256)
-* 參數
-    * address user：手續費接收者的賬號地址，即signer地址
-    * uint256 deliveryFee：手續費金額
-* 說明
-    1. 驗證人在調用此接口之前，需要先調用BTT的approve方法，來授權StakeManagerProxy可以轉賬BTT。
-    2. deliveryFee可設置的最小值為StakeManagerProxy：minHeimdallFee（目前為100000BTT）
-
-
-#### 領取手續費
-* 合約方法：StakeManagerProxy:claimFee(uint256，uint256，bytes memory)
-* 參數
-    * uint256 accumFeeAmount：領取手續費數量
-    * uint256 index
-    * bytes memory proof：證明數據
-* 說明
-    1. 調用成功後，領取的手續費立刻到達驗證人賬戶
 
