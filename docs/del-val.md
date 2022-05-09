@@ -216,7 +216,7 @@ What the Dapp/user needs to do is work with the state-sync.
 * parameter
     * address user: stake account address, that is, the validator's owner address
     * uint256 amount: the amount of staked BTT
-    * uint256 deliveryFee: delivery fee; The validator needs to pay a fee for signing a checkpoint, so it is necessary to deposit a certain fee for the signer address in advance.
+    * uint256 deliveryFee: delivery fee in validator layer
     * bool acceptDelegation: Whether the validator accepts the delegator's vote
     * bytes memory signerPubkey: the public key of the signature account; that is, the public key of validator's signer address, the leading "04" needs to be removed
 * illustration

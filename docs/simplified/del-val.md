@@ -220,7 +220,7 @@ Dapp/用户 需要做的事情是与state-sync 一起工作。
 * 参数
     * address user：质押账号地址，即验证人的owner地址
     * uint256 amount：质押的BTT数量
-    * uint256 deliveryFee：存入的手续费；验证人为检查点签名需要支付一定的手续费，因此需要预先为signer地址存入一定的手续费。
+    * uint256 deliveryFee：中间层手续费
     * bool acceptDelegation：验证人是否接受委托人的投票
     * bytes memory signerPubkey：签名账户公钥；即验证人的signer地址的公钥，需要把前导“04”去掉
 * 说明
