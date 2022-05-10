@@ -221,14 +221,13 @@ Dapp/用户 需要做的事情是与state-sync 一起工作。
     * address user：质押账号地址，即验证人的owner地址
     * uint256 amount：质押的BTT数量
     * uint256 deliveryFee：中间层手续费
-    * bool acceptDelegation：验证人是否接受委托人的投票
+    * bool acceptDelegation：验证人是否接受委托人的投票；建议将其设置为true，即接收委托人的投票，之后可以通过ValidatorShare:updateDelegation方法关闭或开启；但是如果调用 stakeFor 时 acceptDelegation 是 false，之后就无法再更改，也就无法再接受投票。
     * bytes memory signerPubkey：签名账户公钥；即验证人的signer地址的公钥，需要把前导“04”去掉
 * 说明
     1. 参数`amount`允许的最小值可通过StakeManagerProxy:minDeposit方法查询（目前为10^30， 也就是10^12个BTT）。
     2. 参数`deliveryFee`允许的最小值可通过StakeManagerProxy:minHeimdallFee方法查询（目前为10^23，也就是100000个BTT）。
-    3. 参数`acceptDelegation`：true表示接受委托人的投票，false表示不接受委托人的投票；后期可通过可通过ValidatorShare:updateDelegation方法更改该属性值。
-    4. 在调用stakeFor方法之前，需要先调用[`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code)的approve方法授权大于质押数量的BTT给[`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code)合约。
-    5. 用户质押成功后，可通过stakeManagerProxy:getValidatorId方法获取到验证人的validatorID，然后通过stakeManagerProxy:validators方法获取到validator的详细信息。
+    3. 在调用stakeFor方法之前，需要先调用[`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code)的approve方法授权大于质押数量的BTT给[`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code)合约。
+    4. 用户质押成功后，可通过stakeManagerProxy:getValidatorId方法获取到验证人的validatorID，然后通过stakeManagerProxy:validators方法获取到validator的详细信息。
 
 #### 追加质押
 * 合约方法：StakeManagerProxy:restake(uint256，uint256，bool)

@@ -217,14 +217,13 @@ What the Dapp/user needs to do is work with the state-sync.
     * address user: stake account address, that is, the validator's owner address
     * uint256 amount: the amount of staked BTT
     * uint256 deliveryFee: delivery fee in validator layer
-    * bool acceptDelegation: Whether the validator accepts the delegator's vote
+    * bool acceptDelegation: Whether the validator accepts the delegator's vote; it is recommended to set it to true, that is, to receive the vote of the delegator, and then it can be turned off or turned on by the ValidatorShare:updateDelegation method; but if acceptDelegation is false when calling stakeFor, it cannot be changed after that. and the validator will no longer be able to accept votes.
     * bytes memory signerPubkey: the public key of the signature account; that is, the public key of validator's signer address, the leading "04" needs to be removed
 * illustration
     1. The minimum value allowed by the parameter `amount` can be queried through the StakeManagerProxy:minDeposit method (currently 10^30, which is 10^12 BTT).
     2. The minimum value allowed by the parameter `deliveryFee` can be queried through the StakeManagerProxy:minHeimdallFee method (currently 10^23, which is 100000 BTT).
-    3. Parameter `acceptDelegation`: true means accepting the vote of the delegator, false means not accepting the vote of the delegator; the value of this property can be changed later through ValidatorShare:updateDelegation.
-    4. Before calling stakeFor, you need to authorize [`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code) contract to transfer [`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code) from the stake account address by calling the `approve` method of BTT, and the number of BTT approved should be larger than the amount of staked BTT.
-    2. After the user stakes BTT successfully, the validatorID can be obtained through `stakeManagerProxy:getValidatorId` , and then the validator's detailed information can be obtained through `stakeManagerProxy:validators` method.
+    3. Before calling stakeFor, you need to authorize [`StakeManagerProxy`](https://tronscan.org/#/contract/TEpjT8xbAe3FPCPFziqFfEjLVXaw9NbGXj/code) contract to transfer [`BTT`](https://tronscan.org/#/contract/TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4/code) from the stake account address by calling the `approve` method of BTT, and the number of BTT approved should be larger than the amount of staked BTT.
+    4. After the user stakes BTT successfully, the validatorID can be obtained through `stakeManagerProxy:getValidatorId` , and then the validator's detailed information can be obtained through `stakeManagerProxy:validators` method.
 
 #### Stake more
 * Contract method: StakeManagerProxy:restake(uint256, uint256, bool)
