@@ -60,6 +60,7 @@ Accessing to the BTTC test network requires Metamask. Please use Metamask to add
 * RPC URL: https://pre-rpc.bt.io/ 
 * ChainID: 1029
 * Symbol: BTT
+* Block Explorer URL: https://testnet.bttcscan.com/
 * Block Explorer URL: https://testscan.bt.io/
 
 ![image](./pics/wallet-rpc.png)

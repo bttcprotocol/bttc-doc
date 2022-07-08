@@ -2,7 +2,9 @@
 
 ## Blockchain Explorer
 
-* Testnet: [https://testscan.bt.io/](https://testscan.bt.io/)
+* Testnet: 
+  [https://testnet.bttcscan.com/](https://testnet.bttcscan.com/)
+  [https://testscan.bt.io/](https://testscan.bt.io/)
 
 * Mainnet: [https://scan.bt.io/](https://scan.bt.io/)
 

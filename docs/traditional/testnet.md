@@ -58,6 +58,7 @@ BTTC測試網的接入需要使用Metamask，並使用Metamask添加BTTC測試�
 * RPC URL（RPC URL）：https://pre-rpc.bt.io/ 
 * 鏈ID（ChainID）：1029
 * 符號（Symbol）：BTT
+* 區塊瀏覽器URL（Block Explorer URL）：https://testnet.bttcscan.com/
 * 區塊瀏覽器URL（Block Explorer URL）：https://testscan.bt.io/
 
 ![image](../pics/wallet-rpc.png)

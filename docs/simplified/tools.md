@@ -2,7 +2,9 @@
 
 ## 区块链浏览器
 
-* 测试网：[https://testscan.bt.io/](https://testscan.bt.io/)
+* 测试网：
+  [https://testnet.bttcscan.com/](https://testnet.bttcscan.com/)
+  [https://testscan.bt.io/](https://testscan.bt.io/)
 
 * 主网：[https://scan.bt.io/](https://scan.bt.io/)
 

@@ -2,7 +2,9 @@
 
 ## 區塊鏈瀏覽器
 
-* 測試網：[https://testscan.bt.io/](https://testscan.bt.io/)
+* 測試網：
+  [https://testnet.bttcscan.com/](https://testnet.bttcscan.com/)
+  [https://testscan.bt.io/](https://testscan.bt.io/)
 
 * 主網：[https://scan.bt.io/](https://scan.bt.io/)
 
